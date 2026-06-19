@@ -1,33 +1,166 @@
 ---
+// index.astro: The main page of the Neo-Bistro Digital Menu.
 import Layout from '../layouts/Layout.astro';
+import Loader from '../components/common/Loader.astro';
+import GrainOverlay from '../components/common/GrainOverlay.astro';
+import Cover from '../components/menu/Cover.astro';
+import MenuCanvas from '../components/menu/MenuCanvas.astro';
+import MenuGallery from '../components/menu/MenuGallery.astro';
+import Dossier from '../components/menu/Dossier.astro';
+import DishProfile from '../components/menu/DishProfile.astro';
 ---
 
 <Layout>
-	<main class="menu-shell">
-		<h1>Menú Digital</h1>
-		<p>El cascarón del menú digital está listo. Modifica este archivo para empezar a construir la interfaz.</p>
-	</main>
+  <!-- Interactive Loader -->
+  <Loader />
+
+  <!-- Tactile Grain Overlay -->
+  <GrainOverlay />
+
+  <!-- Scroll trigger area for cover page scaling -->
+  <div id="cover-trigger-area" class="absolute top-0 left-0 w-full h-[140vh] pointer-events-none z-0"></div>
+
+  <!-- Cover Section -->
+  <Cover />
+
+  <!-- Menu Content Container (scrolls up after cover) -->
+  <div id="menu-content-container" class="relative w-full z-10 bg-[#F2EFE9] pt-[140vh]">
+    <div class="relative w-full">
+      
+      <!-- Asymmetric Editorial View -->
+      <div id="canvas-wrapper">
+        <MenuCanvas />
+      </div>
+
+      <!-- High Density Grid Gallery View -->
+      <div id="gallery-wrapper" class="hidden">
+        <MenuGallery />
+      </div>
+
+      <!-- Footer Info Section -->
+      <Dossier />
+      
+    </div>
+  </div>
+
+  <!-- Split Screen Detail Modal overlay -->
+  <DishProfile />
 </Layout>
 
-<style>
-	.menu-shell {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		height: 100vh;
-		font-family: system-ui, sans-serif;
-		color: #333;
-		text-align: center;
-		padding: 2rem;
-	}
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 1rem;
-	}
-	p {
-		font-size: 1.2rem;
-		color: #666;
-		max-width: 600px;
-	}
-</style>
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { initMenuAnimations } from '../animations/menuAnimations';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Initialize GSAP ScrollTrigger and animations AFTER loading animation completes
+  document.addEventListener('loader-finished', () => {
+    // Scroll to top on fresh load to prevent offset trigger issues
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+    
+    initMenuAnimations();
+    setupToggleViews();
+    setupDishClickHandlers();
+  });
+
+  // 1. View Toggling: Editorial vs Gallery Grid
+  function setupToggleViews() {
+    const btnEditorial = document.querySelectorAll('.btn-toggle-editorial, #nav-btn-editorial');
+    const btnGallery = document.querySelectorAll('.btn-toggle-gallery, #nav-btn-gallery');
+    
+    const canvasWrapper = document.getElementById('canvas-wrapper');
+    const galleryWrapper = document.getElementById('gallery-wrapper');
+    const galleryView = document.getElementById('gallery-view');
+
+    if (!canvasWrapper || !galleryWrapper || !galleryView) return;
+
+    const showEditorial = () => {
+      // Toggle visibility
+      canvasWrapper.classList.remove('hidden');
+      galleryWrapper.classList.add('hidden');
+      galleryView.classList.add('hidden');
+      
+      // Update navigation active button styling
+      btnEditorial.forEach(btn => btn.classList.add('text-charcoal', 'font-bold'));
+      btnGallery.forEach(btn => btn.classList.remove('text-charcoal', 'font-bold'));
+
+      // Fade-in canvas wrapper cleanly
+      gsap.fromTo(canvasWrapper, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+      );
+
+      // Force GSAP ScrollTrigger to recalculate new heights and trigger values
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 50);
+    };
+
+    const showGallery = () => {
+      // Toggle visibility
+      canvasWrapper.classList.add('hidden');
+      galleryWrapper.classList.remove('hidden');
+      galleryView.classList.remove('hidden');
+
+      // Update navigation active button styling
+      btnGallery.forEach(btn => btn.classList.add('text-charcoal', 'font-bold'));
+      btnEditorial.forEach(btn => btn.classList.remove('text-charcoal', 'font-bold'));
+
+      // Fade-in gallery wrapper cleanly
+      gsap.fromTo(galleryWrapper, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+      );
+
+      // Force GSAP ScrollTrigger to recalculate new heights
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 50);
+    };
+
+    // Bind event listeners to both sets of header links (Cover header + Menu header)
+    btnEditorial.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showEditorial();
+      });
+    });
+
+    btnGallery.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showGallery();
+      });
+    });
+  }
+
+  // 2. Open Dish Profile details modal on click
+  function setupDishClickHandlers() {
+    const dishRows = document.querySelectorAll('.dish-row[data-dish-id]');
+    const dishCards = document.querySelectorAll('.dish-card[data-dish-id]');
+
+    const triggerOpen = (dishId: string) => {
+      // Dispatch custom event to notify DishProfile modal to open
+      document.dispatchEvent(new CustomEvent('open-dish-profile', {
+        detail: { dishId }
+      }));
+    };
+
+    dishRows.forEach(row => {
+      row.addEventListener('click', () => {
+        const dishId = row.getAttribute('data-dish-id');
+        if (dishId) triggerOpen(dishId);
+      });
+    });
+
+    dishCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const dishId = card.getAttribute('data-dish-id');
+        if (dishId) triggerOpen(dishId);
+      });
+    });
+  }
+</script>
