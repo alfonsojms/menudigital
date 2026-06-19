@@ -14,239 +14,400 @@ export interface Dish {
 }
 
 export const menuData: Dish[] = [
+  // --- STARTERS (Entradas / Snacks / Perros / Tequeperros) ---
   {
-    id: "starter-1",
-    name: "Papas Pepperoni Loaded",
-    price: 12,
-    category: "starters",
-    categoryLabel: "Entradas / Snacks",
-    description: "Papas fritas crujientes bañadas en salsa marinara artesanal, queso mozzarella derretido y pepperoni doradito.",
-    image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=800",
-    subtitle: "El Snack Más Pedido",
-    story: "Nuestras papas fritas cortadas a mano se cubren con una deliciosa salsa marinara casera, queso mozzarella fundido bajo el grill y rodajas de pepperoni premium tostado, logrando un sabor único que une lo mejor de la pizza con las papas.",
-    ingredients: [
-      "Papas fritas artesanales crujientes",
-      "Salsa marinara casera de tomates italianos",
-      "Queso mozzarella fundido premium",
-      "Rodajas de pepperoni tostadas al horno"
-    ],
-    allergens: "Lácteos, Gluten"
-  },
-  {
-    id: "starter-2",
-    name: "Cheesy Burger Bites",
-    price: 10,
-    category: "starters",
-    categoryLabel: "Entradas / Snacks",
-    description: "Esferas de carne smash premium rellenas de queso cheddar cremoso, empanizadas al panko y fritas al momento.",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800",
-    subtitle: "Fusión de Sabor",
-    story: "Combinamos la sazón de nuestra carne de hamburguesa con un corazón de queso cheddar líquido, envuelto en una capa súper crujiente de panko. Se sirven calientes para que el queso explote en tu boca.",
-    ingredients: [
-      "Carne de res seleccionada y sazonada",
-      "Corazón de queso cheddar americano líquido",
-      "Empanizado crujiente de panko y finas hierbas",
-      "Salsa especial 'Casa Sauce' para untar"
-    ],
-    allergens: "Gluten, Lácteos, Huevos"
-  },
-  {
-    id: "starter-3",
-    name: "Aros de Cebolla Gigantes BBQ",
+    id: "tequeperro-sencillo",
+    name: "Tequeperros 2 Unidades",
     price: 8,
     category: "starters",
-    categoryLabel: "Entradas / Snacks",
-    description: "Aros de cebolla cortados a mano, doblemente empanizados y servidos con nuestra salsa barbacoa ahumada.",
-    image: "https://images.unsplash.com/photo-1639024471283-2bc7b3c6a267?q=80&w=800",
-    subtitle: "Crujiente Clásico",
-    story: "Cebollas dulces seleccionadas cortadas en aros gigantescos, pasadas por un tempura de cerveza y panko para el máximo crujido, acompañadas de salsa BBQ dulce y ahumada.",
+    categoryLabel: "Tequeperros y Perros",
+    description: "Fusionamos el rico tequeño venezolano con el clásico perro caliente, cambiamos el pan por un súper tequeño. Con salchicha, papas ralladas, tocineta, maíz y salsas.",
+    image: "/menufotos/480435892_17894956473170633_7261931795626125031_n.webp",
+    subtitle: "El Tequeño Gigante Fusión",
+    story: "¡Una locura total! Cambiamos el tradicional pan por una masa crujiente de tequeño venezolano dorado. Relleno con salchicha de calidad, maíz tierno, tocineta crocante, papitas ralladas y nuestra selección de salsas clásicas.",
     ingredients: [
-      "Cebollas dulces cortadas gruesas",
-      "Tempura crujiente a base de cerveza rubia",
-      "Pan rallado panko de alta calidad",
-      "Salsa BBQ con toque de chipotle"
+      "Masa de tequeño artesanal frita",
+      "Salchicha premium",
+      "Papas ralladas ultra finas",
+      "Tocineta crujiente",
+      "Maíz tierno desgranado",
+      "Salsas tradicionales"
     ],
-    allergens: "Gluten"
+    allergens: "Gluten, Lácteos"
   },
   {
-    id: "starter-4",
-    name: "Crispy Chicken Nuggets",
-    price: 9,
+    id: "tequeperro-especial",
+    name: "Tequeperros Especial 2 Unidades",
+    price: 10,
     category: "starters",
-    categoryLabel: "Entradas / Snacks",
-    description: "Trozos de pechuga de pollo marinados en suero de leche, empanizados con receta secreta de especias.",
-    image: "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=800",
-    subtitle: "Puro Pollo Real",
-    story: "Olvídate de los nuggets procesados. Estos son trozos de pechuga de pollo real marinados por 24 horas en buttermilk y especias, fritos hasta que queden súper crujientes por fuera y jugosos por dentro.",
+    categoryLabel: "Tequeperros y Perros",
+    description: "Súper tequeño relleno de salchicha, jamón, queso amarillo, queso mozzarella, tocineta, papas ralladas, maíz y salsas.",
+    image: "/menufotos/480435892_17894956473170633_7261931795626125031_n.webp",
+    subtitle: "La Versión Recargada",
+    story: "Si te gustó el tequeperro clásico, este te volará la cabeza. Añadimos jamón premium, queso amarillo derretido y una capa extra de queso mozzarella fundido al calor de la fritura de la masa de tequeño.",
     ingredients: [
-      "Pechuga de pollo 100% natural cortada a mano",
-      "Marinado en buttermilk (suero de leche) y ajo",
-      "Mezcla de harina sazonada con 11 especias",
-      "Aderezo Honey Mustard artesanal"
+      "Masa de tequeño artesanal extra grande",
+      "Salchicha premium y jamón seleccionado",
+      "Queso amarillo y queso mozzarella fundido",
+      "Tocineta, maíz tierno y papitas crujientes",
+      "Salsas especiales de la casa"
     ],
-    allergens: "Gluten, Lácteos, Mostaza"
+    allergens: "Gluten, Lácteos"
   },
   {
-    id: "main-1",
-    name: "La Hamburpizza Suprema",
+    id: "perro-jumbo",
+    name: "Perros Normales Tamaño Jumbo",
+    price: 6,
+    category: "starters",
+    categoryLabel: "Tequeperros y Perros",
+    description: "Perro caliente jumbo tradicional con ensalada, salchicha, papitas, salsas y queso de año.",
+    image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
+    subtitle: "Estilo Callejero Venezolano",
+    story: "El clásico indiscutible de las noches venezolanas. Una salchicha gigante en pan ultra suave al vapor, cubierto con ensalada fresca rallada, papas fritas ralladas crujientes, una lluvia de queso de año con su característico toque salado y todas las salsas.",
+    ingredients: [
+      "Pan de perro caliente gigante al vapor",
+      "Salchicha Jumbo de alta calidad",
+      "Ensalada de repollo y zanahoria finamente rallada",
+      "Papitas fritas trituradas crujientes",
+      "Queso de año rallado tradicional",
+      "Salsas tradicionales"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "perro-charcutero",
+    name: "Perro Charcutero",
+    price: 8,
+    category: "starters",
+    categoryLabel: "Tequeperros y Perros",
+    description: "Perro caliente especial con ensalada, salchicha, papitas, maíz, jamón, queso pasteurizado, queso amarillo, salsas y queso de año.",
+    image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
+    subtitle: "El Rey de la Charcutería",
+    story: "Una bomba de sabores. A la base del perro jumbo le sumamos jamón de primera, queso pasteurizado suave, queso amarillo derretido y maíz tierno, logrando una combinación irresistiblemente quesuda y sabrosa.",
+    ingredients: [
+      "Pan especial de perro jumbo al vapor",
+      "Salchicha Jumbo y jamón premium",
+      "Queso amarillo y queso pasteurizado tierno",
+      "Ensalada rallada, maíz y papitas fritas",
+      "Queso de año rallado y aderezos especiales"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+
+  // --- MAINS (Hamburpizzas, Pizzas, Patacones, Whoppers, La Meri) ---
+  {
+    id: "hamburpizza-pollo-carne",
+    name: "Hamburpizza Pollo o Carne",
+    price: 14,
+    category: "mains",
+    categoryLabel: "Hamburpizzas y Más",
+    description: "La fusión de sabores que buscabas, unimos lo mejor de la hamburguesa y lo exquisito de una buena pizza. Con jamón, tocineta, queso mozzarella, queso amarillo, tomate, orégano, maíz, salsas, pasta de tomate y papas ralladas.",
+    image: "/menufotos/481020682_17894956464170633_8960802278795460931_n.webp",
+    subtitle: "Fusión Suprema de Carne o Pollo",
+    story: "Nuestra creación insignia. Todo el relleno jugoso de una hamburguesa de carne o pollo asado a la plancha con tocineta, jamón y papas ralladas, envuelto en una masa de pizza artesanal con base de pomodoro, mozzarella y orégano recién horneada.",
+    ingredients: [
+      "Masa de pizza artesanal horneada al momento",
+      "Carne de res o pollo desmechado premium a la plancha",
+      "Jamón, tocineta y doble queso (mozzarella y amarillo)",
+      "Tomate, maíz dulce, papas ralladas y orégano",
+      "Pasta de tomate pomodoro y salsas de la casa"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "hamburpizza-crispy",
+    name: "Hamburpizza Crispy Pollo o Chuleta",
+    price: 16,
+    category: "mains",
+    categoryLabel: "Hamburpizzas y Más",
+    description: "Nuestra hamburpizza premium rellena de jamón, tocineta, queso mozzarella, queso amarillo, pollo crispy crujiente o chuleta, tomate, maíz, salsas, pasta de tomate y papas ralladas.",
+    image: "/menufotos/481020682_17894956464170633_8960802278795460931_n.webp",
+    subtitle: "Sabor Extra Crujiente",
+    story: "Una versión con texturas inigualables. Rellenamos la masa de pizza con jugoso pollo crispy súper crujiente o una chuleta ahumada tierna a la plancha, combinada con jamón, tocineta, quesos derretidos y papitas fritas ralladas.",
+    ingredients: [
+      "Masa de pizza artesanal crujiente",
+      "Pollo frito crispy o chuleta ahumada premium",
+      "Queso mozzarella, queso amarillo y tocineta",
+      "Tomate, maíz, papas ralladas y orégano",
+      "Pasta de tomate artesanal y aderezos"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "hamburpizza-minions",
+    name: "Hamburpizza Minions",
+    price: 10,
+    category: "mains",
+    categoryLabel: "Hamburpizzas y Más",
+    description: "Hamburpizza en tamaño perfecto para los pequeños. Rellena de carne, jamón, queso mozzarella, queso amarillo, tomate, orégano, maíz, salsas, pasta de tomate y papas ralladas.",
+    image: "/menufotos/481020682_17894956464170633_8960802278795460931_n.webp",
+    subtitle: "La Favorita de los Chamos",
+    story: "Una versión miniatura de nuestra hamburpizza pero con todo el sabor. Carne molida premium, jamón, quesos derretidos, maíz dulce y papitas ralladas en una porción ideal para niños.",
+    ingredients: [
+      "Masa de pizza individual",
+      "Carne de res tierna sazonada",
+      "Jamón, queso mozzarella y amarillo",
+      "Tomate fresco, maíz dulce y papitas ralladas",
+      "Salsas suaves y pasta de tomate"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "pizza-ind-sencilla",
+    name: "Pizza Individual Sencilla",
+    price: 8,
+    category: "mains",
+    categoryLabel: "Pizzas",
+    description: "Pizza individual de masa fina con queso mozzarella fundido, jamón premium y un toque de orégano.",
+    image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
+    subtitle: "Rápida y Tradicional",
+    story: "Nuestra clásica pizza individual estirada a mano al estilo napolitano, pintada con salsa de la casa, abundante mozzarella derretida, jamón curado y orégano aromático.",
+    ingredients: [
+      "Masa de pizza artesanal delgada",
+      "Salsa de tomate especiada de la casa",
+      "Queso mozzarella 100% real",
+      "Jamón premium y orégano"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "pizza-ind-margarita",
+    name: "Pizza Individual Margarita",
+    price: 8,
+    category: "mains",
+    categoryLabel: "Pizzas",
+    description: "Pizza individual con queso mozzarella, maíz tierno y orégano.",
+    image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
+    subtitle: "Un Toque Dulce de Maíz",
+    story: "La versión de la casa de la clásica Margarita. Reemplazamos la albahaca por granos dulces de maíz tierno que combinan a la perfección con la cremosidad del queso mozzarella fundido.",
+    ingredients: [
+      "Masa de pizza delgada",
+      "Salsa de tomate artesanal",
+      "Queso mozzarella fundido",
+      "Maíz dulce desgranado y orégano"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "pizza-ind-especial",
+    name: "Pizza Individual Especial",
+    price: 10,
+    category: "mains",
+    categoryLabel: "Pizzas",
+    description: "Pizza individual cargada con queso, jamón, tocineta, maíz y orégano.",
+    image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
+    subtitle: "La Combinación Perfecta",
+    story: "Una pizza individual completa para los que quieren un poco de todo. Jamón tierno, tocineta crocante y maíz tierno sobre una cama de queso mozzarella fundido sobre nuestra salsa de tomate secreta.",
+    ingredients: [
+      "Masa artesanal fina",
+      "Salsa de tomate pomodoro",
+      "Queso mozzarella premium",
+      "Jamón, tocineta ahumada, maíz dulce y orégano"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "pizza-rect-sencilla",
+    name: "Pizza Il Rectzza Sencilla",
     price: 22,
     category: "mains",
-    categoryLabel: "Hamburguesas & Pizzas",
-    description: "Jugosa carne smash de 200g, tocino ahumado, cheddar y salsa envueltos en una mini pizza de pepperoni recién horneada.",
-    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=800",
-    subtitle: "Nuestra Creación Insignia",
-    story: "La madre de todas las fusiones. Reemplazamos los tradicionales panes por una mini pizza de pepperoni estirada a mano y horneada al momento. En su interior guarda una jugosa carne premium de res smash de 200g, queso cheddar fundido, tocino crujiente y vegetales frescos.",
+    categoryLabel: "Pizzas",
+    description: "Pizza cuadrada gigante de 24 trozos con abundante queso mozzarella, maíz y orégano. Perfecta para compartir en familia.",
+    image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
+    subtitle: "La Pizza Cuadrada Gigante",
+    story: "Nuestra famosa pizza rectangular XL. 24 deliciosos trozos cuadrados cubiertos de una generosa capa de mozzarella, maíz tierno y un aroma de orégano que perfuma toda la mesa.",
     ingredients: [
-      "Masa de pizza artesanal horneada con salsa e hilo de mozzarella",
-      "Carne smash de res premium de 200 gramos",
-      "Rodajas de pepperoni y tocino ahumado",
-      "Queso cheddar americano y aderezo especial de la casa"
+      "Masa de pizza rectangular familiar",
+      "Salsa pomodoro especial de la casa",
+      "Queso mozzarella extra fundido",
+      "Maíz tierno desgranado y orégano"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "pizza-rect-especial",
+    name: "Pizza Il Rectzza Especial",
+    price: 26,
+    category: "mains",
+    categoryLabel: "Pizzas",
+    description: "Pizza cuadrada gigante de 24 trozos con abundante queso mozzarella, jamón, tocineta, maíz y orégano.",
+    image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
+    subtitle: "El Banquete Familiar XL",
+    story: "La reina de las reuniones. Una bandeja de 24 trozos de pizza cuadrada repletos de jamón premium, tocineta crujiente ahumada, maíz dulce desgranado, abundante queso mozzarella y orégano.",
+    ingredients: [
+      "Masa familiar rectangular horneada al molde",
+      "Salsa de tomate artesanal",
+      "Queso mozzarella premium",
+      "Jamón, tocineta ahumada, maíz y orégano"
+    ],
+    allergens: "Gluten, Lácteos"
+  },
+  {
+    id: "patacon-casa",
+    name: "Patacón de la Casa",
+    price: 12,
+    category: "mains",
+    categoryLabel: "Patacón y Burgers",
+    description: "Plátano verde macho frito y crujiente relleno de carne y pollo, ensalada rallada, queso de mano, queso amarillo, jamón, tocineta, maíz y salsas.",
+    image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
+    subtitle: "El Auténtico Sabor Zuliano",
+    story: "Cambiamos el pan por dos tapas crujientes de plátano verde macho frito, aplanado y sazonado. Lo rellenamos con carne y pollo desmechado a la plancha, ensalada de repollo fresca, jamón, tocineta crujiente, maíz y un espectacular queso de mano y amarillo derretido.",
+    ingredients: [
+      "Tapas de plátano macho verde frito y crujiente",
+      "Carne de res y pechuga de pollo desmechados a la plancha",
+      "Queso de mano tradicional y queso amarillo",
+      "Jamón premium y tocineta ahumada",
+      "Ensalada rallada fresca, maíz y salsas"
+    ],
+    allergens: "Lácteos"
+  },
+  {
+    id: "whopper-crispy",
+    name: "Whopper de Pollo Crispy",
+    price: 10,
+    category: "mains",
+    categoryLabel: "Patacón y Burgers",
+    description: "Hamburguesa premium con vegetales, papitas crujientes, pollo crispy, queso mozzarella, queso amarillo, tocineta y salsas.",
+    image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
+    subtitle: "Doble Queso & Pollo Crujiente",
+    story: "Una hamburguesa enorme con una pechuga de pollo frita súper crujiente rebozada en nuestra receta especial de especias. Viene acompañada de vegetales frescos, papitas fritas ralladas, queso mozzarella y amarillo derretido y tocino crujiente.",
+    ingredients: [
+      "Pan brioche con ajonjolí tostado",
+      "Pechuga de pollo crispy marinada y rebozada",
+      "Queso mozzarella fundido y queso amarillo",
+      "Vegetales frescos (lechuga y tomate)",
+      "Tocineta crujiente y papitas fritas trituradas",
+      "Salsas de la casa"
     ],
     allergens: "Gluten, Lácteos, Huevos"
   },
   {
-    id: "main-2",
-    name: "Pizza Pepperoni Explosiva",
-    price: 18,
+    id: "whopper-sencilla",
+    name: "Whopper Sencilla",
+    price: 9,
     category: "mains",
-    categoryLabel: "Hamburguesas & Pizzas",
-    description: "Masa napolitana madurada 48h, salsa pomodoro italiana, abundante mozzarella y triple ración de pepperoni.",
-    image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800",
-    subtitle: "Para Fanáticos del Pepperoni",
-    story: "El clásico americano llevado a otro nivel. Masa napolitana súper delgada y con bordes inflados alveolados, pintada con salsa pomodoro artesanal, cubierta de queso mozzarella premium que estira al infinito y repleta de rodajas de pepperoni que se curvan en el horno.",
+    categoryLabel: "Patacón y Burgers",
+    description: "Hamburguesa clásica con vegetales, papitas, carne de res premium o pollo, jamón, queso y salsas.",
+    image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
+    subtitle: "El Clásico Hamburguesero",
+    story: "La hamburguesa de toda la vida. Carne de res seleccionada o pollo a la plancha, jamón, queso derretido, vegetales frescos, papas ralladas crujientes y un aderezo de salsas tradicionales.",
     ingredients: [
-      "Masa artesanal madurada en frío por 48 horas",
-      "Salsa de tomates de San Marzano",
-      "Queso mozzarella 100% de leche de vaca",
-      "Abundante pepperoni curado seleccionado"
+      "Pan brioche tostado",
+      "Carne de res smash premium o pollo a la plancha",
+      "Queso derretido y jamón premium",
+      "Lechuga, tomate fresco y papitas trituradas",
+      "Salsas de la casa"
+    ],
+    allergens: "Gluten, Lácteos, Huevos"
+  },
+  {
+    id: "meri-pollo-carne",
+    name: "Meri de Pollo o Carne",
+    price: 11,
+    category: "mains",
+    categoryLabel: "La Meri",
+    description: "Cambiamos el pan tradicional por nuestra deliciosa masa frita de la casa. Con pollo o carne, queso de mano, queso amarillo, jamón, tocineta, papas ralladas, maíz y salsas.",
+    image: "/menufotos/480986107_17894956482170633_5563912232239391031_n.webp",
+    subtitle: "La Hamburguesa Frita",
+    story: "Una joya exclusiva. Masa de pan frita y crujiente de la casa rellena de jugosa carne o pollo, queso de mano derretido, queso amarillo, jamón, tocineta, maíz dulce desgranado, papitas trituradas y salsas.",
+    ingredients: [
+      "Masa frita artesanal de la casa",
+      "Carne de res o pollo desmechado premium",
+      "Queso de mano venezolano y queso amarillo",
+      "Jamón y tocineta ahumada",
+      "Papas ralladas, maíz tierno y salsas"
     ],
     allergens: "Gluten, Lácteos"
   },
   {
-    id: "main-3",
-    name: "Burger Double Smash Cheddar",
-    price: 15,
+    id: "meri-crispy-chuleta",
+    name: "Meri de Pollo Crispy o Chuleta",
+    price: 12,
     category: "mains",
-    categoryLabel: "Hamburguesas & Pizzas",
-    description: "Doble carne smash costrosa (100g c/u), cuatro rebanadas de cheddar, cebolla caramelizada y aderezo especial.",
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800",
-    subtitle: "Clásico Americano Smash",
-    story: "Carne de res de libre pastoreo con la costra perfecta que solo da la plancha caliente. Dos carnes smash de 100g unidas por capas de queso cheddar americano derretido, cebolla caramelizada a la mantequilla y aderezo de pepinillos casero en pan brioche.",
+    categoryLabel: "La Meri",
+    description: "Masa frita de la casa rellena de pollo crispy súper crujiente o chuleta, queso de mano, queso amarillo, jamón, tocineta, papas ralladas, maíz y salsas.",
+    image: "/menufotos/480986107_17894956482170633_5563912232239391031_n.webp",
+    subtitle: "Doble Sabor Frito y Crujiente",
+    story: "Nuestra meri en su versión premium. Con el increíble pollo frito crispy o chuleta ahumada a la plancha, combinados con queso de mano y amarillo derretido dentro del pan frito de la casa.",
     ingredients: [
-      "Doble carne smash premium de 100g cada una",
-      "Cuatro rebanadas de queso cheddar americano real",
-      "Cebolla caramelizada y pepinillos agridulces",
-      "Pan brioche de papa tostado con mantequilla noisette"
-    ],
-    allergens: "Gluten, Lácteos, Huevos",
-    soldOut: false
-  },
-  {
-    id: "main-4",
-    name: "Pizza Burger Especial",
-    price: 20,
-    category: "mains",
-    categoryLabel: "Hamburguesas & Pizzas",
-    description: "Pizza tradicional con salsa marinara y mozzarella, cargada de carne de res molida premium, tocino, cheddar y cebolla.",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800",
-    subtitle: "La Hamburguesa Hecha Pizza",
-    story: "Preparamos una pizza artesanal y la coronamos con todos los ingredientes icónicos de una hamburguesa premium: trocitos de carne sazonada a la plancha, tocino ahumado, aros de cebolla morada y un baño final de queso cheddar fundido tras salir del horno de piedra.",
-    ingredients: [
-      "Base de pizza artesanal con pomodoro y mozzarella",
-      "Carne de hamburguesa sazonada desmenuzada",
-      "Tocino ahumado y cebolla morada fresca",
-      "Baño de salsa de queso cheddar derretido"
+      "Masa frita artesanal de la casa",
+      "Pollo frito crispy o chuleta ahumada a la plancha",
+      "Queso de mano y queso amarillo derretido",
+      "Jamón, tocineta, maíz tierno y papitas",
+      "Aderezos especiales de la casa"
     ],
     allergens: "Gluten, Lácteos"
   },
-  {
-    id: "main-5",
-    name: "La Burger Monstrosa Triple",
-    price: 24,
-    category: "mains",
-    categoryLabel: "Hamburguesas & Pizzas",
-    description: "Triple carne smash (100g c/u), triple cheddar, aros de cebolla crujientes y salsa BBQ en pan brioche.",
-    image: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?q=80&w=800",
-    subtitle: "Solo para Valientes",
-    story: "Una hamburguesa colosal diseñada para satisfacer los apetitos más feroces. Tres carnes smash doraditas, tres rebanadas de cheddar americano, aros de cebolla crujientes y salsa BBQ ahumada en pan brioche de papa.",
-    ingredients: [
-      "Triple carne smash de 100g (300g totales)",
-      "Triple porción de queso cheddar fundido",
-      "Aros de cebolla empanizados integrados",
-      "Salsa BBQ artesanal y pan de papa"
-    ],
-    allergens: "Gluten, Lácteos, Huevos",
-    soldOut: true
-  },
+
+  // --- DESSERTS (Postres / Dulces) ---
   {
     id: "dessert-1",
     name: "Pizza Sweet Nutella & Fresas",
     price: 12,
     category: "desserts",
-    categoryLabel: "Postres / Dulces",
+    categoryLabel: "Postres",
     description: "Masa delgada y crujiente cubierta de Nutella caliente, rodajas de fresas frescas y lluvia de azúcar glas.",
     image: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?q=80&w=800",
-    subtitle: "El Postre Estrella",
-    story: "Masa artesanal estirada fina, horneada hasta quedar crujiente, untada generosamente con crema de avellanas Nutella caliente y decorada con fresas jugosas frescas y azúcar flor.",
+    subtitle: "El Dulce Final",
+    story: "Nuestra deliciosa masa de pizza artesanal estirada muy fina y horneada hasta quedar súper crujiente, cubierta generosamente con Nutella caliente y fresas frescas fileteadas.",
     ingredients: [
-      "Masa delgada crujiente de pizza dulce",
-      "Crema de avellanas y chocolate Nutella caliente",
-      "Fresas frescas seleccionadas fileteadas",
-      "Lluvia de azúcar flor glas"
+      "Masa fina crujiente",
+      "Nutella de chocolate y avellana",
+      "Fresas frescas seleccionadas",
+      "Azúcar glas"
     ],
-    allergens: "Gluten, Lácteos, Frutos de Cáscara"
+    allergens: "Gluten, Lácteos, Frutos Secos"
   },
   {
     id: "dessert-2",
     name: "Mega Shake Oreo Burger",
     price: 10,
     category: "desserts",
-    categoryLabel: "Postres / Dulces",
+    categoryLabel: "Postres",
     description: "Batido cremoso de galletas Oreo, crema batida, coronado con una mini dona glaseada de chocolate.",
     image: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?q=80&w=800",
-    subtitle: "Batido Extremo",
-    story: "Un batido ultra cremoso a base de helado de vainilla premium, galletas Oreo trituradas y leche entera, decorado con fudge de chocolate, crema chantilly y una mini dona de chocolate arriba.",
+    subtitle: "Un Batido de Locura",
+    story: "Batido espeso y frío de helado de vainilla y trozos de galleta Oreo, servido en copa con crema chantilly y una mini dona de chocolate de decoración.",
     ingredients: [
-      "Helado de vainilla premium y leche entera",
-      "Galletas Oreo trituradas en el batido",
-      "Crema batida chantilly fresca",
-      "Mini dona de chocolate y jarabe fudge"
+      "Helado de vainilla y leche entera",
+      "Galletas Oreo trituradas",
+      "Crema batida fresca",
+      "Mini dona de chocolate"
     ],
-    allergens: "Lácteos, Gluten, Soya"
+    allergens: "Gluten, Lácteos"
   },
+
+  // --- DRINKS (Bebidas) ---
   {
     id: "drink-1",
-    name: "Cerveza Artesanal IPA La Casa",
-    price: 7,
+    name: "Refrescos Variados",
+    price: 3,
     category: "drinks",
-    categoryLabel: "Bebidas / Cervezas",
-    description: "IPA artesanal de cuerpo medio, con intensas notas cítricas, de maracuyá y un amargor refrescante.",
-    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=800",
-    subtitle: "Para Acompañar la Hamburguesa",
-    story: "Una cerveza estilo India Pale Ale elaborada localmente, con adición de lúpulos aromáticos americanos que aportan aromas de frutas tropicales y cítricos. Marida perfecto con el queso cheddar y tocino.",
+    categoryLabel: "Bebidas",
+    description: "Lata de Coca-Cola, Chinotto, Fanta o Pepsi bien fría.",
+    image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800",
+    subtitle: "Gaseosas Heladas",
+    story: "Las gaseosas clásicas servidas en lata súper heladas para acompañar tu hamburpizza o patacón favorito.",
     ingredients: [
-      "Agua purificada de manantial",
-      "Malta de cebada pale seleccionada",
-      "Lúpulos cítricos Cascade, Citra y Mosaic",
-      "Levadura de cerveza ale"
+      "Gaseosa seleccionada de 355ml"
     ],
-    allergens: "Gluten"
+    allergens: "Ninguno"
   },
   {
     id: "drink-2",
     name: "Soda Tropical de Maracuyá",
     price: 5,
     category: "drinks",
-    categoryLabel: "Bebidas / Cervezas",
+    categoryLabel: "Bebidas",
     description: "Refresco natural artesanal de pulpa de maracuyá maduro, menta fresca y gasificado ligero.",
     image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800",
     subtitle: "Refrescante sin Alcohol",
-    story: "Una gaseosa natural elaborada en casa con pulpa fresca de maracuyá, un jarabe simple infundido con menta fresca del huerto y agua carbonatada ligera. Ácida, dulce y ultra refrescante.",
+    story: "Elaborada en casa con pulpa 100% natural de maracuyá (parchita), hojas de menta fresca machacadas, un toque de jarabe de azúcar y agua mineral con gas.",
     ingredients: [
-      "Pulpa fresca de maracuyá natural",
-      "Agua carbonatada mineralizada",
-      "Hojas de menta fresca machacadas",
-      "Jarabe de azúcar simple artesanal"
+      "Pulpa natural de parchita (maracuyá)",
+      "Agua carbonatada",
+      "Hojas de menta fresca",
+      "Jarabe de azúcar simple"
     ],
     allergens: "Ninguno"
   }
