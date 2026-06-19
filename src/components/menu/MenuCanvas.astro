@@ -5,130 +5,116 @@ import { menuData } from '../../types/menuData';
 const starters = menuData.filter(d => d.category === 'starters');
 const mains = menuData.filter(d => d.category === 'mains');
 ---
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-charcoal/20 px-4 py-3">
-  <div class="flex items-center gap-4 text-charcoal">
-    <div class="size-4">
-      <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-        <path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
-        <path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"></path>
-      </svg>
-    </div>
-    <h2 class="text-charcoal text-lg font-bold leading-tight tracking-[-0.015em] font-display">L'Éphémère</h2>
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 px-4 py-3 bg-[#1A1A1A]">
+  <div class="flex items-center gap-4 text-white">
+    <img src="/logo.png" alt="Logo" class="size-8 object-contain" />
+    <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display uppercase">La Casa de la Hamburpizza</h2>
   </div>
-  <nav class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-mono text-fennel">
-    <button class="hover:text-charcoal transition-colors cursor-pointer text-charcoal font-bold btn-toggle-editorial">Menu</button>
-    <button class="hover:text-charcoal transition-colors cursor-pointer btn-toggle-gallery">Gallery</button>
-    <a class="hover:text-charcoal transition-colors" href="#dossier-section">Info</a>
+  <nav class="hidden md:flex gap-8 text-xs uppercase tracking-widest font-sans font-bold text-white/60">
+    <button class="hover:text-[var(--color-brand-yellow)] transition-colors cursor-pointer text-[var(--color-brand-yellow)] font-bold btn-toggle-editorial">Carta</button>
+    <button class="hover:text-[var(--color-brand-yellow)] transition-colors cursor-pointer btn-toggle-gallery">Galería</button>
+    <a class="hover:text-[var(--color-brand-yellow)] transition-colors" href="#dossier-section">Info</a>
   </nav>
 </header>
 
-<div id="editorial-view" class="w-full bg-[#F2EFE9] text-[#1C1B19] min-h-screen">
+<div id="editorial-view" class="w-full bg-[#1A1A1A] text-white min-h-screen">
   <main class="w-full px-8 md:px-20 lg:px-40 pb-40">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 relative">
       
       <!-- Column 1: Starters (Spans cols 1-5) -->
       <section class="lg:col-span-5 pt-20 lg:pt-32 relative" id="section-starters">
-        <h2 class="font-display italic text-6xl md:text-[80px] leading-none mb-16 border-t border-[#1C1B19] pt-6 text-[#1C1B19] gs-reveal uppercase">
-          Première
+        <h2 class="font-display text-5xl md:text-[64px] leading-none mb-16 border-t border-white/10 pt-6 text-[var(--color-brand-yellow)] gs-reveal uppercase">
+          Entradas / Snacks
         </h2>
         <div class="space-y-12">
           {starters.map(dish => (
             <article 
               class="dish-row group relative cursor-pointer" 
               data-dish-id={dish.id} 
-              data-image="starter-1"
+              data-image-url={dish.image}
             >
               <div class="hover-dot"></div>
               <div class="flex items-baseline w-full gs-dish">
-                <h3 class="text-[15px] font-semibold text-[#1C1B19] tracking-tight group-hover:text-[var(--color-primary)] transition-colors duration-300">
+                <h3 class="text-[16px] font-bold text-white tracking-tight group-hover:text-[var(--color-brand-yellow)] transition-colors duration-300">
                   {dish.name}
                 </h3>
                 <div class="dotted-leader"></div>
-                <span class="font-mono text-[14px] text-[#9C978D] font-medium">{dish.price}</span>
+                <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold">${dish.price}</span>
               </div>
-              <p class="text-[13px] text-[#3A3833] mt-1 w-4/5 leading-relaxed gs-dish">
+              <p class="text-[13px] text-white/70 mt-1 w-4/5 leading-relaxed gs-dish">
                 {dish.description}
               </p>
             </article>
           ))}
         </div>
-
-        <!-- Floating Image for Starters (Left side) -->
-        <div class="hidden lg:block absolute left-[-80px] top-[480px] w-[280px] h-[380px] featured-image rounded-none overflow-hidden border border-[#1C1B19]" id="img-starter-1">
-          <img 
-            alt="Oyster dish" 
-            class="w-full h-full object-cover select-none pointer-events-none" 
-            src={starters[0]?.image} 
-          />
-        </div>
       </section>
 
       <!-- Column 2: Mains (Spans cols 7-12, offset vertically) -->
       <section class="lg:col-start-7 lg:col-span-6 pt-32 lg:pt-80 relative" id="section-mains">
-        <h2 class="font-display italic text-6xl md:text-[80px] leading-none mb-16 border-t border-[#1C1B19] pt-6 text-[#1C1B19] gs-reveal uppercase">
-          Principale
+        <h2 class="font-display text-5xl md:text-[64px] leading-none mb-16 border-t border-white/10 pt-6 text-[var(--color-brand-yellow)] gs-reveal uppercase">
+          Hamburguesas & Pizzas
         </h2>
         <div class="space-y-12">
           {mains.map(dish => (
             <article 
               class="dish-row group relative cursor-pointer" 
               data-dish-id={dish.id} 
-              data-image="main-1"
+              data-image-url={dish.image}
             >
               {dish.soldOut && (
-                <div class="absolute -left-16 top-0.5 font-mono text-[9px] text-[var(--color-primary)] uppercase tracking-widest bg-[var(--color-primary)]/10 px-2 py-0.5 border border-[var(--color-primary)]/20 select-none">
-                  Sold Out
+                <div class="absolute -left-16 top-0.5 font-mono text-[9px] text-[var(--color-brand-red)] uppercase tracking-widest bg-[var(--color-brand-red)]/10 px-2 py-0.5 border border-[var(--color-brand-red)]/20 select-none">
+                  Agotado
                 </div>
               )}
               <div class="hover-dot"></div>
               <div class={`flex items-baseline w-full gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
-                <h3 class={`text-[15px] font-semibold text-[#1C1B19] tracking-tight group-hover:text-[var(--color-primary)] transition-colors duration-300 ${dish.soldOut ? 'line-through' : ''}`}>
+                <h3 class={`text-[16px] font-bold text-white tracking-tight group-hover:text-[var(--color-brand-yellow)] transition-colors duration-300 ${dish.soldOut ? 'line-through' : ''}`}>
                   {dish.name}
                 </h3>
                 <div class="dotted-leader"></div>
-                <span class="font-mono text-[14px] text-[#9C978D] font-medium">{dish.price}</span>
+                <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold">${dish.price}</span>
               </div>
-              <p class={`text-[13px] text-[#3A3833] mt-1 w-4/5 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
+              <p class={`text-[13px] text-white/70 mt-1 w-4/5 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
                 {dish.description}
               </p>
             </article>
           ))}
         </div>
-
-        <!-- Floating Image for Mains (Right side) -->
-        <div class="hidden lg:block absolute right-[-60px] top-[750px] w-[300px] h-[400px] featured-image rounded-none overflow-hidden border border-[#1C1B19]" id="img-main-1">
-          <img 
-            alt="Main dish" 
-            class="w-full h-full object-cover select-none pointer-events-none" 
-            src={mains[0]?.image} 
-          />
-        </div>
       </section>
 
     </div>
   </main>
+
+  <!-- Floating Mouse-Following Preview Container -->
+  <div 
+    id="hover-image-preview" 
+    class="fixed pointer-events-none z-50 w-[220px] h-[280px] border-3 border-[var(--color-brand-yellow)] bg-[#262626] overflow-hidden scale-0 opacity-0 rounded-lg shadow-[0_15px_30px_rgba(0,0,0,0.5)] transition-transform duration-100"
+    style="left: 0; top: 0; transform: translate3d(0, 0, 0);"
+  >
+    <div id="hover-image-inner" class="w-full h-full bg-cover bg-center transition-all duration-300"></div>
+  </div>
 </div>
 
 <style>
   /* Hairline borders and dotted leaders */
   .dotted-leader {
     flex-grow: 1;
-    border-bottom: 2px dotted #9C978D;
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.2);
     margin: 0 16px;
     position: relative;
     top: -6px;
-    opacity: 0.3;
+    opacity: 0.5;
   }
 
-  /* Interactive Hover Dot */
+  /* Interactive Hover Dot (Yellow / Orange F58220) */
   .hover-dot {
     position: absolute;
     left: -20px;
     top: 10px;
     transform: scale(0);
-    width: 6px;
-    height: 6px;
-    background-color: var(--color-primary);
+    width: 8px;
+    height: 8px;
+    background-color: #F58220;
     border-radius: 50%;
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -138,15 +124,59 @@ const mains = menuData.filter(d => d.category === 'mains');
     opacity: 1;
     transform: scale(1);
   }
-
-  /* Grayscale to color transition for featured floating images */
-  .featured-image {
-    filter: grayscale(100%);
-    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10;
-  }
-
-  .featured-image.active {
-    filter: grayscale(0%);
-  }
 </style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initHoverPreview() {
+    const preview = document.getElementById('hover-image-preview');
+    const inner = document.getElementById('hover-image-inner');
+    const rows = document.querySelectorAll('.dish-row[data-image-url]');
+
+    if (!preview || !inner || rows.length === 0) return;
+
+    rows.forEach(row => {
+      const imageUrl = row.getAttribute('data-image-url');
+      if (!imageUrl) return;
+
+      row.addEventListener('mouseenter', () => {
+        // Set background image
+        inner.style.backgroundImage = `url('${imageUrl}')`;
+
+        // Scale up and fade in
+        gsap.to(preview, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'back.out(1.2)'
+        });
+      });
+
+      row.addEventListener('mousemove', (e: any) => {
+        // Smoothly move preview container to match mouse coordinates with an offset
+        gsap.to(preview, {
+          x: e.clientX + 20,
+          y: e.clientY + 20,
+          duration: 0.25,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      });
+
+      row.addEventListener('mouseleave', () => {
+        // Scale down and fade out
+        gsap.to(preview, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.2,
+          ease: 'power2.in'
+        });
+      });
+    });
+  }
+
+  // Initialize on loader-finished (when page reveals) and on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', initHoverPreview);
+  document.addEventListener('loader-finished', initHoverPreview);
+</script>

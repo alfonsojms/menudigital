@@ -1,61 +1,65 @@
 ---
 // Dossier.astro: The elegant info footer containing service details and booking interactions.
 ---
-<footer id="dossier-section" class="w-full border-t border-[#1C1B19] mt-auto bg-[#F2EFE9] text-[#1C1B19]">
+<footer id="dossier-section" class="w-full border-t border-white/10 mt-auto bg-[#1A1A1A] text-white">
   
   <!-- 3-Column Info Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#1C1B19] border-b border-[#1C1B19]">
+  <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-b border-white/10">
     
     <!-- Address -->
     <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-between min-h-[240px]">
-      <h3 class="text-[10px] font-mono uppercase tracking-[2px] text-[#9C978D] mb-8 select-none">Location</h3>
+      <h3 class="text-[10px] font-mono uppercase tracking-[2px] text-[var(--color-brand-yellow)] mb-8 select-none">Ubicación</h3>
       <div>
         <p class="text-xl md:text-2xl font-display leading-relaxed">
-          123 Culinary Avenue<br/>
-          Meatpacking District<br/>
-          NY 10001
+          Av. Principal de la Comida 456<br/>
+          Distrito del Sabor<br/>
+          Santiago, Chile
         </p>
       </div>
     </div>
     
     <!-- Hours -->
     <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-between min-h-[240px]">
-      <h3 class="text-[10px] font-mono uppercase tracking-[2px] text-[#9C978D] mb-8 select-none">Service Hours</h3>
+      <h3 class="text-[10px] font-mono uppercase tracking-[2px] text-[var(--color-brand-yellow)] mb-8 select-none">Horario de Atención</h3>
       <div class="font-mono text-xs space-y-3.5 uppercase tracking-wider">
-        <div class="flex justify-between border-b border-[#1C1B19]/10 pb-2">
-          <span>Wed - Sun</span>
-          <span>17:00 — 23:00</span>
+        <div class="flex justify-between border-b border-white/10 pb-2">
+          <span>Lun - Jue</span>
+          <span>12:00 — 23:00</span>
         </div>
-        <div class="flex justify-between border-b border-[#1C1B19]/10 pb-2">
-          <span>Mon - Tue</span>
-          <span class="text-[#9C978D]">Closed</span>
+        <div class="flex justify-between border-b border-white/10 pb-2">
+          <span>Vie - Sáb</span>
+          <span>12:00 — 01:00</span>
+        </div>
+        <div class="flex justify-between border-b border-white/10 pb-2">
+          <span>Domingos</span>
+          <span>12:00 — 22:30</span>
         </div>
       </div>
     </div>
     
     <!-- Contact -->
     <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-between min-h-[240px]">
-      <h3 class="text-[10px] font-mono uppercase tracking-[2px] text-[#9C978D] mb-8 select-none">Inquiries</h3>
+      <h3 class="text-[10px] font-mono uppercase tracking-[2px] text-[var(--color-brand-yellow)] mb-8 select-none">Contacto & Redes</h3>
       <div class="space-y-4">
-        <a class="block text-xl md:text-2xl font-display hover:text-[var(--color-primary)] transition-colors duration-300" href="mailto:hello@neobistro.com">
-          hello@neobistro.com
+        <a class="block text-xl md:text-2xl font-display hover:text-[var(--color-brand-yellow)] transition-colors duration-300" href="mailto:hola@lacasadelahamburpizza.com">
+          hola@lacasadelahamburpizza.com
         </a>
-        <a class="block font-mono text-xs hover:text-[var(--color-primary)] transition-colors duration-300" href="tel:+12125550199">
-          +1 212 555 0199
+        <a class="block font-mono text-xs hover:text-[var(--color-brand-yellow)] transition-colors duration-300" href="tel:+56912345678">
+          +56 9 1234 5678
         </a>
         <div class="pt-4 flex gap-6">
-          <a class="text-[10px] font-mono uppercase tracking-widest hover:text-[var(--color-primary)] transition-colors duration-300" href="#">Instagram</a>
-          <a class="text-[10px] font-mono uppercase tracking-widest hover:text-[var(--color-primary)] transition-colors duration-300" href="#">Journal</a>
+          <a class="text-[10px] font-mono uppercase tracking-widest hover:text-[var(--color-brand-yellow)] transition-colors duration-300" href="#">Instagram</a>
+          <a class="text-[10px] font-mono uppercase tracking-widest hover:text-[var(--color-brand-yellow)] transition-colors duration-300" href="#">Facebook</a>
         </div>
       </div>
     </div>
     
   </div>
 
-  <!-- Booking Button -->
-  <button class="booking-btn w-full h-[80px] bg-[#1C1B19] text-[#F2EFE9] hover:bg-[var(--color-primary)] transition-colors duration-500 ease-in-out flex items-center justify-center cursor-pointer rounded-none outline-none border-none">
-    <span class="text-initial text-lg md:text-2xl tracking-[4px] uppercase font-bold">Secure A Table</span>
-    <span class="text-hover text-lg md:text-2xl tracking-[4px] uppercase font-extrabold hidden">Reserve on Resy</span>
+  <!-- Booking/Order Button -->
+  <button class="booking-btn w-full h-[80px] bg-[#FFD500] text-[#1A1A1A] hover:bg-[#F58220] hover:text-white transition-colors duration-500 ease-in-out flex items-center justify-center cursor-pointer rounded-none outline-none border-none">
+    <span class="text-initial text-lg md:text-2xl tracking-[4px] uppercase font-display">Pide Online Ahora</span>
+    <span class="text-hover text-lg md:text-2xl tracking-[4px] uppercase font-display hidden">¡Llamar al Delivery!</span>
   </button>
   
 </footer>

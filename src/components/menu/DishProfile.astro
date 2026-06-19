@@ -1,22 +1,22 @@
 ---
 // DishProfile.astro: Fixed overlay modal displaying detailed dish profiles.
 ---
-<div id="dish-profile-modal" class="fixed inset-0 w-screen h-screen z-50 flex flex-col md:flex-row bg-[#f8f6f6] translate-y-full opacity-0 pointer-events-none transition-all duration-300">
+<div id="dish-profile-modal" class="fixed inset-0 w-screen h-screen z-50 flex flex-col md:flex-row bg-[#1A1A1A] translate-y-full opacity-0 pointer-events-none transition-all duration-300">
   
   <!-- Left Panel: Full Bleed Hero Image -->
   <div class="relative w-full h-[40vh] md:h-full md:w-1/2 overflow-hidden" id="dish-modal-image-container">
     <div class="absolute inset-0 bg-cover bg-center" id="dish-modal-image"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
   </div>
 
   <!-- Right Panel: Text Content -->
-  <div class="relative w-full h-[60vh] md:h-full md:w-1/2 flex flex-col bg-[#f8f6f6] custom-scrollbar overflow-y-auto pt-12 pb-20 md:py-24 px-8 md:px-16 lg:px-24">
+  <div class="relative w-full h-[60vh] md:h-full md:w-1/2 flex flex-col bg-[#1A1A1A] custom-scrollbar overflow-y-auto pt-12 pb-20 md:py-24 px-8 md:px-16 lg:px-24">
     
     <!-- Close Button -->
     <button 
       id="close-dish-modal"
       aria-label="Close Dish Profile" 
-      class="fixed top-6 right-6 md:top-8 md:right-8 z-50 text-[#1C1B19] transition-all duration-500 ease-out close-btn p-2 cursor-pointer outline-none hover:rotate-90 hover:text-[var(--color-primary)]"
+      class="fixed top-6 right-6 md:top-8 md:right-8 z-50 text-white transition-all duration-500 ease-out close-btn p-2 cursor-pointer outline-none hover:rotate-90 hover:text-[var(--color-brand-yellow)]"
     >
       <span class="material-symbols-outlined thin text-[36px] md:text-[48px] leading-none">close</span>
     </button>
@@ -24,26 +24,26 @@
     <!-- Content Container -->
     <div class="my-auto max-w-xl" id="dish-modal-content">
       <!-- Sub-title / Metadata -->
-      <p class="font-mono text-xs md:text-[14px] uppercase tracking-[2px] text-[var(--color-primary)] mb-4 md:mb-6" id="dish-modal-subtitle">
+      <p class="font-mono text-xs md:text-[14px] uppercase tracking-[2px] text-[var(--color-brand-yellow)] mb-4 md:mb-6 font-bold" id="dish-modal-subtitle">
         Local Farms, Day 04
       </p>
       
       <!-- Dish Title -->
-      <h1 class="font-display text-[36px] md:text-[56px] lg:text-[64px] leading-[1.1] text-[#1C1B19] mb-8 md:mb-12 tracking-tight" id="dish-modal-title">
+      <h1 class="font-display text-[36px] md:text-[56px] lg:text-[64px] leading-[1.1] text-white mb-8 md:mb-12 tracking-tight" id="dish-modal-title">
         Charred Heirloom Cabbage
       </h1>
       
       <!-- Ingredient List / Body text -->
-      <div class="font-sans text-[14px] md:text-[15px] leading-[2] md:leading-[2.2] text-[#3A3833] space-y-6">
-        <p id="dish-modal-story">
+      <div class="font-sans text-[14px] md:text-[15px] leading-[2] md:leading-[2.2] text-white/80 space-y-6">
+        <p id="dish-modal-story" class="text-white/90">
           A study in simplicity and time.
         </p>
         
-        <ul class="space-y-3.5 pl-4 mt-6 md:mt-8 list-none" id="dish-modal-ingredients">
+        <ul class="space-y-3.5 pl-4 mt-6 md:mt-8 list-none text-white/80" id="dish-modal-ingredients">
           <!-- Dynamically injected ingredients -->
         </ul>
         
-        <p class="mt-8 md:mt-12 text-[12px] font-mono tracking-wide text-[#9C978D] uppercase" id="dish-modal-allergens">
+        <p class="mt-8 md:mt-12 text-[12px] font-mono tracking-wide text-white/40 uppercase" id="dish-modal-allergens">
           Allergens: Alliums, Tree Nuts, Gluten
         </p>
       </div>
@@ -61,7 +61,7 @@
     background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #9C978D;
+    background-color: rgba(255, 255, 255, 0.2);
   }
   
   .material-symbols-outlined.thin {
@@ -96,14 +96,14 @@
     if (subtitleElement) subtitleElement.innerText = dish.subtitle;
     if (titleElement) titleElement.innerText = dish.name;
     if (storyElement) storyElement.innerText = dish.story;
-    if (allergensElement) allergensElement.innerText = dish.allergens ? `Allergens: ${dish.allergens}` : 'Allergens: None';
+    if (allergensElement) allergensElement.innerText = dish.allergens ? `Alergenos: ${dish.allergens}` : 'Alergenos: Ninguno';
 
     // Clear and build ingredients list
     if (ingredientsList) {
       ingredientsList.innerHTML = '';
       dish.ingredients.forEach(ing => {
         const li = document.createElement('li');
-        li.className = "relative before:content-[''] before:absolute before:-left-4 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-[var(--color-primary)] before:rounded-none";
+        li.className = "relative before:content-[''] before:absolute before:-left-4 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-[#F58220] before:rounded-none";
         li.innerText = ing;
         ingredientsList.appendChild(li);
       });
@@ -119,6 +119,9 @@
     if (!success) return;
 
     isOpen = true;
+
+    // Stop Lenis smooth scroll
+    if ((window as any).lenis) (window as any).lenis.stop();
     
     // Save scroll position and lock body scroll
     lastScrollY = window.scrollY;
@@ -137,7 +140,7 @@
       tl.to(modal, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'power3.out'
       });
 
@@ -145,8 +148,8 @@
       if (imgContainer) {
         tl.fromTo(imgContainer, 
           { clipPath: 'inset(0 100% 0 0)' }, 
-          { clipPath: 'inset(0 0 0 0)', duration: 1.2 },
-          '-=0.7'
+          { clipPath: 'inset(0 0 0 0)', duration: 0.6 },
+          '-=0.3'
         );
       }
 
@@ -170,7 +173,7 @@
     // Animate out
     if (modal) {
       const tl = gsap.timeline({
-        defaults: { ease: 'power3.inOut', duration: 0.8 },
+        defaults: { ease: 'power2.in', duration: 0.25 },
         onComplete: () => {
           modal.classList.add('pointer-events-none');
           
@@ -178,6 +181,9 @@
           document.body.classList.remove('modal-open');
           document.body.style.top = '';
           window.scrollTo(0, lastScrollY);
+
+          // Restart Lenis smooth scroll
+          if ((window as any).lenis) (window as any).lenis.start();
         }
       });
 

@@ -16,201 +16,238 @@ export interface Dish {
 export const menuData: Dish[] = [
   {
     id: "starter-1",
-    name: "Oyster & Sea Buckthorn",
-    price: 24,
+    name: "Papas Pepperoni Loaded",
+    price: 12,
     category: "starters",
-    categoryLabel: "Première",
-    description: "Foraged sea buckthorn mignonette, pickled kelp, dill oil.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBeDm1k0_QiCP7OlgNjzMOd4osb9kW3HQV6FB1tinZ4PMtnZqEPGe5qtiXhkx8ciBebMEQ0rBHI2KLhqdTiAYmTYbNpPZGMCOJUr0ETNUPcztkj8dOTVUyxpbCm4udfeLv7M7EkM0uiImUUFcRfCNjUejgdPADfG5fawZxjpyjaqrQw8zmQq_yPPKxyPFk2RP6pS7Bjfq_nQPVv6tffzjn0vPHhBkoNJoMiTCSNvPI_CWvHjyDYoe9D",
-    subtitle: "Coastline Sourcing, Batch 12",
-    story: "Harvested from the cold northern tides, these oysters are paired with the sharp acidity of wild sea buckthorn berries, creating an intense, refreshing opening act that tastes of the ocean.",
+    categoryLabel: "Entradas / Snacks",
+    description: "Papas fritas crujientes bañadas en salsa marinara artesanal, queso mozzarella derretido y pepperoni doradito.",
+    image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=800",
+    subtitle: "El Snack Más Pedido",
+    story: "Nuestras papas fritas cortadas a mano se cubren con una deliciosa salsa marinara casera, queso mozzarella fundido bajo el grill y rodajas de pepperoni premium tostado, logrando un sabor único que une lo mejor de la pizza con las papas.",
     ingredients: [
-      "Freshly shucked wild-caught coastal oysters",
-      "Foraged sea buckthorn juice and mignonette",
-      "Pickled sea kelp harvested at low tide",
-      "Cold-pressed dill oil infusion"
+      "Papas fritas artesanales crujientes",
+      "Salsa marinara casera de tomates italianos",
+      "Queso mozzarella fundido premium",
+      "Rodajas de pepperoni tostadas al horno"
     ],
-    allergens: "Molluscs"
+    allergens: "Lácteos, Gluten"
   },
   {
     id: "starter-2",
-    name: "Cured Venison",
-    price: 28,
+    name: "Cheesy Burger Bites",
+    price: 10,
     category: "starters",
-    categoryLabel: "Première",
-    description: "Fermented blueberries, pine emulsion, crispy lichen.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCsGZ9gBRkNIRffLb4sTxhkLmLJKYj_pCD5l3worEOc_H96vwBVnT9Tz1i1p_QLXJGVi6z8TZsTXqhoSUMbEfIKxVvtJ459EaI6fARXywQpnvfB6kvX7zT5so5-pyW7cDNrLDcmI3V0kvyYRexyFg6rpcyMv3qNxdWmFtwnpzYRNsroQ2EvkEXlpLIie0mGiB1waJz1uj9lKi_AmqVzZWnpFrBSaGRWbZcr6rC94UmWtyvelSzfzAmq",
-    subtitle: "Highlands & Pine Woods",
-    story: "A wild dish evoking the forest floor. Venison loin is cured with pine needles and juniper, sliced paper-thin, and offset by the deep, complex sweetness of wild blueberries fermented in-house.",
+    categoryLabel: "Entradas / Snacks",
+    description: "Esferas de carne smash premium rellenas de queso cheddar cremoso, empanizadas al panko y fritas al momento.",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800",
+    subtitle: "Fusión de Sabor",
+    story: "Combinamos la sazón de nuestra carne de hamburguesa con un corazón de queso cheddar líquido, envuelto en una capa súper crujiente de panko. Se sirven calientes para que el queso explote en tu boca.",
     ingredients: [
-      "Juniper and pine-cured wild venison loin",
-      "Lacto-fermented wild forest blueberries",
-      "Pine needle and rapeseed oil emulsion",
-      "Crisped woodland lichen and moss extract"
+      "Carne de res seleccionada y sazonada",
+      "Corazón de queso cheddar americano líquido",
+      "Empanizado crujiente de panko y finas hierbas",
+      "Salsa especial 'Casa Sauce' para untar"
     ],
-    allergens: "None"
+    allergens: "Gluten, Lácteos, Huevos"
   },
   {
     id: "starter-3",
-    name: "Charred Leeks",
-    price: 22,
+    name: "Aros de Cebolla Gigantes BBQ",
+    price: 8,
     category: "starters",
-    categoryLabel: "Première",
-    description: "Whipped smoked cod roe, hazelnut, brown butter vinaigrette.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCeF7rl0odcJ3hjbDemY_5KrZb8iK70jUD3GPcOzUsr1Oj2Jbw-miYWd9t4RWXzENW3pOwgMc8wtPf98tqTF6MSPFM1Tp0SqtfzTYivbPvr2LMMcsaFAgCvMxGlhrQDeGXuDkFyDMOjb6TL0W0X4qi-QN3JzQk2tMGJq0fXrpZMU8FX7N_ZhS-3dFal7Ey-B3_xdrRgbMwtcEZaGOY0x2D3LeAJNP-x6sUaEt6L0EpmXI88-wE5MzDQ",
-    subtitle: "Orchards & Ash",
-    story: "Leeks are blackened directly on beechwood coals to steam them inside their own skins. The tender hearts are served warm over a rich, velvety whipped cod roe and drizzled with a nutty brown butter vinaigrette.",
+    categoryLabel: "Entradas / Snacks",
+    description: "Aros de cebolla cortados a mano, doblemente empanizados y servidos con nuestra salsa barbacoa ahumada.",
+    image: "https://images.unsplash.com/photo-1639024471283-2bc7b3c6a267?q=80&w=800",
+    subtitle: "Crujiente Clásico",
+    story: "Cebollas dulces seleccionadas cortadas en aros gigantescos, pasadas por un tempura de cerveza y panko para el máximo crujido, acompañadas de salsa BBQ dulce y ahumada.",
     ingredients: [
-      "Coal-charred sweet winter leeks",
-      "Whipped smoked Baltic cod roe",
-      "Toasted Piedmont hazelnuts",
-      "Aged sherry vinegar and brown butter vinaigrette"
+      "Cebollas dulces cortadas gruesas",
+      "Tempura crujiente a base de cerveza rubia",
+      "Pan rallado panko de alta calidad",
+      "Salsa BBQ con toque de chipotle"
     ],
-    allergens: "Fish, Tree Nuts"
+    allergens: "Gluten"
   },
   {
     id: "starter-4",
-    name: "Salt-Baked Beetroot",
-    price: 18,
+    name: "Crispy Chicken Nuggets",
+    price: 9,
     category: "starters",
-    categoryLabel: "Première",
-    description: "Goat's curd, pickled walnuts, watercress oil.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAL9jGG0xApxxUCElVnpKdPoH-ZCKpABdVMcSL8BQGKZrN_asD3DTJj3hAofoL1qIu1lZPaCrdgA17p3aQJQ9s8H2rM_oXH3JOp4TLLu85kHVcMMQDBIjcVpw80DTRT5anoBB4BPo-PdZPidFHl3A2jEi88dEBqA7ebXapDHSAbub-3REuIy_dXFpALj3544D1rklzvy4FaaepJLpUdg48XTTGhWWdXqV4BD_WVySlCPlyuho33jFX",
-    subtitle: "Earthy Roots & Herb Garden",
-    story: "Salt-baking concentrates the natural earthy sweetness of organic beetroots. We balance this with the tanginess of fresh whipped goat's curd, crunch from pickled walnuts, and an aromatic watercress oil.",
+    categoryLabel: "Entradas / Snacks",
+    description: "Trozos de pechuga de pollo marinados en suero de leche, empanizados con receta secreta de especias.",
+    image: "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=800",
+    subtitle: "Puro Pollo Real",
+    story: "Olvídate de los nuggets procesados. Estos son trozos de pechuga de pollo real marinados por 24 horas en buttermilk y especias, fritos hasta que queden súper crujientes por fuera y jugosos por dentro.",
     ingredients: [
-      "Clay and salt-baked organic heritage beetroots",
-      "Artisanal fresh goat's milk curd",
-      "Green walnuts pickled in spiced vinegar",
-      "Vibrant garden watercress oil"
+      "Pechuga de pollo 100% natural cortada a mano",
+      "Marinado en buttermilk (suero de leche) y ajo",
+      "Mezcla de harina sazonada con 11 especias",
+      "Aderezo Honey Mustard artesanal"
     ],
-    allergens: "Dairy, Tree Nuts"
-  },
-  {
-    id: "starter-5",
-    name: "Scallop Crudo",
-    price: 26,
-    category: "starters",
-    categoryLabel: "Première",
-    description: "Green apple, kohlrabi, horseradish snow.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAxx8xgRo0Ldx9Tap3rsYOL8newKB6jqRWRllzeeeYsorfV3ByQp3z5zrEEZufAtAbW_tiLy6K-kf4qE6i_4um-d35Ok3gknL8ZoJF3ropMXKVTLqwowUPo6RmqSsPtw8v6twBLMEFaFxKo0_ulXTDhqfxhAEwzCJwaoHhQNjgvaCamAoGlIiCKPMCeAeA4J9AEoAw8Ocg01R5U1pm3wuDGDn-8rEUvkML_DWBoPm0jTjQusDLCPDb-",
-    subtitle: "Orchard & Tide",
-    story: "Slices of raw, sweet diver scallops layered with crisp green apple and shaved kohlrabi. Finished tableside with a delicate, refreshing snow made from freshly grated horseradish.",
-    ingredients: [
-      "Hand-dived raw Norwegian scallops",
-      "Granny Smith apple gel and matchsticks",
-      "Paper-thin sliced local kohlrabi",
-      "Cryogenic fresh horseradish snow"
-    ],
-    allergens: "Molluscs"
+    allergens: "Gluten, Lácteos, Mostaza"
   },
   {
     id: "main-1",
-    name: "Aged Duck Breast",
-    price: 48,
+    name: "La Hamburpizza Suprema",
+    price: 22,
     category: "mains",
-    categoryLabel: "Principale",
-    description: "14-day dry aged, sour cherry jus, confit leg croquette, bitter greens.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBakE3O83vUqh5FG4W9nehOsVxiOUgkBeK5abl7HnegVFt4Ph1zil31hockuW3SFCp1P3oSp-1HyCEiedUcdxrS7Drm-LcxPbpbdribgUnl1i_kDcaHWOqBqjQcNMCg1puy8rHAHw36hngIVJ50RcuPd_cVVSEh2C6YNkOOaOSFiJsU3TFfvYPyrQtndcLclOgCAS6p46piivw7p6xKa-ppPl6PM26p-HzF4isSJabfQNGEvFAhVJRS",
-    subtitle: "Dry-Ager Room, Day 14",
-    story: "Our duck breasts are dry-aged on the bone in-house for 14 days to develop a deep gamey flavor and incredibly crispy skin. Accompanied by a rich sour cherry reduction and a crispy croquette made from slow-cooked leg meat.",
+    categoryLabel: "Hamburguesas & Pizzas",
+    description: "Jugosa carne smash de 200g, tocino ahumado, cheddar y salsa envueltos en una mini pizza de pepperoni recién horneada.",
+    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=800",
+    subtitle: "Nuestra Creación Insignia",
+    story: "La madre de todas las fusiones. Reemplazamos los tradicionales panes por una mini pizza de pepperoni estirada a mano y horneada al momento. En su interior guarda una jugosa carne premium de res smash de 200g, queso cheddar fundido, tocino crujiente y vegetales frescos.",
     ingredients: [
-      "14-day dry-aged duck breast",
-      "Slow-cooked duck leg confit croquette",
-      "Fermented sour cherry and duck bone reduction",
-      "Sautéed wild dandelion greens and chicory"
+      "Masa de pizza artesanal horneada con salsa e hilo de mozzarella",
+      "Carne smash de res premium de 200 gramos",
+      "Rodajas de pepperoni y tocino ahumado",
+      "Queso cheddar americano y aderezo especial de la casa"
     ],
-    allergens: "Gluten, Eggs"
+    allergens: "Gluten, Lácteos, Huevos"
   },
   {
     id: "main-2",
-    name: "Wild Turbot",
-    price: 52,
+    name: "Pizza Pepperoni Explosiva",
+    price: 18,
     category: "mains",
-    categoryLabel: "Principale",
-    description: "Roasted on the bone, white asparagus, vin jaune sauce, smoked caviar.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDwoxceqefVMl9woCK75mqT229mHbD2afq9xnkwMncdAJaQ6fGpHY8MMnam4yHiDvG3kP4Dg0yuaiHzPoeOB0mi83ib3t7L6Y1M1krTD4RlAVQUXS-auq2f7Je3WB4euTqI3UMnEYh0RWrzYCaX9TWWFlxiX3N0qx5OhLYSUBVc0fey2XW94pL2SOeeCWfI9Pia93HH5YEqY98PaMIHmOO1D_Ud8ZCUWlaFtPFyeOU_EE705PuY0g7b",
-    subtitle: "North Sea Day Boat",
-    story: "Prized wild turbot, thick-cut and roasted gently on the bone to maintain its succulence. It sits in a rich, buttery emulsion flavored with French Vin Jaune, paired with tender seasonal white asparagus.",
+    categoryLabel: "Hamburguesas & Pizzas",
+    description: "Masa napolitana madurada 48h, salsa pomodoro italiana, abundante mozzarella y triple ración de pepperoni.",
+    image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800",
+    subtitle: "Para Fanáticos del Pepperoni",
+    story: "El clásico americano llevado a otro nivel. Masa napolitana súper delgada y con bordes inflados alveolados, pintada con salsa pomodoro artesanal, cubierta de queso mozzarella premium que estira al infinito y repleta de rodajas de pepperoni que se curvan en el horno.",
     ingredients: [
-      "Wild North Sea turbot roasted on the bone",
-      "Seasonal poached white asparagus spears",
-      "Vin Jaune and cream reduction sauce",
-      "Smoked herring caviar"
+      "Masa artesanal madurada en frío por 48 horas",
+      "Salsa de tomates de San Marzano",
+      "Queso mozzarella 100% de leche de vaca",
+      "Abundante pepperoni curado seleccionado"
     ],
-    allergens: "Fish, Dairy"
+    allergens: "Gluten, Lácteos"
   },
   {
     id: "main-3",
-    name: "Heritage Pork Collar",
-    price: 42,
+    name: "Burger Double Smash Cheddar",
+    price: 15,
     category: "mains",
-    categoryLabel: "Principale",
-    description: "Charred cabbage, mustard seed, pork jus infused with fermented plum.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJjzEWRlrRHrgQs0vjeWFjCmjIbKxf8E5S2P4dIKkrDzdPhx12_9fG7ZFYS-fPRnLVAqhgpmSBcTrAisOjong4Zkw7P34hM0u0d2t7kHMhSeVOyTLaAUJy1Q3impMYs9KTcEOK8FSm91zFG7F8XYRUMXufjxUnMmz9TFTSzMJzSa8MmI_QiLYXTd3yUcNkdF3Q8LmhCL8Hxeh4SmgfUZC31wen-Ve_qPovJ9SruS9MC5niADTEOGXy",
-    subtitle: "Organic Pastures",
-    story: "Sourced from local heritage pigs, this heavily marbled collar is slow-cooked until meltingly tender, then glazed over charcoal. Served alongside charred savoy cabbage and a jus sweet-and-sour with pickled plums.",
+    categoryLabel: "Hamburguesas & Pizzas",
+    description: "Doble carne smash costrosa (100g c/u), cuatro rebanadas de cheddar, cebolla caramelizada y aderezo especial.",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800",
+    subtitle: "Clásico Americano Smash",
+    story: "Carne de res de libre pastoreo con la costra perfecta que solo da la plancha caliente. Dos carnes smash de 100g unidas por capas de queso cheddar americano derretido, cebolla caramelizada a la mantequilla y aderezo de pepinillos casero en pan brioche.",
     ingredients: [
-      "Heritage Berkshire pork collar",
-      "Beechwood charred savoy cabbage",
-      "Pickled mustard seeds",
-      "Double-reduced pork jus with fermented local plums"
+      "Doble carne smash premium de 100g cada una",
+      "Cuatro rebanadas de queso cheddar americano real",
+      "Cebolla caramelizada y pepinillos agridulces",
+      "Pan brioche de papa tostado con mantequilla noisette"
     ],
-    allergens: "Mustard",
-    soldOut: true
+    allergens: "Gluten, Lácteos, Huevos",
+    soldOut: false
   },
   {
     id: "main-4",
-    name: "Smoked Celeriac",
-    price: 34,
+    name: "Pizza Burger Especial",
+    price: 20,
     category: "mains",
-    categoryLabel: "Principale",
-    description: "Salt-baked, black truffle, rich mushroom demi-glace, crispy roots.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBxmG87hAo7cmjMeXpma8Zd_aeD7Nl-kolYvWUpPqwvMHPoeWtkzoj0nOHMWxUWo6aU9eE7WeQEYKkcUEe1e5wVXlrrZh_GJxf_CR_k5efGMBQ_QCk6WuPMahAzaRAgfdxKX8gLDS2zZIvMGkTRnmBwMJ5e6YXFIbXk8DkksAxMJNVBPwaC0iFmnr9HGtMlYsetu8q1Rem-RBK2OJmi-tBGxSlw-vMhmfnKlCuyR_KsH7nQRImk3EcY",
-    subtitle: "Forest Floor Earthiness",
-    story: "A spectacular vegetarian main. Whole celeriac is smoked, salt-baked for hours, then carved and served with shaved fresh black winter truffle and a deeply concentrated mushroom and vegetable demi-glace.",
+    categoryLabel: "Hamburguesas & Pizzas",
+    description: "Pizza tradicional con salsa marinara y mozzarella, cargada de carne de res molida premium, tocino, cheddar y cebolla.",
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800",
+    subtitle: "La Hamburguesa Hecha Pizza",
+    story: "Preparamos una pizza artesanal y la coronamos con todos los ingredientes icónicos de una hamburguesa premium: trocitos de carne sazonada a la plancha, tocino ahumado, aros de cebolla morada y un baño final de queso cheddar fundido tras salir del horno de piedra.",
     ingredients: [
-      "Oak-smoked celeriac baked in salt crust",
-      "Shaved fresh black winter truffles",
-      "Concentrated wild mushroom demi-glace",
-      "Crisped celeriac root ribbons"
+      "Base de pizza artesanal con pomodoro y mozzarella",
+      "Carne de hamburguesa sazonada desmenuzada",
+      "Tocino ahumado y cebolla morada fresca",
+      "Baño de salsa de queso cheddar derretido"
     ],
-    allergens: "Celery"
+    allergens: "Gluten, Lácteos"
   },
   {
     id: "main-5",
-    name: "Charred Heirloom Cabbage",
-    price: 28,
+    name: "La Burger Monstrosa Triple",
+    price: 24,
     category: "mains",
-    categoryLabel: "Principale",
-    description: "Smoked sea salt, fermented garlic honey, toasted hazelnut emulsion, sourdough crumbs.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCiPmTW9NNEZmffM2YXa9OiHsZ5AzSNDcyaZ7K978hcBeETblue2mJlpCvjl2Xjora2JzeSIqOQUrHlIRD1dpNneFhxNoSkD7NbMVnY5zfBs2IPZrPlonRw5YvrZdkqJEas4tC84Hl-NP7HRA5haXIwxDJPLzff2O_6-xqlGtxtA8EpZ3esc2IDVP4yMfoPE_FLNtXzE80E2SW519GGIO5aCCASX9cyhArAsH00r6pT0Yrd6Wln916z",
-    subtitle: "Local Farms, Day 04",
-    story: "A study in simplicity and time. We source late-season heirloom cabbages from local partners, allowing them to gently frost in the field to concentrate their natural sugars.",
+    categoryLabel: "Hamburguesas & Pizzas",
+    description: "Triple carne smash (100g c/u), triple cheddar, aros de cebolla crujientes y salsa BBQ en pan brioche.",
+    image: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?q=80&w=800",
+    subtitle: "Solo para Valientes",
+    story: "Una hamburguesa colosal diseñada para satisfacer los apetitos más feroces. Tres carnes smash doraditas, tres rebanadas de cheddar americano, aros de cebolla crujientes y salsa BBQ ahumada en pan brioche de papa.",
     ingredients: [
-      "Smoked sea salt harvested from the northern coast",
-      "Fermented garlic honey aged for 60 days",
-      "Toasted hazelnut emulsion with wild fennel pollen",
-      "Crispy rye sourdough crumbs"
+      "Triple carne smash de 100g (300g totales)",
+      "Triple porción de queso cheddar fundido",
+      "Aros de cebolla empanizados integrados",
+      "Salsa BBQ artesanal y pan de papa"
     ],
-    allergens: "Alliums, Tree Nuts, Gluten"
+    allergens: "Gluten, Lácteos, Huevos",
+    soldOut: true
   },
   {
     id: "dessert-1",
-    name: "Birch Sap Panna Cotta",
-    price: 16,
+    name: "Pizza Sweet Nutella & Fresas",
+    price: 12,
     category: "desserts",
-    categoryLabel: "Sucré",
-    description: "Rhubarb glass, wood sorrel, toasted grains.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBwrZaY4_rlPL94HeVGQGn-TS6SYw7WRqNyvWrxW-N8w3Gnc_B8R3CY2FoyHtKUW8tZ_J3f6uW84l1XuQdmYf82s5rh9uCuVufe-TE9U3SpTrx6ICJjtjiCZXvPfClcYdqsyVIgZfQA4kpIzInIrhAj8h1wuwek9geyCsbgwz9lT0ub6-YjsdK8k6MpjOLPr3VPS7q2HnqQxwsSz7gkswYaACI-k34GUSUzstoCXM_WUrcyNiZ6-9Y7",
-    subtitle: "Forest Tap & Spring",
-    story: "A light, refreshing panna cotta made using fresh birch sap for a subtle woody sweetness, topped with sugar-baked crisp rhubarb glass, fresh wood sorrel leaves, and toasted ancient grains.",
+    categoryLabel: "Postres / Dulces",
+    description: "Masa delgada y crujiente cubierta de Nutella caliente, rodajas de fresas frescas y lluvia de azúcar glas.",
+    image: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?q=80&w=800",
+    subtitle: "El Postre Estrella",
+    story: "Masa artesanal estirada fina, horneada hasta quedar crujiente, untada generosamente con crema de avellanas Nutella caliente y decorada con fresas jugosas frescas y azúcar flor.",
     ingredients: [
-      "Organic cream infused with spring birch sap",
-      "Dehydrated heirloom rhubarb glass",
-      "Freshly foraged green wood sorrel",
-      "Toasted barley and spelt crumble"
+      "Masa delgada crujiente de pizza dulce",
+      "Crema de avellanas y chocolate Nutella caliente",
+      "Fresas frescas seleccionadas fileteadas",
+      "Lluvia de azúcar flor glas"
     ],
-    allergens: "Dairy, Gluten"
+    allergens: "Gluten, Lácteos, Frutos de Cáscara"
+  },
+  {
+    id: "dessert-2",
+    name: "Mega Shake Oreo Burger",
+    price: 10,
+    category: "desserts",
+    categoryLabel: "Postres / Dulces",
+    description: "Batido cremoso de galletas Oreo, crema batida, coronado con una mini dona glaseada de chocolate.",
+    image: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?q=80&w=800",
+    subtitle: "Batido Extremo",
+    story: "Un batido ultra cremoso a base de helado de vainilla premium, galletas Oreo trituradas y leche entera, decorado con fudge de chocolate, crema chantilly y una mini dona de chocolate arriba.",
+    ingredients: [
+      "Helado de vainilla premium y leche entera",
+      "Galletas Oreo trituradas en el batido",
+      "Crema batida chantilly fresca",
+      "Mini dona de chocolate y jarabe fudge"
+    ],
+    allergens: "Lácteos, Gluten, Soya"
+  },
+  {
+    id: "drink-1",
+    name: "Cerveza Artesanal IPA La Casa",
+    price: 7,
+    category: "drinks",
+    categoryLabel: "Bebidas / Cervezas",
+    description: "IPA artesanal de cuerpo medio, con intensas notas cítricas, de maracuyá y un amargor refrescante.",
+    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=800",
+    subtitle: "Para Acompañar la Hamburguesa",
+    story: "Una cerveza estilo India Pale Ale elaborada localmente, con adición de lúpulos aromáticos americanos que aportan aromas de frutas tropicales y cítricos. Marida perfecto con el queso cheddar y tocino.",
+    ingredients: [
+      "Agua purificada de manantial",
+      "Malta de cebada pale seleccionada",
+      "Lúpulos cítricos Cascade, Citra y Mosaic",
+      "Levadura de cerveza ale"
+    ],
+    allergens: "Gluten"
+  },
+  {
+    id: "drink-2",
+    name: "Soda Tropical de Maracuyá",
+    price: 5,
+    category: "drinks",
+    categoryLabel: "Bebidas / Cervezas",
+    description: "Refresco natural artesanal de pulpa de maracuyá maduro, menta fresca y gasificado ligero.",
+    image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800",
+    subtitle: "Refrescante sin Alcohol",
+    story: "Una gaseosa natural elaborada en casa con pulpa fresca de maracuyá, un jarabe simple infundido con menta fresca del huerto y agua carbonatada ligera. Ácida, dulce y ultra refrescante.",
+    ingredients: [
+      "Pulpa fresca de maracuyá natural",
+      "Agua carbonatada mineralizada",
+      "Hojas de menta fresca machacadas",
+      "Jarabe de azúcar simple artesanal"
+    ],
+    allergens: "Ninguno"
   }
 ];
