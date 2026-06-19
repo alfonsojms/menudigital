@@ -1,0 +1,199 @@
+---
+// DishProfile.astro: Fixed overlay modal displaying detailed dish profiles.
+---
+<div id="dish-profile-modal" class="fixed inset-0 w-screen h-screen z-50 flex flex-col md:flex-row bg-[#f8f6f6] translate-y-full opacity-0 pointer-events-none transition-all duration-300">
+  
+  <!-- Left Panel: Full Bleed Hero Image -->
+  <div class="relative w-full h-[40vh] md:h-full md:w-1/2 overflow-hidden" id="dish-modal-image-container">
+    <div class="absolute inset-0 bg-cover bg-center" id="dish-modal-image"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+  </div>
+
+  <!-- Right Panel: Text Content -->
+  <div class="relative w-full h-[60vh] md:h-full md:w-1/2 flex flex-col bg-[#f8f6f6] custom-scrollbar overflow-y-auto pt-12 pb-20 md:py-24 px-8 md:px-16 lg:px-24">
+    
+    <!-- Close Button -->
+    <button 
+      id="close-dish-modal"
+      aria-label="Close Dish Profile" 
+      class="fixed top-6 right-6 md:top-8 md:right-8 z-50 text-[#1C1B19] transition-all duration-500 ease-out close-btn p-2 cursor-pointer outline-none hover:rotate-90 hover:text-[var(--color-primary)]"
+    >
+      <span class="material-symbols-outlined thin text-[36px] md:text-[48px] leading-none">close</span>
+    </button>
+
+    <!-- Content Container -->
+    <div class="my-auto max-w-xl" id="dish-modal-content">
+      <!-- Sub-title / Metadata -->
+      <p class="font-mono text-xs md:text-[14px] uppercase tracking-[2px] text-[var(--color-primary)] mb-4 md:mb-6" id="dish-modal-subtitle">
+        Local Farms, Day 04
+      </p>
+      
+      <!-- Dish Title -->
+      <h1 class="font-display text-[36px] md:text-[56px] lg:text-[64px] leading-[1.1] text-[#1C1B19] mb-8 md:mb-12 tracking-tight" id="dish-modal-title">
+        Charred Heirloom Cabbage
+      </h1>
+      
+      <!-- Ingredient List / Body text -->
+      <div class="font-sans text-[14px] md:text-[15px] leading-[2] md:leading-[2.2] text-[#3A3833] space-y-6">
+        <p id="dish-modal-story">
+          A study in simplicity and time.
+        </p>
+        
+        <ul class="space-y-3.5 pl-4 mt-6 md:mt-8 list-none" id="dish-modal-ingredients">
+          <!-- Dynamically injected ingredients -->
+        </ul>
+        
+        <p class="mt-8 md:mt-12 text-[12px] font-mono tracking-wide text-[#9C978D] uppercase" id="dish-modal-allergens">
+          Allergens: Alliums, Tree Nuts, Gluten
+        </p>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<style>
+  /* Custom scrollbar for right panel */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #9C978D;
+  }
+  
+  .material-symbols-outlined.thin {
+    font-variation-settings: 'wght' 200;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { menuData } from '../../types/menuData';
+
+  const modal = document.getElementById('dish-profile-modal');
+  const closeBtn = document.getElementById('close-dish-modal');
+  const imgContainer = document.getElementById('dish-modal-image-container');
+  const imgElement = document.getElementById('dish-modal-image');
+  const subtitleElement = document.getElementById('dish-modal-subtitle');
+  const titleElement = document.getElementById('dish-modal-title');
+  const storyElement = document.getElementById('dish-modal-story');
+  const ingredientsList = document.getElementById('dish-modal-ingredients');
+  const allergensElement = document.getElementById('dish-modal-allergens');
+  const modalContent = document.getElementById('dish-modal-content');
+
+  let lastScrollY = 0;
+  let isOpen = false;
+
+  function populateModal(dishId: string) {
+    const dish = menuData.find(d => d.id === dishId);
+    if (!dish) return false;
+
+    // Set text contents
+    if (imgElement) imgElement.style.backgroundImage = `url('${dish.image}')`;
+    if (subtitleElement) subtitleElement.innerText = dish.subtitle;
+    if (titleElement) titleElement.innerText = dish.name;
+    if (storyElement) storyElement.innerText = dish.story;
+    if (allergensElement) allergensElement.innerText = dish.allergens ? `Allergens: ${dish.allergens}` : 'Allergens: None';
+
+    // Clear and build ingredients list
+    if (ingredientsList) {
+      ingredientsList.innerHTML = '';
+      dish.ingredients.forEach(ing => {
+        const li = document.createElement('li');
+        li.className = "relative before:content-[''] before:absolute before:-left-4 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-[var(--color-primary)] before:rounded-none";
+        li.innerText = ing;
+        ingredientsList.appendChild(li);
+      });
+    }
+
+    return true;
+  }
+
+  function openModal(dishId: string) {
+    if (isOpen) return;
+    
+    const success = populateModal(dishId);
+    if (!success) return;
+
+    isOpen = true;
+    
+    // Save scroll position and lock body scroll
+    lastScrollY = window.scrollY;
+    document.body.classList.add('modal-open');
+    document.body.style.top = `-${lastScrollY}px`;
+
+    // Make modal visible but transparent initially, then animate
+    if (modal) {
+      modal.classList.remove('pointer-events-none');
+      
+      const tl = gsap.timeline({
+        defaults: { ease: 'power4.inOut', duration: 1.1 }
+      });
+
+      // Slide modal overlay in
+      tl.to(modal, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out'
+      });
+
+      // Left panel wipe-in clip path
+      if (imgContainer) {
+        tl.fromTo(imgContainer, 
+          { clipPath: 'inset(0 100% 0 0)' }, 
+          { clipPath: 'inset(0 0 0 0)', duration: 1.2 },
+          '-=0.7'
+        );
+      }
+
+      // Right panel text elements stagger slide up
+      if (modalContent) {
+        const textElements = modalContent.children;
+        tl.fromTo(textElements, 
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' },
+          '-=0.9'
+        );
+      }
+    }
+  }
+
+  function closeModal() {
+    if (!isOpen) return;
+
+    isOpen = false;
+    
+    // Animate out
+    if (modal) {
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.inOut', duration: 0.8 },
+        onComplete: () => {
+          modal.classList.add('pointer-events-none');
+          
+          // Restore scroll position
+          document.body.classList.remove('modal-open');
+          document.body.style.top = '';
+          window.scrollTo(0, lastScrollY);
+        }
+      });
+
+      tl.to(modal, {
+        y: '100%',
+        opacity: 0
+      });
+    }
+  }
+
+  // Bind custom events to open the modal from other components
+  document.addEventListener('open-dish-profile', (e: any) => {
+    if (e.detail && e.detail.dishId) {
+      openModal(e.detail.dishId);
+    }
+  });
+
+  closeBtn?.addEventListener('click', closeModal);
+</script>

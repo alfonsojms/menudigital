@@ -1,0 +1,56 @@
+---
+// Cover.astro: The 100vh dramatic typographic cover page with scroll animations.
+---
+<section class="sticky top-0 left-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden z-20 bg-[#F2EFE9]" id="cover-page">
+  <!-- Navigation (Fixed inside cover) -->
+  <nav class="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-30 text-[#1C1B19]">
+    <div class="flex items-center gap-2">
+      <span class="font-display italic text-2xl font-bold tracking-tight">L'Éphémère</span>
+    </div>
+    <div class="flex gap-6 md:gap-8 font-display text-sm uppercase tracking-widest">
+      <button class="hover:text-[var(--color-primary)] transition-colors duration-300 font-mono text-xs cursor-pointer active-view-btn" id="nav-btn-editorial">
+        Editorial
+      </button>
+      <button class="hover:text-[var(--color-primary)] transition-colors duration-300 font-mono text-xs cursor-pointer" id="nav-btn-gallery">
+        Gallery
+      </button>
+      <a class="hover:text-[var(--color-primary)] transition-colors duration-300 font-mono text-xs" href="#dossier-section">
+        Info
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Typography -->
+  <div class="relative w-full text-center px-4">
+    <h1 class="font-display text-[12vw] leading-none tracking-tighter text-[#1C1B19] uppercase whitespace-nowrap origin-center select-none" id="hero-title">
+      L'Éphémère
+    </h1>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4 text-[var(--color-primary)]" id="scroll-indicator">
+    <div class="relative w-24 h-24 rotating-text select-none pointer-events-none">
+      <svg class="w-full h-full overflow-visible" viewBox="0 0 100 100">
+        <path d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" id="circlePath"></path>
+        <text class="font-mono text-[9px] font-semibold fill-current uppercase tracking-[2px]">
+          <textPath href="#circlePath" startOffset="0%">
+            SCROLL TO DINE • SCROLL TO DINE •
+          </textPath>
+        </text>
+      </svg>
+    </div>
+    <span class="material-symbols-outlined animate-bounce text-2xl select-none pointer-events-none">arrow_downward</span>
+  </div>
+</section>
+
+<style>
+  /* Circular text rotation */
+  .rotating-text {
+    animation: rotate 12s linear infinite;
+  }
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>

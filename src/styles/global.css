@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #e24312;
+  --color-charcoal: #1C1B19;
+  --color-oatmilk: #F2EFE9;
+  --color-limestone: #E8E4DA;
+  --color-ash: #3A3833;
+  --color-fennel: #9C978D;
+  --color-harissa: #D34E24;
+  
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+body {
+  background-color: #F2EFE9; /* Oatmilk */
+  color: #1C1B19; /* Charcoal */
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+}
+
+/* Modal Open Lock Body Scroll (fixed position helper) */
+body.modal-open {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* General Hide scrollbar for a clean magazine layout */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Custom thin weight for Material Icons */
+.material-symbols-outlined {
+  font-variation-settings: 'wght' 200;
+}

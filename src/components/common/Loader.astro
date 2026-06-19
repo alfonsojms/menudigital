@@ -1,0 +1,41 @@
+---
+// Loader.astro: Percentage-based animated loader that reveals the cover page when finished.
+---
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-[#F2EFE9]" id="loader">
+  <div class="font-mono text-[var(--color-primary)] text-5xl md:text-7xl tracking-widest font-bold" id="counter">0%</div>
+</div>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const counterElement = document.getElementById("counter");
+  const loaderElement = document.getElementById("loader");
+
+  if (counterElement && loaderElement) {
+    let currentPercent = 0;
+
+    const updateCounter = () => {
+      if (currentPercent < 100) {
+        currentPercent += Math.floor(Math.random() * 15) + 1;
+        if (currentPercent > 100) currentPercent = 100;
+        counterElement.innerText = currentPercent + "%";
+        setTimeout(updateCounter, 50);
+      } else {
+        // Fade out loader using GSAP
+        gsap.to(loaderElement, {
+          opacity: 0,
+          duration: 1,
+          ease: "power2.inOut",
+          onComplete: () => {
+            loaderElement.style.display = "none";
+            // Emit custom event so other components know they can animate in
+            document.dispatchEvent(new CustomEvent('loader-finished'));
+          }
+        });
+      }
+    };
+    
+    // Start count up after a small initial delay
+    setTimeout(updateCounter, 300);
+  }
+</script>
