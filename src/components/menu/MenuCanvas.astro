@@ -1,5 +1,5 @@
 ---
-// MenuCanvas.astro: Asymmetric editorial layout with starters on left, mains on right, and floating parallax images.
+// MenuCanvas.astro: Symmetric 2-column editorial layout — secciones en cuadrícula balanceada.
 import { menuData } from '../../types/menuData';
 
 const sections = [
@@ -8,59 +8,55 @@ const sections = [
     title: "Tequeperros",
     subtitle: "Fusionamos el rico tequeño venezolano con el clásico perro caliente, cambiando el pan por un súper tequeño.",
     items: menuData.filter(d => d.id.includes("tequeperro")),
-    layoutClass: "col-span-12 lg:col-span-5 pt-12 lg:pt-20"
   },
   {
     id: "perros",
     title: "Perros",
     subtitle: "El clásico indiscutible de la calle con su ensalada y queso de año.",
     items: menuData.filter(d => d.id.includes("perro") && !d.id.includes("tequeperro")),
-    layoutClass: "col-span-12 lg:col-start-7 lg:col-span-5 pt-12 lg:pt-36"
   },
   {
     id: "hamburpizzas",
     title: "Hamburpizzas",
     subtitle: "La fusión de sabores que buscabas, uniendo lo mejor de la hamburguesa y lo exquisito de una buena pizza.",
     items: menuData.filter(d => d.id.includes("hamburpizza")),
-    layoutClass: "col-span-12 lg:col-start-2 lg:col-span-7 pt-12 lg:pt-24"
   },
   {
     id: "pizzas",
     title: "Pizzas",
     subtitle: "Masa estirada a mano, salsa pomodoro y queso mozzarella derretido.",
     items: menuData.filter(d => d.id.includes("pizza") && !d.id.includes("hamburpizza") && d.category !== 'desserts'),
-    layoutClass: "col-span-12 lg:col-start-6 lg:col-span-6 pt-12 lg:pt-32"
   },
   {
     id: "patacon",
     title: "Patacón",
     subtitle: "El auténtico sabor zuliano con tapas de plátano macho crujiente.",
     items: menuData.filter(d => d.id.includes("patacon")),
-    layoutClass: "col-span-12 lg:col-span-5 pt-12 lg:pt-20"
   },
   {
     id: "whopper",
     title: "Whoppers",
     subtitle: "Hamburguesas gigantes premium cargadas de sabor.",
     items: menuData.filter(d => d.id.includes("whopper")),
-    layoutClass: "col-span-12 lg:col-start-7 lg:col-span-5 pt-12 lg:pt-32"
   },
   {
     id: "meri",
     title: "La Meri",
     subtitle: "Cambiamos el pan tradicional por nuestra deliciosa masa frita de la casa.",
     items: menuData.filter(d => d.id.includes("meri")),
-    layoutClass: "col-span-12 lg:col-start-3 lg:col-span-6 pt-12 lg:pb-24 lg:pt-24"
   }
 ];
 ---
 
 <div id="editorial-view" class="w-full bg-[#1A1A1A] text-white min-h-screen">
-  <main class="w-full px-8 md:px-20 lg:px-40 pb-40">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 relative">
+  <main class="w-full px-8 md:px-16 lg:px-28 pb-40">
+    <div class="menu-symmetric-grid">
       
-      {sections.map(section => (
-        <section class={`${section.layoutClass} relative`} id={`section-${section.id}`}>
+      {sections.map((section, idx) => (
+        <section
+          class={`menu-section ${idx % 2 !== 0 ? 'menu-section--offset' : ''} relative`}
+          id={`section-${section.id}`}
+        >
           <div class="border-t border-white/10 pt-6 mb-12 gs-reveal">
             <h2 class="font-display text-4xl md:text-[54px] leading-none text-[var(--color-brand-yellow)] uppercase">
               {section.title}
@@ -82,16 +78,30 @@ const sections = [
                   </div>
                 )}
                 <div class="hover-dot"></div>
-                <div class={`flex items-baseline w-full gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
-                  <h3 class={`text-[16px] font-bold text-white tracking-tight group-hover:text-[var(--color-brand-yellow)] transition-colors duration-300 ${dish.soldOut ? 'line-through' : ''}`}>
-                    {dish.name}
-                  </h3>
-                  <div class="dotted-leader"></div>
-                  <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold">${dish.price}</span>
+                <div class="dish-row-inner">
+                  <!-- Text content -->
+                  <div class="dish-row-text">
+                    <div class={`flex items-baseline w-full gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
+                      <h3 class={`text-[16px] font-bold text-white tracking-tight group-hover:text-[var(--color-brand-yellow)] transition-colors duration-300 ${dish.soldOut ? 'line-through' : ''}`}>
+                        {dish.name}
+                      </h3>
+                      <div class="dotted-leader"></div>
+                      <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold">${dish.price}</span>
+                    </div>
+                    <p class={`text-[13px] text-white/70 mt-1 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
+                      {dish.description}
+                    </p>
+                  </div>
+                  <!-- Mobile thumbnail (hidden on desktop) -->
+                  <div class={`dish-thumb ${dish.soldOut ? 'opacity-40' : ''}`}>
+                    <img 
+                      src={dish.image} 
+                      alt={dish.name}
+                      loading="lazy"
+                      class="dish-thumb-img"
+                    />
+                  </div>
                 </div>
-                <p class={`text-[13px] text-white/70 mt-1 w-4/5 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
-                  {dish.description}
-                </p>
               </article>
             ))}
           </div>
@@ -112,6 +122,32 @@ const sections = [
 </div>
 
 <style>
+  /* ─── Symmetric 2-column menu grid ────────────────────────────────── */
+  .menu-symmetric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem 5rem;
+    padding-top: 4rem;
+  }
+
+  /* Offset on odd sections for visual rhythm while keeping balance */
+  .menu-section--offset {
+    padding-top: 4rem;
+  }
+
+  /* On mobile, stack to single column */
+  @media (max-width: 1023px) {
+    .menu-symmetric-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding-top: 2rem;
+    }
+
+    .menu-section--offset {
+      padding-top: 0;
+    }
+  }
+
   /* Hairline borders and dotted leaders */
   .dotted-leader {
     flex-grow: 1;
@@ -120,6 +156,63 @@ const sections = [
     position: relative;
     top: -6px;
     opacity: 0.5;
+  }
+
+  /* ─── Dish Row with Mobile Thumbnail ──────────────────────────────── */
+  .dish-row-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dish-row-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Mobile thumbnail — shown only on touch / small screens */
+  .dish-thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(245, 130, 32, 0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease;
+  }
+
+  .dish-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Hover / active micro-interaction on thumbnail */
+  .dish-row:active .dish-thumb,
+  .dish-row:hover .dish-thumb {
+    border-color: var(--color-brand-yellow, #F5C518);
+    transform: scale(1.05);
+  }
+
+  .dish-row:active .dish-thumb-img,
+  .dish-row:hover .dish-thumb-img {
+    transform: scale(1.1);
+  }
+
+  /* Desktop: hide thumbnails, use hover preview instead */
+  @media (min-width: 1024px) {
+    .dish-thumb {
+      display: none;
+    }
+
+    .dish-row-inner {
+      display: block;
+    }
   }
 
   /* Interactive Hover Dot (Yellow / Orange F58220) */
