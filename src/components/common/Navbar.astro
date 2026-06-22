@@ -1,17 +1,22 @@
 ---
 // Navbar.astro: Global minimalist navbar with GSAP scroll effects and active state tracking.
 ---
-<nav id="global-navbar" class="fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] py-3.5 md:py-5 px-5 md:px-12 flex justify-between items-center bg-transparent">
-  <!-- Brand logo and name -->
-  <a href="#" class="flex items-center gap-3 decoration-none no-underline group select-none">
+<nav id="global-navbar" class="navbar-symmetric fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] bg-transparent">
+
+  <!-- Col 1: Logo -->
+  <a href="#" class="navbar-col navbar-col--left flex items-center gap-2.5 decoration-none no-underline group select-none">
     <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain filter invert transition-all duration-500" />
-    <span id="navbar-brand-name" class="font-display text-sm md:text-lg font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500">
-      La Casa de la Hamburpizza
-    </span>
   </a>
 
-  <!-- Menu links -->
-  <div class="flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
+  <!-- Col 2: Brand name (center) -->
+  <div class="navbar-col navbar-col--center">
+    <span id="navbar-brand-name" class="font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500 whitespace-nowrap">
+      La Casa de la Hamburpizza
+    </span>
+  </div>
+
+  <!-- Col 3: Nav links -->
+  <div class="navbar-col navbar-col--right flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center justify-end">
     <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
       Carta
     </button>
@@ -25,7 +30,41 @@
 </nav>
 
 <style>
-  /* Base styles for the active view states */
+  /* ─── Symmetric Navbar: 3-column CSS Grid ─────────────────────────── */
+  .navbar-symmetric {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 14px 48px;
+    gap: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .navbar-symmetric {
+      padding: 12px 20px;
+    }
+  }
+
+  /* Each column is a flex container for alignment control */
+  .navbar-col {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-col--left {
+    justify-content: flex-start;
+  }
+
+  .navbar-col--center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .navbar-col--right {
+    justify-content: flex-end;
+  }
+
+  /* Active nav item state */
   .active-nav-item {
     color: #E62020 !important;
   }
