@@ -1,0 +1,131 @@
+---
+// Navbar.astro: Global minimalist navbar with GSAP scroll effects and active state tracking.
+---
+<nav id="global-navbar" class="fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] py-6 px-6 md:px-12 flex justify-between items-center bg-transparent">
+  <!-- Brand logo and name -->
+  <a href="#" class="flex items-center gap-3 decoration-none no-underline group select-none">
+    <img src="/logo.png" alt="Logo" id="navbar-logo" class="size-9 object-contain filter invert transition-all duration-500" />
+    <span id="navbar-brand-name" class="font-display text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-500">
+      La Casa de la Hamburpizza
+    </span>
+  </a>
+
+  <!-- Menu links -->
+  <div class="flex gap-8 md:gap-12 font-sans text-sm md:text-base uppercase font-bold tracking-widest items-center">
+    <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
+      Carta
+    </button>
+    <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-gallery" id="global-nav-btn-gallery">
+      Galería
+    </button>
+    <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline" href="#dossier-section">
+      Info
+    </a>
+  </div>
+</nav>
+
+<style>
+  /* Base styles for the active view states */
+  .active-nav-item {
+    color: #E62020 !important;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initNavbarAnimations() {
+    if ((window as any).__navbarInitialized) return;
+    (window as any).__navbarInitialized = true;
+
+    const navbar = document.getElementById('global-navbar');
+    const brandName = document.getElementById('navbar-brand-name');
+    const logo = document.getElementById('navbar-logo');
+
+    if (!navbar || !brandName || !logo) return;
+
+    let lastScrollY = window.scrollY;
+    let isHidden = false;
+
+    // 1. Show/Hide on Scroll direction (GSAP)
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+
+      // Only toggle if scrolled past a threshold
+      if (currentScrollY > 100) {
+        if (currentScrollY > lastScrollY && !isHidden) {
+          // Scrolling down -> hide navbar
+          gsap.to(navbar, {
+            y: -100,
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power3.out'
+          });
+          isHidden = true;
+        } else if (currentScrollY < lastScrollY && isHidden) {
+          // Scrolling up -> show navbar
+          gsap.to(navbar, {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: 'power3.out'
+          });
+          isHidden = false;
+        }
+      } else {
+        // Always show near top
+        gsap.to(navbar, {
+          y: 0,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+        isHidden = false;
+      }
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // 2. Change Theme on Scroll (GSAP ScrollTrigger)
+    // When the cover trigger area ends, transition to dark navbar
+    ScrollTrigger.create({
+      trigger: '#cover-page',
+      start: 'bottom 8%',
+      end: 'bottom 0%',
+      onEnter: () => {
+        gsap.to(navbar, {
+          backgroundColor: 'rgba(26, 26, 26, 0.85)',
+          backdropFilter: 'blur(12px)',
+          borderColor: 'rgba(255, 255, 255, 0.1)',
+          borderBottomWidth: '1px',
+          paddingTop: '16px',
+          paddingBottom: '16px',
+          color: '#ffffff',
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+        brandName.style.color = '#ffffff';
+        logo.classList.remove('invert'); // Remove invert to show colored logo in dark bar
+      },
+      onLeaveBack: () => {
+        gsap.to(navbar, {
+          backgroundColor: 'rgba(26, 26, 26, 0)',
+          backdropFilter: 'blur(0px)',
+          borderBottomWidth: '0px',
+          paddingTop: '24px',
+          paddingBottom: '24px',
+          color: '#1A1A1A',
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+        brandName.style.color = '#1A1A1A';
+        logo.classList.add('invert'); // Re-invert to look black on yellow
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initNavbarAnimations);
+  document.addEventListener('loader-finished', initNavbarAnimations);
+</script>

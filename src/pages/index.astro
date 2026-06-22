@@ -3,6 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 import Loader from '../components/common/Loader.astro';
 import GrainOverlay from '../components/common/GrainOverlay.astro';
+import Navbar from '../components/common/Navbar.astro';
 import Cover from '../components/menu/Cover.astro';
 import MenuCanvas from '../components/menu/MenuCanvas.astro';
 import MenuGallery from '../components/menu/MenuGallery.astro';
@@ -11,6 +12,9 @@ import DishProfile from '../components/menu/DishProfile.astro';
 ---
 
 <Layout>
+  <!-- Global Navbar -->
+  <Navbar />
+
   <!-- Interactive Loader -->
   <Loader />
 
@@ -84,8 +88,8 @@ import DishProfile from '../components/menu/DishProfile.astro';
       galleryView.classList.add('hidden');
       
       // Update navigation active button styling
-      btnEditorial.forEach(btn => btn.classList.add('text-charcoal', 'font-bold'));
-      btnGallery.forEach(btn => btn.classList.remove('text-charcoal', 'font-bold'));
+      btnEditorial.forEach(btn => btn.classList.add('active-nav-item'));
+      btnGallery.forEach(btn => btn.classList.remove('active-nav-item'));
 
       // Fade-in canvas wrapper cleanly
       gsap.fromTo(canvasWrapper, 
@@ -106,8 +110,8 @@ import DishProfile from '../components/menu/DishProfile.astro';
       galleryView.classList.remove('hidden');
 
       // Update navigation active button styling
-      btnGallery.forEach(btn => btn.classList.add('text-charcoal', 'font-bold'));
-      btnEditorial.forEach(btn => btn.classList.remove('text-charcoal', 'font-bold'));
+      btnGallery.forEach(btn => btn.classList.add('active-nav-item'));
+      btnEditorial.forEach(btn => btn.classList.remove('active-nav-item', 'text-[var(--color-brand-red)]'));
 
       // Fade-in gallery wrapper cleanly
       gsap.fromTo(galleryWrapper, 
