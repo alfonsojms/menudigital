@@ -1,17 +1,17 @@
 ---
 // Navbar.astro: Global minimalist navbar with GSAP scroll effects and active state tracking.
 ---
-<nav id="global-navbar" class="fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] py-6 px-6 md:px-12 flex justify-between items-center bg-transparent">
+<nav id="global-navbar" class="fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] py-3.5 md:py-5 px-5 md:px-12 flex justify-between items-center bg-transparent">
   <!-- Brand logo and name -->
   <a href="#" class="flex items-center gap-3 decoration-none no-underline group select-none">
-    <img src="/logo.png" alt="Logo" id="navbar-logo" class="size-9 object-contain filter invert transition-all duration-500" />
-    <span id="navbar-brand-name" class="font-display text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-500">
+    <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain filter invert transition-all duration-500" />
+    <span id="navbar-brand-name" class="font-display text-sm md:text-lg font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500">
       La Casa de la Hamburpizza
     </span>
   </a>
 
   <!-- Menu links -->
-  <div class="flex gap-8 md:gap-12 font-sans text-sm md:text-base uppercase font-bold tracking-widest items-center">
+  <div class="flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
     <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
       Carta
     </button>
@@ -100,8 +100,8 @@
           backdropFilter: 'blur(12px)',
           borderColor: 'rgba(255, 255, 255, 0.1)',
           borderBottomWidth: '1px',
-          paddingTop: '16px',
-          paddingBottom: '16px',
+          paddingTop: '12px',
+          paddingBottom: '12px',
           color: '#ffffff',
           duration: 0.4,
           ease: 'power2.out'
@@ -114,8 +114,8 @@
           backgroundColor: 'rgba(26, 26, 26, 0)',
           backdropFilter: 'blur(0px)',
           borderBottomWidth: '0px',
-          paddingTop: '24px',
-          paddingBottom: '24px',
+          paddingTop: '14px',
+          paddingBottom: '14px',
           color: '#1A1A1A',
           duration: 0.4,
           ease: 'power2.out'
