@@ -215,6 +215,13 @@ const sections = [
     }
   }
 
+  /* Mobile/Tablet: hide floating hover preview */
+  @media (max-width: 1023px) {
+    #hover-image-preview {
+      display: none !important;
+    }
+  }
+
   /* Interactive Hover Dot (Yellow / Orange F58220) */
   .hover-dot {
     position: absolute;
@@ -245,11 +252,15 @@ const sections = [
 
     if (!preview || !inner || rows.length === 0) return;
 
+    const isMobileOrTouch = () => window.matchMedia('(max-width: 1023px)').matches || window.matchMedia('(pointer: coarse)').matches;
+
     rows.forEach(row => {
       const imageUrl = row.getAttribute('data-image-url');
       if (!imageUrl) return;
 
       row.addEventListener('mouseenter', () => {
+        if (isMobileOrTouch()) return;
+
         // Set background image
         inner.style.backgroundImage = `url('${imageUrl}')`;
 
@@ -263,6 +274,8 @@ const sections = [
       });
 
       row.addEventListener('mousemove', (e: any) => {
+        if (isMobileOrTouch()) return;
+
         // Smoothly move preview container to match mouse coordinates with an offset
         gsap.to(preview, {
           x: e.clientX + 20,
@@ -274,6 +287,8 @@ const sections = [
       });
 
       row.addEventListener('mouseleave', () => {
+        if (isMobileOrTouch()) return;
+
         // Scale down and fade out
         gsap.to(preview, {
           scale: 0,
