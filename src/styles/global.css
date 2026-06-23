@@ -26,12 +26,16 @@ body {
   margin: 0;
   overflow-x: hidden;
   font-family: "Rubik", sans-serif;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight flash on mobile */
 }
 
-/* Modal Open Lock Body Scroll (fixed position helper) */
+/* Eliminate 300ms mobile tap delay on all interactive elements */
+a, button, [role="button"], input, select, textarea, label, summary {
+  touch-action: manipulation;
+}
+
+/* Modal Open Lock Body Scroll (overflow-only: avoids position:fixed reflow cost) */
 body.modal-open {
-  position: fixed;
-  width: 100%;
   overflow: hidden;
 }
 

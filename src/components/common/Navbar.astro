@@ -41,15 +41,15 @@
 </nav>
 
 <!-- Mobile Menu Overlay (Fullscreen with premium glassmorphism) -->
-<div id="mobile-menu-overlay" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center transition-all duration-500 opacity-0 pointer-events-none">
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center opacity-0 pointer-events-none" style="transition: opacity 0.15s ease-out;">
   <div class="flex flex-col gap-8 text-center font-display text-4xl uppercase tracking-wider text-white">
-    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer" id="mobile-nav-btn-editorial">
+    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer" id="mobile-nav-btn-editorial" style="touch-action: manipulation;">
       Carta
     </button>
-    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-gallery cursor-pointer" id="mobile-nav-btn-gallery">
+    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-gallery cursor-pointer" id="mobile-nav-btn-gallery" style="touch-action: manipulation;">
       Galería
     </button>
-    <a class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 no-underline decoration-none" href="#dossier-section" id="mobile-nav-link-info">
+    <a class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 no-underline decoration-none" href="#dossier-section" id="mobile-nav-link-info" style="touch-action: manipulation;">
       Info
     </a>
   </div>
@@ -191,7 +191,10 @@
   #mobile-menu-overlay.is-active {
     opacity: 1;
     pointer-events: auto;
+    transition: opacity 0.3s ease-out; /* Smooth fade-in on open */
   }
+
+  /* Fast fade-out is handled by inline style (0.15s) so close feels instant */
 </style>
 
 <script>
