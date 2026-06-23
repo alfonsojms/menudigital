@@ -97,30 +97,31 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Scroll to menu content (use a slight delay on mobile so the touch sequence finishes and body modal-open is removed)
       const isMobile = window.innerWidth < 768;
-      const performScroll = () => {
-        if ((window as any).lenis) {
-          (window as any).lenis.resize();
-          (window as any).lenis.scrollTo('#menu-content-container', {
-            offset: -10,
-            duration: isMobile ? 0.3 : 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-          });
-        } else {
-          document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Refresh ScrollTrigger after a slight delay so it doesn't block the start of the scroll animation
+      if (!isMobile) {
+        // Desktop uses Lenis smooth scroll
+        requestAnimationFrame(() => {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: -10,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 850);
+        });
+      } else {
+        // On mobile, native browser anchor scrolling handles the scroll.
+        // We only need to refresh ScrollTrigger after a short delay for layout recalculation.
         setTimeout(() => {
           ScrollTrigger.refresh();
-        }, isMobile ? 350 : 850);
-      };
-
-      if (isMobile) {
-        setTimeout(performScroll, 150);
-      } else {
-        requestAnimationFrame(performScroll);
+        }, 350);
       }
     };
 
@@ -140,44 +141,51 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Scroll to menu content (use a slight delay on mobile so the touch sequence finishes and body modal-open is removed)
       const isMobile = window.innerWidth < 768;
-      const performScroll = () => {
-        if ((window as any).lenis) {
-          (window as any).lenis.resize();
-          (window as any).lenis.scrollTo('#menu-content-container', {
-            offset: -10,
-            duration: isMobile ? 0.3 : 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-          });
-        } else {
-          document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Refresh ScrollTrigger after a slight delay so it doesn't block the start of the scroll animation
+      if (!isMobile) {
+        // Desktop uses Lenis smooth scroll
+        requestAnimationFrame(() => {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: -10,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 850);
+        });
+      } else {
+        // On mobile, native browser anchor scrolling handles the scroll.
+        // We only need to refresh ScrollTrigger after a short delay for layout recalculation.
         setTimeout(() => {
           ScrollTrigger.refresh();
-        }, isMobile ? 350 : 850);
-      };
-
-      if (isMobile) {
-        setTimeout(performScroll, 150);
-      } else {
-        requestAnimationFrame(performScroll);
+        }, 350);
       }
     };
 
     // Bind event listeners to both sets of header links (Cover header + Menu header)
     btnEditorial.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) {
+          e.preventDefault(); // Prevent default hash scroll only on Desktop to use Lenis
+        }
         showEditorial();
       });
     });
 
     btnGallery.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) {
+          e.preventDefault(); // Prevent default hash scroll only on Desktop to use Lenis
+        }
         showGallery();
       });
     });
