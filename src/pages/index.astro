@@ -29,8 +29,6 @@ import DishProfile from '../components/menu/DishProfile.astro';
 
   <!-- Menu Content Container (scrolls up after cover) -->
   <div id="menu-content-container" class="relative w-full z-20 bg-[#1A1A1A] min-h-screen">
-    <!-- Anchor target for mobile scroll to ensure the menu fully covers the screen -->
-    <div id="menu-scroll-target" class="absolute pointer-events-none" style="top: 100px; left: 0; width: 1px; height: 1px;"></div>
     <div class="relative w-full">
       
       <!-- Asymmetric Editorial View -->
@@ -119,11 +117,28 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, let native anchor scroll handle navigation (same as Info link).
-        // Only refresh ScrollTrigger after layout recalculation.
+        // Mobile: Stop Lenis to prevent it from intercepting scroll,
+        // then use native window.scrollTo with extra offset to fully cover the screen.
+        const lenis = (window as any).lenis;
+        if (lenis) lenis.stop();
+        
         setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 400);
+          const el = document.getElementById('menu-content-container');
+          if (el) {
+            // Scroll to the container top + 80px extra to push the Cover completely out of view
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
+            window.scrollTo({ top: targetY, behavior: 'instant' });
+          }
+          
+          // Restart Lenis and refresh ScrollTrigger after scroll completes
+          setTimeout(() => {
+            if (lenis) {
+              lenis.start();
+              lenis.resize();
+            }
+            ScrollTrigger.refresh();
+          }, 100);
+        }, 50);
       }
     };
 
@@ -163,31 +178,42 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, let native anchor scroll handle navigation (same as Info link).
-        // Only refresh ScrollTrigger after layout recalculation.
+        // Mobile: Stop Lenis to prevent it from intercepting scroll,
+        // then use native window.scrollTo with extra offset to fully cover the screen.
+        const lenis = (window as any).lenis;
+        if (lenis) lenis.stop();
+        
         setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 400);
+          const el = document.getElementById('menu-content-container');
+          if (el) {
+            // Scroll to the container top + 80px extra to push the Cover completely out of view
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
+            window.scrollTo({ top: targetY, behavior: 'instant' });
+          }
+          
+          // Restart Lenis and refresh ScrollTrigger after scroll completes
+          setTimeout(() => {
+            if (lenis) {
+              lenis.start();
+              lenis.resize();
+            }
+            ScrollTrigger.refresh();
+          }, 100);
+        }, 50);
       }
     };
 
     // Bind event listeners to both sets of header links (Cover header + Menu header)
     btnEditorial.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const isMobile = window.innerWidth < 768;
-        if (!isMobile) {
-          e.preventDefault(); // Prevent default hash scroll only on Desktop to use Lenis
-        }
+        e.preventDefault(); // Always prevent default — we handle scroll programmatically
         showEditorial();
       });
     });
 
     btnGallery.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const isMobile = window.innerWidth < 768;
-        if (!isMobile) {
-          e.preventDefault(); // Prevent default hash scroll only on Desktop to use Lenis
-        }
+        e.preventDefault(); // Always prevent default — we handle scroll programmatically
         showGallery();
       });
     });
