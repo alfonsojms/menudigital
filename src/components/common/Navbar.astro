@@ -288,7 +288,10 @@
       mobileMenuBtn.classList.remove('is-open');
       mobileMenuOverlay.classList.remove('is-active');
       document.body.classList.remove('modal-open');
-      (window as any).lenis?.start();
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+        (window as any).lenis.resize();
+      }
     }
 
     if (mobileMenuBtn) {
