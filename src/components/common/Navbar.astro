@@ -5,43 +5,77 @@
 
   <!-- Col 1: Logo -->
   <a href="#" class="navbar-col navbar-col--left flex items-center gap-2.5 decoration-none no-underline group select-none">
-    <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain filter invert transition-all duration-500" />
+    <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain transition-all duration-500" />
   </a>
 
   <!-- Col 2: Brand name (center) -->
-  <div class="navbar-col navbar-col--center">
+  <div class="navbar-col navbar-col--center hidden lg:flex">
     <span id="navbar-brand-name" class="font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500 whitespace-nowrap">
       La Casa de la Hamburpizza
     </span>
   </div>
 
-  <!-- Col 3: Nav links -->
-  <div class="navbar-col navbar-col--right flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center justify-end">
-    <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
-      Carta
+  <!-- Col 3: Nav links & Hamburger -->
+  <div class="navbar-col navbar-col--right flex items-center justify-end">
+    <!-- Desktop Links (Tablet & Desktop only) -->
+    <div class="hidden md:flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
+      <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
+        Carta
+      </button>
+      <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-gallery" id="global-nav-btn-gallery">
+        Galería
+      </button>
+      <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline" href="#dossier-section">
+        Info
+      </a>
+    </div>
+
+    <!-- Hamburger Button (Mobile only) -->
+    <button id="mobile-menu-btn" class="flex md:hidden flex-col justify-center items-center w-10 h-10 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom"></span>
     </button>
-    <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-gallery" id="global-nav-btn-gallery">
-      Galería
-    </button>
-    <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline" href="#dossier-section">
-      Info
-    </a>
   </div>
 </nav>
 
+<!-- Mobile Menu Overlay (Fullscreen with premium glassmorphism) -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center transition-all duration-500 opacity-0 pointer-events-none">
+  <div class="flex flex-col gap-8 text-center font-display text-4xl uppercase tracking-wider text-white">
+    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer" id="mobile-nav-btn-editorial">
+      Carta
+    </button>
+    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-gallery cursor-pointer" id="mobile-nav-btn-gallery">
+      Galería
+    </button>
+    <a class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 no-underline decoration-none" href="#dossier-section" id="mobile-nav-link-info">
+      Info
+    </a>
+  </div>
+</div>
+
 <style>
-  /* ─── Symmetric Navbar: 3-column CSS Grid ─────────────────────────── */
+  /* ─── Symmetric Navbar: Responsive Flexbox/Grid ─────────────────── */
   .navbar-symmetric {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 14px 48px;
-    gap: 1rem;
+    padding: 12px 20px;
   }
 
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .navbar-symmetric {
-      padding: 12px 20px;
+      padding: 14px 32px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .navbar-symmetric {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1fr;
+      align-items: center;
+      padding: 14px 48px;
+      gap: 1.5rem;
     }
   }
 
@@ -62,11 +96,41 @@
 
   .navbar-col--right {
     justify-content: flex-end;
+    width: auto;
+  }
+
+  @media (min-width: 1024px) {
+    .navbar-col--right {
+      width: 100%;
+    }
   }
 
   /* Active nav item state */
   .active-nav-item {
     color: #E62020 !important;
+  }
+
+  /* Hamburger morphing to X */
+  #mobile-menu-btn.is-open #bar-top {
+    transform: translateY(6px) rotate(45deg);
+  }
+  #mobile-menu-btn.is-open #bar-middle {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  #mobile-menu-btn.is-open #bar-bottom {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Ensure hamburger is white when open, regardless of navbar state */
+  #mobile-menu-btn.is-open {
+    color: #ffffff !important;
+  }
+
+  /* Mobile Overlay visibility */
+  #mobile-menu-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
   }
 </style>
 
@@ -83,14 +147,20 @@
     const navbar = document.getElementById('global-navbar');
     const brandName = document.getElementById('navbar-brand-name');
     const logo = document.getElementById('navbar-logo');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-    if (!navbar || !brandName || !logo) return;
+    if (!navbar || !logo) return;
 
     let lastScrollY = window.scrollY;
     let isHidden = false;
 
     // 1. Show/Hide on Scroll direction (GSAP)
     window.addEventListener('scroll', () => {
+      // If mobile menu is open, do not hide navbar
+      if (mobileMenuBtn && mobileMenuBtn.classList.contains('is-open')) return;
+
       const currentScrollY = window.scrollY;
 
       // Only toggle if scrolled past a threshold
@@ -145,8 +215,8 @@
           duration: 0.4,
           ease: 'power2.out'
         });
-        brandName.style.color = '#ffffff';
-        logo.classList.remove('invert'); // Remove invert to show colored logo in dark bar
+        if (brandName) brandName.style.color = '#ffffff';
+        logo.classList.add('invert'); // Swapped! Invert logo to show white in dark bar
       },
       onLeaveBack: () => {
         gsap.to(navbar, {
@@ -159,9 +229,50 @@
           duration: 0.4,
           ease: 'power2.out'
         });
-        brandName.style.color = '#1A1A1A';
-        logo.classList.add('invert'); // Re-invert to look black on yellow
+        if (brandName) brandName.style.color = '#1A1A1A';
+        logo.classList.remove('invert'); // Swapped! Remove invert to show colored logo on yellow cover
       }
+    });
+
+    // 3. Mobile Menu Toggle Logic
+    function openMobileMenu() {
+      if (!mobileMenuBtn || !mobileMenuOverlay) return;
+      mobileMenuBtn.classList.add('is-open');
+      mobileMenuOverlay.classList.add('is-active');
+      document.body.classList.add('modal-open');
+      (window as any).lenis?.stop();
+
+      // GSAP Staggered entry for links
+      gsap.fromTo(mobileLinks,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power3.out', delay: 0.1 }
+      );
+    }
+
+    function closeMobileMenu() {
+      if (!mobileMenuBtn || !mobileMenuOverlay) return;
+      mobileMenuBtn.classList.remove('is-open');
+      mobileMenuOverlay.classList.remove('is-active');
+      document.body.classList.remove('modal-open');
+      (window as any).lenis?.start();
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenuBtn.classList.contains('is-open');
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+    }
+
+    // Close when clicking any link inside the menu
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
     });
   }
 
