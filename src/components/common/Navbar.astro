@@ -1,51 +1,102 @@
 ---
-// Navbar.astro: Global minimalist navbar with GSAP scroll effects and active state tracking.
+// Navbar.astro: Floating Pill Navbar inspired by Mobbin with premium micro-interactions.
 ---
-<nav id="global-navbar" class="navbar-symmetric fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] bg-transparent">
+<nav id="global-navbar" class="navbar-symmetric">
 
-  <!-- Col 1: Logo -->
-  <a href="#" class="navbar-col navbar-col--left flex items-center gap-2.5 decoration-none no-underline group select-none">
-    <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain filter invert transition-all duration-500" />
-  </a>
-
-  <!-- Col 2: Brand name (center) -->
-  <div class="navbar-col navbar-col--center">
-    <span id="navbar-brand-name" class="font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500 whitespace-nowrap">
+  <!-- Left: Logo & Brand Name -->
+  <a href="#" class="navbar-col navbar-col--left flex items-center gap-3 decoration-none no-underline group select-none">
+    <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain transition-all duration-500" />
+    <span id="navbar-brand-name" class="navbar-brand-text font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[3px] uppercase whitespace-nowrap text-current transition-colors duration-500">
       La Casa de la Hamburpizza
     </span>
-  </div>
+  </a>
 
-  <!-- Col 3: Nav links -->
-  <div class="navbar-col navbar-col--right flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center justify-end">
-    <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
-      Carta
-    </button>
-    <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-gallery" id="global-nav-btn-gallery">
-      Galería
-    </button>
-    <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline" href="#dossier-section">
-      Info
+  <!-- Right: Nav links, CTA Button, & Hamburger -->
+  <div class="navbar-col navbar-col--right flex items-center gap-4 md:gap-6 justify-end">
+    <!-- Desktop Links (Tablet & Desktop only) -->
+    <div class="navbar-desktop-links gap-6 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
+      <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
+        Carta
+      </button>
+      <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-gallery" id="global-nav-btn-gallery">
+        Galería
+      </button>
+      <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline" href="#dossier-section">
+        Info
+      </a>
+    </div>
+
+    <!-- CTA Delivery Button (Tablet & Desktop only) -->
+    <a href="https://wa.me/584120721925" target="_blank" class="navbar-cta-btn no-underline decoration-none font-sans text-[10px] md:text-xs uppercase font-bold tracking-[1px] px-4 md:px-5 py-2 md:py-2.5 rounded-full transition-all duration-300">
+      Pide Delivery
     </a>
+
+    <!-- Hamburger Button (Mobile only) -->
+    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-12 h-12 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom"></span>
+    </button>
   </div>
 </nav>
 
+<!-- Mobile Menu Overlay (Fullscreen with premium glassmorphism) -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center transition-all duration-500 opacity-0 pointer-events-none">
+  <div class="flex flex-col gap-8 text-center font-display text-4xl uppercase tracking-wider text-white">
+    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer" id="mobile-nav-btn-editorial">
+      Carta
+    </button>
+    <button class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-gallery cursor-pointer" id="mobile-nav-btn-gallery">
+      Galería
+    </button>
+    <a class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 no-underline decoration-none" href="#dossier-section" id="mobile-nav-link-info">
+      Info
+    </a>
+  </div>
+</div>
+
 <style>
-  /* ─── Symmetric Navbar: 3-column CSS Grid ─────────────────────────── */
+  /* ─── Floating Pill Navbar: Responsive Styles ─────────────────── */
   .navbar-symmetric {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 92%;
+    max-w: 1200px;
+    border-radius: 9999px;
+    padding: 10px 24px;
+    border: 1px solid rgba(26, 26, 26, 0.15);
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 14px 48px;
-    gap: 1rem;
+    z-index: 40;
+    color: #1A1A1A;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   @media (max-width: 767px) {
     .navbar-symmetric {
-      padding: 12px 20px;
+      top: 12px;
+      padding: 8px 16px;
+      width: 94%;
     }
   }
 
-  /* Each column is a flex container for alignment control */
+  /* Scrolled dark theme applied dynamically */
+  .navbar-symmetric.scrolled {
+    background-color: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #ffffff;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Column flex settings */
   .navbar-col {
     display: flex;
     align-items: center;
@@ -55,42 +106,116 @@
     justify-content: flex-start;
   }
 
-  .navbar-col--center {
-    justify-content: center;
-    text-align: center;
-  }
-
   .navbar-col--right {
     justify-content: flex-end;
   }
 
-  /* Active nav item state */
-  .active-nav-item {
+  /* Brand name visibility and responsiveness */
+  .navbar-brand-text {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .navbar-brand-text {
+      display: inline-block;
+    }
+  }
+
+  /* Responsive Display classes for desktop links and mobile menu button */
+  .navbar-desktop-links {
+    display: none;
+  }
+
+  .navbar-cta-btn {
+    display: none;
+    background-color: #1A1A1A;
+    color: #FFD500;
+  }
+
+  .navbar-cta-btn:hover {
+    background-color: #E62020;
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  /* Scrolled dark theme button state */
+  .navbar-symmetric.scrolled .navbar-cta-btn {
+    background-color: #FFD500;
+    color: #1A1A1A;
+  }
+
+  .navbar-symmetric.scrolled .navbar-cta-btn:hover {
+    background-color: #ffffff;
+    color: #1A1A1A;
+  }
+
+  .navbar-mobile-menu-btn {
+    display: flex;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-desktop-links {
+      display: flex;
+    }
+    .navbar-cta-btn {
+      display: inline-block;
+    }
+    .navbar-mobile-menu-btn {
+      display: none;
+    }
+  }
+
+  /* Active nav item state (defined globally to prevent Astro styling scope issues when toggling via JS) */
+  :global(.active-nav-item) {
     color: #E62020 !important;
+  }
+
+  /* Hamburger morphing to X */
+  #mobile-menu-btn.is-open #bar-top {
+    transform: translateY(6px) rotate(45deg);
+  }
+  #mobile-menu-btn.is-open #bar-middle {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  #mobile-menu-btn.is-open #bar-bottom {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Ensure hamburger is white when open, regardless of navbar state */
+  #mobile-menu-btn.is-open {
+    color: #ffffff !important;
+  }
+
+  /* Mobile Overlay visibility */
+  #mobile-menu-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
   }
 </style>
 
 <script>
   import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
 
   function initNavbarAnimations() {
     if ((window as any).__navbarInitialized) return;
     (window as any).__navbarInitialized = true;
 
     const navbar = document.getElementById('global-navbar');
-    const brandName = document.getElementById('navbar-brand-name');
-    const logo = document.getElementById('navbar-logo');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-    if (!navbar || !brandName || !logo) return;
+    if (!navbar) return;
 
     let lastScrollY = window.scrollY;
     let isHidden = false;
 
     // 1. Show/Hide on Scroll direction (GSAP)
     window.addEventListener('scroll', () => {
+      // If mobile menu is open, do not hide navbar
+      if (mobileMenuBtn && mobileMenuBtn.classList.contains('is-open')) return;
+
       const currentScrollY = window.scrollY;
 
       // Only toggle if scrolled past a threshold
@@ -127,41 +252,61 @@
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    // 2. Change Theme on Scroll (GSAP ScrollTrigger)
-    // When the cover trigger area ends, transition to dark navbar
-    ScrollTrigger.create({
-      trigger: '#cover-page',
-      start: 'bottom 8%',
-      end: 'bottom 0%',
-      onEnter: () => {
-        gsap.to(navbar, {
-          backgroundColor: 'rgba(26, 26, 26, 0.85)',
-          backdropFilter: 'blur(12px)',
-          borderColor: 'rgba(255, 255, 255, 0.1)',
-          borderBottomWidth: '1px',
-          paddingTop: '12px',
-          paddingBottom: '12px',
-          color: '#ffffff',
-          duration: 0.4,
-          ease: 'power2.out'
-        });
-        brandName.style.color = '#ffffff';
-        logo.classList.remove('invert'); // Remove invert to show colored logo in dark bar
-      },
-      onLeaveBack: () => {
-        gsap.to(navbar, {
-          backgroundColor: 'rgba(26, 26, 26, 0)',
-          backdropFilter: 'blur(0px)',
-          borderBottomWidth: '0px',
-          paddingTop: '14px',
-          paddingBottom: '14px',
-          color: '#1A1A1A',
-          duration: 0.4,
-          ease: 'power2.out'
-        });
-        brandName.style.color = '#1A1A1A';
-        logo.classList.add('invert'); // Re-invert to look black on yellow
+    // 2. Change Theme on Scroll (Deterministic Native Event)
+    function updateNavbarTheme() {
+      const currentScrollY = window.scrollY;
+      const threshold = window.innerHeight * 0.8; // Change theme at 80% viewport height
+
+      if (currentScrollY > threshold) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
       }
+    }
+
+    window.addEventListener('scroll', updateNavbarTheme, { passive: true });
+    window.addEventListener('resize', updateNavbarTheme);
+    updateNavbarTheme(); // Run initially
+
+    // 3. Mobile Menu Toggle Logic
+    function openMobileMenu() {
+      if (!mobileMenuBtn || !mobileMenuOverlay) return;
+      mobileMenuBtn.classList.add('is-open');
+      mobileMenuOverlay.classList.add('is-active');
+      document.body.classList.add('modal-open');
+      (window as any).lenis?.stop();
+
+      // GSAP Staggered entry for links
+      gsap.fromTo(mobileLinks,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power3.out', delay: 0.1 }
+      );
+    }
+
+    function closeMobileMenu() {
+      if (!mobileMenuBtn || !mobileMenuOverlay) return;
+      mobileMenuBtn.classList.remove('is-open');
+      mobileMenuOverlay.classList.remove('is-active');
+      document.body.classList.remove('modal-open');
+      (window as any).lenis?.start();
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenuBtn.classList.contains('is-open');
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+    }
+
+    // Close when clicking any link inside the menu
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
     });
   }
 
