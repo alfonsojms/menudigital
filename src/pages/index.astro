@@ -97,9 +97,9 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Scroll to menu content on next frame (single rAF ensures DOM reflow after modal-open removal)
-      requestAnimationFrame(() => {
-        const isMobile = window.innerWidth < 768;
+      // Scroll to menu content (use a slight delay on mobile so the touch sequence finishes and body modal-open is removed)
+      const isMobile = window.innerWidth < 768;
+      const performScroll = () => {
         if ((window as any).lenis) {
           (window as any).lenis.resize();
           (window as any).lenis.scrollTo('#menu-content-container', {
@@ -115,7 +115,13 @@ import DishProfile from '../components/menu/DishProfile.astro';
         setTimeout(() => {
           ScrollTrigger.refresh();
         }, isMobile ? 350 : 850);
-      });
+      };
+
+      if (isMobile) {
+        setTimeout(performScroll, 150);
+      } else {
+        requestAnimationFrame(performScroll);
+      }
     };
 
     const showGallery = () => {
@@ -134,9 +140,9 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Scroll to menu content on next frame (single rAF ensures DOM reflow after modal-open removal)
-      requestAnimationFrame(() => {
-        const isMobile = window.innerWidth < 768;
+      // Scroll to menu content (use a slight delay on mobile so the touch sequence finishes and body modal-open is removed)
+      const isMobile = window.innerWidth < 768;
+      const performScroll = () => {
         if ((window as any).lenis) {
           (window as any).lenis.resize();
           (window as any).lenis.scrollTo('#menu-content-container', {
@@ -152,7 +158,13 @@ import DishProfile from '../components/menu/DishProfile.astro';
         setTimeout(() => {
           ScrollTrigger.refresh();
         }, isMobile ? 350 : 850);
-      });
+      };
+
+      if (isMobile) {
+        setTimeout(performScroll, 150);
+      } else {
+        requestAnimationFrame(performScroll);
+      }
     };
 
     // Bind event listeners to both sets of header links (Cover header + Menu header)
