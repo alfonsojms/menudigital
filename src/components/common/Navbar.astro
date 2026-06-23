@@ -286,10 +286,27 @@
       );
     }
 
-    function closeMobileMenu() {
+    function closeMobileMenu(instant = false) {
       if (!mobileMenuBtn || !mobileMenuOverlay) return;
       mobileMenuBtn.classList.remove('is-open');
-      mobileMenuOverlay.classList.remove('is-active');
+      
+      if (instant) {
+        // Temporarily disable CSS transition for instant fade-out
+        const prevTransition = mobileMenuOverlay.style.transition;
+        mobileMenuOverlay.style.transition = 'none';
+        mobileMenuOverlay.classList.remove('is-active');
+        
+        // Force reflow
+        mobileMenuOverlay.offsetHeight;
+        
+        // Restore transition after a brief delay for subsequent menu openings
+        setTimeout(() => {
+          mobileMenuOverlay.style.transition = prevTransition;
+        }, 50);
+      } else {
+        mobileMenuOverlay.classList.remove('is-active');
+      }
+      
       document.body.classList.remove('modal-open');
       if ((window as any).lenis) {
         (window as any).lenis.start();
@@ -308,10 +325,10 @@
       });
     }
 
-    // Close when clicking any link inside the menu
+    // Close when clicking any link inside the menu (instant close on link selection)
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
-        closeMobileMenu();
+        closeMobileMenu(true);
       });
     });
   }

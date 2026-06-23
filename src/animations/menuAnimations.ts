@@ -5,13 +5,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export function initMenuAnimations() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   // Scale up and fade out the logo and title wrapper
   gsap.to("#hero-content", {
     scrollTrigger: {
       trigger: "#cover-trigger-area",
       start: "top top",
       end: "bottom top",
-      scrub: 0.8,
+      scrub: isMobile ? true : 0.5,
     },
     scale: 2.5,
     opacity: 0,

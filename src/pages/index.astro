@@ -99,17 +99,23 @@ import DishProfile from '../components/menu/DishProfile.astro';
 
       // Scroll to menu content on next frame (single rAF ensures DOM reflow after modal-open removal)
       requestAnimationFrame(() => {
+        const isMobile = window.innerWidth < 768;
         if ((window as any).lenis) {
           (window as any).lenis.resize();
           (window as any).lenis.scrollTo('#menu-content-container', {
             offset: -10,
-            duration: 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            duration: isMobile ? 0.3 : 0.8,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            onComplete: () => {
+              ScrollTrigger.refresh();
+            }
           });
         } else {
           document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, isMobile ? 350 : 850);
         }
-        ScrollTrigger.refresh();
       });
     };
 
@@ -131,17 +137,23 @@ import DishProfile from '../components/menu/DishProfile.astro';
 
       // Scroll to menu content on next frame (single rAF ensures DOM reflow after modal-open removal)
       requestAnimationFrame(() => {
+        const isMobile = window.innerWidth < 768;
         if ((window as any).lenis) {
           (window as any).lenis.resize();
           (window as any).lenis.scrollTo('#menu-content-container', {
             offset: -10,
-            duration: 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            duration: isMobile ? 0.3 : 0.8,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            onComplete: () => {
+              ScrollTrigger.refresh();
+            }
           });
         } else {
           document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, isMobile ? 350 : 850);
         }
-        ScrollTrigger.refresh();
       });
     };
 
