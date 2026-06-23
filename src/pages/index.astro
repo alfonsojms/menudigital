@@ -117,11 +117,15 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, native browser anchor scrolling handles the scroll.
-        // We only need to refresh ScrollTrigger after a short delay for layout recalculation.
+        // On mobile, programmatically scroll to the menu content section.
+        // Native anchor scrolling doesn't work reliably because the mobile overlay
+        // and GSAP animations interfere with timing. This matches how Info works.
         setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 350);
+          document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 350);
+        }, 50);
       }
     };
 
@@ -161,11 +165,15 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, native browser anchor scrolling handles the scroll.
-        // We only need to refresh ScrollTrigger after a short delay for layout recalculation.
+        // On mobile, programmatically scroll to the menu content section.
+        // Native anchor scrolling doesn't work reliably because the mobile overlay
+        // and GSAP animations interfere with timing. This matches how Info works.
         setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 350);
+          document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 350);
+        }, 50);
       }
     };
 
