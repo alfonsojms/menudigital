@@ -1,5 +1,5 @@
 ---
-// Navbar.astro: Global minimalist navbar with GSAP scroll effects and active state tracking.
+// Navbar.astro: Global minimalist navbar with scroll effects and active state tracking.
 ---
 <nav id="global-navbar" class="navbar-symmetric fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] bg-transparent">
 
@@ -9,7 +9,7 @@
   </a>
 
   <!-- Col 2: Brand name (center) -->
-  <div class="navbar-col navbar-col--center hidden lg:flex">
+  <div class="navbar-col navbar-col--center">
     <span id="navbar-brand-name" class="font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500 whitespace-nowrap">
       La Casa de la Hamburpizza
     </span>
@@ -18,7 +18,7 @@
   <!-- Col 3: Nav links & Hamburger -->
   <div class="navbar-col navbar-col--right flex items-center justify-end">
     <!-- Desktop Links (Tablet & Desktop only) -->
-    <div class="hidden md:flex gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
+    <div class="navbar-desktop-links gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
       <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
         Carta
       </button>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Hamburger Button (Mobile only) -->
-    <button id="mobile-menu-btn" class="flex md:hidden flex-col justify-center items-center w-10 h-10 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
+    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-10 h-10 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
       <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top"></span>
       <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle"></span>
       <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom"></span>
@@ -89,9 +89,17 @@
     justify-content: flex-start;
   }
 
-  .navbar-col--center {
+  /* Specifying .navbar-col.navbar-col--center to increase specificity and successfully override display: flex */
+  .navbar-col.navbar-col--center {
     justify-content: center;
     text-align: center;
+    display: none; /* Hidden on mobile/tablets by default */
+  }
+
+  @media (min-width: 1024px) {
+    .navbar-col.navbar-col--center {
+      display: flex; /* Shown only on desktop */
+    }
   }
 
   .navbar-col--right {
@@ -105,8 +113,26 @@
     }
   }
 
-  /* Active nav item state */
-  .active-nav-item {
+  /* Responsive Display classes for desktop links and mobile menu button */
+  .navbar-desktop-links {
+    display: none;
+  }
+
+  .navbar-mobile-menu-btn {
+    display: flex;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-desktop-links {
+      display: flex;
+    }
+    .navbar-mobile-menu-btn {
+      display: none;
+    }
+  }
+
+  /* Active nav item state (defined globally to prevent Astro styling scope issues when toggling via JS) */
+  :global(.active-nav-item) {
     color: #E62020 !important;
   }
 
@@ -136,9 +162,6 @@
 
 <script>
   import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
 
   function initNavbarAnimations() {
     if ((window as any).__navbarInitialized) return;
@@ -146,12 +169,11 @@
 
     const navbar = document.getElementById('global-navbar');
     const brandName = document.getElementById('navbar-brand-name');
-    const logo = document.getElementById('navbar-logo');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-    if (!navbar || !logo) return;
+    if (!navbar) return;
 
     let lastScrollY = window.scrollY;
     let isHidden = false;
@@ -197,13 +219,13 @@
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    // 2. Change Theme on Scroll (GSAP ScrollTrigger)
-    // When the cover trigger area ends, transition to dark navbar
-    ScrollTrigger.create({
-      trigger: '#cover-page',
-      start: 'bottom 8%',
-      end: 'bottom 0%',
-      onEnter: () => {
+    // 2. Change Theme on Scroll (Deterministic Native Event to prevent height-toggling bugs in Gallery)
+    function updateNavbarTheme() {
+      const currentScrollY = window.scrollY;
+      const threshold = window.innerHeight * 0.8; // Change theme at 80% viewport height
+
+      if (currentScrollY > threshold) {
+        // Scrolled down -> Dark Navbar
         gsap.to(navbar, {
           backgroundColor: 'rgba(26, 26, 26, 0.85)',
           backdropFilter: 'blur(12px)',
@@ -213,12 +235,12 @@
           paddingBottom: '12px',
           color: '#ffffff',
           duration: 0.4,
-          ease: 'power2.out'
+          ease: 'power2.out',
+          overwrite: 'auto'
         });
         if (brandName) brandName.style.color = '#ffffff';
-        logo.classList.add('invert'); // Swapped! Invert logo to show white in dark bar
-      },
-      onLeaveBack: () => {
+      } else {
+        // Near top -> Transparent / Light Navbar
         gsap.to(navbar, {
           backgroundColor: 'rgba(26, 26, 26, 0)',
           backdropFilter: 'blur(0px)',
@@ -227,12 +249,16 @@
           paddingBottom: '14px',
           color: '#1A1A1A',
           duration: 0.4,
-          ease: 'power2.out'
+          ease: 'power2.out',
+          overwrite: 'auto'
         });
         if (brandName) brandName.style.color = '#1A1A1A';
-        logo.classList.remove('invert'); // Swapped! Remove invert to show colored logo on yellow cover
       }
-    });
+    }
+
+    window.addEventListener('scroll', updateNavbarTheme, { passive: true });
+    window.addEventListener('resize', updateNavbarTheme);
+    updateNavbarTheme(); // Run initially
 
     // 3. Mobile Menu Toggle Logic
     function openMobileMenu() {

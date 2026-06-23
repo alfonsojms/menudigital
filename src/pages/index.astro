@@ -97,6 +97,17 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
+      // Smoothly scroll to the menu content container
+      if ((window as any).lenis) {
+        (window as any).lenis.scrollTo('#menu-content-container', {
+          offset: 0,
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+      }
+
       // Force GSAP ScrollTrigger to recalculate new heights and trigger values
       setTimeout(() => {
         ScrollTrigger.refresh();
@@ -118,6 +129,17 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 0, y: 15 },
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
+
+      // Smoothly scroll to the menu content container
+      if ((window as any).lenis) {
+        (window as any).lenis.scrollTo('#menu-content-container', {
+          offset: 0,
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+      }
 
       // Force GSAP ScrollTrigger to recalculate new heights
       setTimeout(() => {
