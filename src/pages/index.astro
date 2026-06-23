@@ -117,18 +117,24 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, programmatically scroll so the menu content fully covers the viewport.
-        // We calculate the exact offset to ensure the cover is completely hidden.
+        // On mobile, use Lenis to scroll to the menu section after the overlay closes.
+        // offset: 0 ensures the menu content top aligns with viewport top for full coverage.
         setTimeout(() => {
-          const menuContainer = document.getElementById('menu-content-container');
-          if (menuContainer) {
-            const targetScroll = menuContainer.offsetTop;
-            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: 0,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            const el = document.getElementById('menu-content-container');
+            if (el) window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
           }
           setTimeout(() => {
             ScrollTrigger.refresh();
-          }, 350);
-        }, 50);
+          }, 850);
+        }, 100);
       }
     };
 
@@ -168,38 +174,38 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, programmatically scroll so the menu content fully covers the viewport.
-        // We calculate the exact offset to ensure the cover is completely hidden.
+        // On mobile, use Lenis to scroll to the menu section after the overlay closes.
+        // offset: 0 ensures the menu content top aligns with viewport top for full coverage.
         setTimeout(() => {
-          const menuContainer = document.getElementById('menu-content-container');
-          if (menuContainer) {
-            const targetScroll = menuContainer.offsetTop;
-            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: 0,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            const el = document.getElementById('menu-content-container');
+            if (el) window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
           }
           setTimeout(() => {
             ScrollTrigger.refresh();
-          }, 350);
-        }, 50);
+          }, 850);
+        }, 100);
       }
     };
 
     // Bind event listeners to both sets of header links (Cover header + Menu header)
     btnEditorial.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const isMobile = window.innerWidth < 768;
-        if (!isMobile) {
-          e.preventDefault(); // Prevent default hash scroll only on Desktop to use Lenis
-        }
+        e.preventDefault(); // Always prevent native anchor scroll — we handle it via Lenis/JS
         showEditorial();
       });
     });
 
     btnGallery.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const isMobile = window.innerWidth < 768;
-        if (!isMobile) {
-          e.preventDefault(); // Prevent default hash scroll only on Desktop to use Lenis
-        }
+        e.preventDefault(); // Always prevent native anchor scroll — we handle it via Lenis/JS
         showGallery();
       });
     });
