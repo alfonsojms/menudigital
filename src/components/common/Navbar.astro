@@ -1,24 +1,20 @@
 ---
-// Navbar.astro: Global minimalist navbar with scroll effects and active state tracking.
+// Navbar.astro: Floating Pill Navbar inspired by Mobbin with premium micro-interactions.
 ---
-<nav id="global-navbar" class="navbar-symmetric fixed top-0 left-0 w-full z-40 transition-colors duration-500 text-[#1A1A1A] bg-transparent">
+<nav id="global-navbar" class="navbar-symmetric">
 
-  <!-- Col 1: Logo -->
-  <a href="#" class="navbar-col navbar-col--left flex items-center gap-2.5 decoration-none no-underline group select-none">
+  <!-- Left: Logo & Brand Name -->
+  <a href="#" class="navbar-col navbar-col--left flex items-center gap-3 decoration-none no-underline group select-none">
     <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain transition-all duration-500" />
-  </a>
-
-  <!-- Col 2: Brand name (center) -->
-  <div class="navbar-col navbar-col--center">
-    <span id="navbar-brand-name" class="font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[4px] uppercase transition-colors duration-500 whitespace-nowrap">
+    <span id="navbar-brand-name" class="navbar-brand-text font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[3px] uppercase whitespace-nowrap text-current transition-colors duration-500">
       La Casa de la Hamburpizza
     </span>
-  </div>
+  </a>
 
-  <!-- Col 3: Nav links & Hamburger -->
-  <div class="navbar-col navbar-col--right flex items-center justify-end">
+  <!-- Right: Nav links, CTA Button, & Hamburger -->
+  <div class="navbar-col navbar-col--right flex items-center gap-4 md:gap-6 justify-end">
     <!-- Desktop Links (Tablet & Desktop only) -->
-    <div class="navbar-desktop-links gap-5 md:gap-8 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
+    <div class="navbar-desktop-links gap-6 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
       <button class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)]" id="global-nav-btn-editorial">
         Carta
       </button>
@@ -30,8 +26,13 @@
       </a>
     </div>
 
+    <!-- CTA Delivery Button (Tablet & Desktop only) -->
+    <a href="https://wa.me/584120721925" target="_blank" class="navbar-cta-btn no-underline decoration-none font-sans text-[10px] md:text-xs uppercase font-bold tracking-[1px] px-4 md:px-5 py-2 md:py-2.5 rounded-full transition-all duration-300">
+      Pide Delivery
+    </a>
+
     <!-- Hamburger Button (Mobile only) -->
-    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-10 h-10 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
+    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-12 h-12 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
       <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top"></span>
       <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle"></span>
       <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom"></span>
@@ -55,31 +56,47 @@
 </div>
 
 <style>
-  /* ─── Symmetric Navbar: Responsive Flexbox/Grid ─────────────────── */
+  /* ─── Floating Pill Navbar: Responsive Styles ─────────────────── */
   .navbar-symmetric {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 92%;
+    max-w: 1200px;
+    border-radius: 9999px;
+    padding: 10px 24px;
+    border: 1px solid rgba(26, 26, 26, 0.15);
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    z-index: 40;
+    color: #1A1A1A;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  @media (min-width: 768px) {
+  @media (max-width: 767px) {
     .navbar-symmetric {
-      padding: 14px 32px;
+      top: 12px;
+      padding: 8px 16px;
+      width: 94%;
     }
   }
 
-  @media (min-width: 1024px) {
-    .navbar-symmetric {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr 1fr;
-      align-items: center;
-      padding: 14px 48px;
-      gap: 1.5rem;
-    }
+  /* Scrolled dark theme applied dynamically */
+  .navbar-symmetric.scrolled {
+    background-color: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #ffffff;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
   }
 
-  /* Each column is a flex container for alignment control */
+  /* Column flex settings */
   .navbar-col {
     display: flex;
     align-items: center;
@@ -89,33 +106,47 @@
     justify-content: flex-start;
   }
 
-  /* Specifying .navbar-col.navbar-col--center to increase specificity and successfully override display: flex */
-  .navbar-col.navbar-col--center {
-    justify-content: center;
-    text-align: center;
-    display: none; /* Hidden on mobile/tablets by default */
-  }
-
-  @media (min-width: 1024px) {
-    .navbar-col.navbar-col--center {
-      display: flex; /* Shown only on desktop */
-    }
-  }
-
   .navbar-col--right {
     justify-content: flex-end;
-    width: auto;
+  }
+
+  /* Brand name visibility and responsiveness */
+  .navbar-brand-text {
+    display: none;
   }
 
   @media (min-width: 1024px) {
-    .navbar-col--right {
-      width: 100%;
+    .navbar-brand-text {
+      display: inline-block;
     }
   }
 
   /* Responsive Display classes for desktop links and mobile menu button */
   .navbar-desktop-links {
     display: none;
+  }
+
+  .navbar-cta-btn {
+    display: none;
+    background-color: #1A1A1A;
+    color: #FFD500;
+  }
+
+  .navbar-cta-btn:hover {
+    background-color: #E62020;
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  /* Scrolled dark theme button state */
+  .navbar-symmetric.scrolled .navbar-cta-btn {
+    background-color: #FFD500;
+    color: #1A1A1A;
+  }
+
+  .navbar-symmetric.scrolled .navbar-cta-btn:hover {
+    background-color: #ffffff;
+    color: #1A1A1A;
   }
 
   .navbar-mobile-menu-btn {
@@ -125,6 +156,9 @@
   @media (min-width: 768px) {
     .navbar-desktop-links {
       display: flex;
+    }
+    .navbar-cta-btn {
+      display: inline-block;
     }
     .navbar-mobile-menu-btn {
       display: none;
@@ -168,7 +202,6 @@
     (window as any).__navbarInitialized = true;
 
     const navbar = document.getElementById('global-navbar');
-    const brandName = document.getElementById('navbar-brand-name');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -219,40 +252,15 @@
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    // 2. Change Theme on Scroll (Deterministic Native Event to prevent height-toggling bugs in Gallery)
+    // 2. Change Theme on Scroll (Deterministic Native Event)
     function updateNavbarTheme() {
       const currentScrollY = window.scrollY;
       const threshold = window.innerHeight * 0.8; // Change theme at 80% viewport height
 
       if (currentScrollY > threshold) {
-        // Scrolled down -> Dark Navbar
-        gsap.to(navbar, {
-          backgroundColor: 'rgba(26, 26, 26, 0.85)',
-          backdropFilter: 'blur(12px)',
-          borderColor: 'rgba(255, 255, 255, 0.1)',
-          borderBottomWidth: '1px',
-          paddingTop: '12px',
-          paddingBottom: '12px',
-          color: '#ffffff',
-          duration: 0.4,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
-        if (brandName) brandName.style.color = '#ffffff';
+        navbar.classList.add('scrolled');
       } else {
-        // Near top -> Transparent / Light Navbar
-        gsap.to(navbar, {
-          backgroundColor: 'rgba(26, 26, 26, 0)',
-          backdropFilter: 'blur(0px)',
-          borderBottomWidth: '0px',
-          paddingTop: '14px',
-          paddingBottom: '14px',
-          color: '#1A1A1A',
-          duration: 0.4,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
-        if (brandName) brandName.style.color = '#1A1A1A';
+        navbar.classList.remove('scrolled');
       }
     }
 
