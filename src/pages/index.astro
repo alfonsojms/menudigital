@@ -105,17 +105,16 @@ import DishProfile from '../components/menu/DishProfile.astro';
           (window as any).lenis.scrollTo('#menu-content-container', {
             offset: -10,
             duration: isMobile ? 0.3 : 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            onComplete: () => {
-              ScrollTrigger.refresh();
-            }
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
           });
         } else {
           document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(() => {
-            ScrollTrigger.refresh();
-          }, isMobile ? 350 : 850);
         }
+        
+        // Refresh ScrollTrigger after a slight delay so it doesn't block the start of the scroll animation
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, isMobile ? 350 : 850);
       });
     };
 
@@ -143,17 +142,16 @@ import DishProfile from '../components/menu/DishProfile.astro';
           (window as any).lenis.scrollTo('#menu-content-container', {
             offset: -10,
             duration: isMobile ? 0.3 : 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            onComplete: () => {
-              ScrollTrigger.refresh();
-            }
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
           });
         } else {
           document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(() => {
-            ScrollTrigger.refresh();
-          }, isMobile ? 350 : 850);
         }
+        
+        // Refresh ScrollTrigger after a slight delay so it doesn't block the start of the scroll animation
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, isMobile ? 350 : 850);
       });
     };
 

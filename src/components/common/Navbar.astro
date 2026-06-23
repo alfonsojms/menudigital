@@ -291,18 +291,16 @@
       mobileMenuBtn.classList.remove('is-open');
       
       if (instant) {
-        // Temporarily disable CSS transition for instant fade-out
-        const prevTransition = mobileMenuOverlay.style.transition;
-        mobileMenuOverlay.style.transition = 'none';
+        mobileMenuOverlay.classList.add('instant-close');
         mobileMenuOverlay.classList.remove('is-active');
         
         // Force reflow
         mobileMenuOverlay.offsetHeight;
         
-        // Restore transition after a brief delay for subsequent menu openings
+        // Remove class after transition duration to allow smooth open transitions next time
         setTimeout(() => {
-          mobileMenuOverlay.style.transition = prevTransition;
-        }, 50);
+          mobileMenuOverlay.classList.remove('instant-close');
+        }, 150);
       } else {
         mobileMenuOverlay.classList.remove('is-active');
       }

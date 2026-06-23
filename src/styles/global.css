@@ -39,6 +39,11 @@ body.modal-open {
   overflow: hidden;
 }
 
+/* Instant Close for Mobile Overlay */
+#mobile-menu-overlay.instant-close {
+  transition: none !important;
+}
+
 /* General Hide scrollbar for a clean magazine layout */
 ::-webkit-scrollbar {
   width: 0px;
