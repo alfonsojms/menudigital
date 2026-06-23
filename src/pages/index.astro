@@ -97,24 +97,20 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Smoothly scroll to the menu content container (delayed slightly for mobile menu scroll lock compatibility)
-      setTimeout(() => {
+      // Scroll to menu content on next frame (single rAF ensures DOM reflow after modal-open removal)
+      requestAnimationFrame(() => {
         if ((window as any).lenis) {
           (window as any).lenis.resize();
           (window as any).lenis.scrollTo('#menu-content-container', {
-            offset: -10, // Scroll 10px past target to completely hide the cover page and dynamic browser bar gaps
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            offset: -10,
+            duration: 0.8,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
           });
         } else {
           document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 150);
-
-      // Force GSAP ScrollTrigger to recalculate new heights and trigger values
-      setTimeout(() => {
         ScrollTrigger.refresh();
-      }, 50);
+      });
     };
 
     const showGallery = () => {
@@ -133,24 +129,20 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Smoothly scroll to the menu content container (delayed slightly for mobile menu scroll lock compatibility)
-      setTimeout(() => {
+      // Scroll to menu content on next frame (single rAF ensures DOM reflow after modal-open removal)
+      requestAnimationFrame(() => {
         if ((window as any).lenis) {
           (window as any).lenis.resize();
           (window as any).lenis.scrollTo('#menu-content-container', {
-            offset: -10, // Scroll 10px past target to completely hide the cover page and dynamic browser bar gaps
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            offset: -10,
+            duration: 0.8,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
           });
         } else {
           document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 150);
-
-      // Force GSAP ScrollTrigger to recalculate new heights
-      setTimeout(() => {
         ScrollTrigger.refresh();
-      }, 50);
+      });
     };
 
     // Bind event listeners to both sets of header links (Cover header + Menu header)
