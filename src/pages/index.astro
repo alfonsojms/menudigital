@@ -117,11 +117,14 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, programmatically scroll to the menu content section.
-        // Native anchor scrolling doesn't work reliably because the mobile overlay
-        // and GSAP animations interfere with timing. This matches how Info works.
+        // On mobile, programmatically scroll so the menu content fully covers the viewport.
+        // We calculate the exact offset to ensure the cover is completely hidden.
         setTimeout(() => {
-          document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          const menuContainer = document.getElementById('menu-content-container');
+          if (menuContainer) {
+            const targetScroll = menuContainer.offsetTop;
+            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+          }
           setTimeout(() => {
             ScrollTrigger.refresh();
           }, 350);
@@ -165,11 +168,14 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // On mobile, programmatically scroll to the menu content section.
-        // Native anchor scrolling doesn't work reliably because the mobile overlay
-        // and GSAP animations interfere with timing. This matches how Info works.
+        // On mobile, programmatically scroll so the menu content fully covers the viewport.
+        // We calculate the exact offset to ensure the cover is completely hidden.
         setTimeout(() => {
-          document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          const menuContainer = document.getElementById('menu-content-container');
+          if (menuContainer) {
+            const targetScroll = menuContainer.offsetTop;
+            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+          }
           setTimeout(() => {
             ScrollTrigger.refresh();
           }, 350);
