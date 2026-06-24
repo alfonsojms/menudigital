@@ -28,6 +28,12 @@
 
   <!-- Right: Nav links, CTA Button, & Hamburger -->
   <div class="navbar-col navbar-col--right flex items-center gap-4 md:gap-6 justify-end">
+    <!-- Cart Trigger Badge (Global) -->
+    <button id="navbar-cart-trigger" class="relative flex items-center justify-center p-2 text-current hover:text-[var(--color-brand-red)] transition-colors duration-300 cursor-pointer outline-none border-none bg-transparent" title="Ver pedido" style="-webkit-tap-highlight-color: transparent;">
+      <span class="material-symbols-outlined text-2xl font-bold">shopping_cart</span>
+      <span id="navbar-cart-badge" class="absolute -top-0.5 -right-0.5 hidden bg-[var(--color-brand-red)] text-white font-mono text-[9px] font-bold w-4.5 h-4.5 rounded-full items-center justify-center border border-[#1A1A1A]">0</span>
+    </button>
+
     <!-- Desktop Links (Tablet & Desktop only) -->
     <div class="navbar-desktop-links gap-6 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
       <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline text-current" href="#dossier-section">
@@ -240,6 +246,7 @@
 
 <script>
   import { gsap } from 'gsap';
+  import { getCartItemsCount } from '../../utils/cartStore';
 
   function initNavbarAnimations() {
     if ((window as any).__navbarInitialized) return;
@@ -251,6 +258,31 @@
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
     if (!navbar) return;
+
+    // Cart Badge Update Logic
+    const cartTrigger = document.getElementById('navbar-cart-trigger');
+    const cartBadge = document.getElementById('navbar-cart-badge');
+    
+    function updateNavbarCartBadge() {
+      const count = getCartItemsCount();
+      if (cartBadge) {
+        cartBadge.innerText = count.toString();
+        if (count > 0) {
+          cartBadge.classList.remove('hidden');
+          cartBadge.classList.add('flex');
+        } else {
+          cartBadge.classList.add('hidden');
+          cartBadge.classList.remove('flex');
+        }
+      }
+    }
+
+    cartTrigger?.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('open-order-sheet'));
+    });
+
+    document.addEventListener('cart-updated', updateNavbarCartBadge);
+    updateNavbarCartBadge(); // Initial run
 
     let lastScrollY = window.scrollY;
     let isHidden = false;

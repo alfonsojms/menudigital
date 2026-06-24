@@ -86,7 +86,12 @@ const sections = [
                         {dish.name}
                       </h3>
                       <div class="dotted-leader"></div>
-                      <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold">${dish.price}</span>
+                      <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold mr-3">${dish.price}</span>
+                      {!dish.soldOut && (
+                        <button class="add-to-cart-btn z-10 p-1.5 flex items-center justify-center bg-[var(--color-brand-yellow)] text-black hover:bg-[#F58220] hover:text-white transition-colors duration-300 rounded-md cursor-pointer outline-none border-none" data-dish-id={dish.id} data-dish-name={dish.name} data-dish-price={dish.price} data-dish-image={dish.image} title="Añadir al delivery">
+                          <span class="material-symbols-outlined text-[16px] font-bold">add_shopping_cart</span>
+                        </button>
+                      )}
                     </div>
                     <p class={`text-[13px] text-white/70 mt-1 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
                       {dish.description}
@@ -244,6 +249,7 @@ const sections = [
 
 <script>
   import { gsap } from 'gsap';
+  import { addToCart } from '../../utils/cartStore';
 
   function initHoverPreview() {
     const preview = document.getElementById('hover-image-preview');
@@ -311,7 +317,31 @@ const sections = [
     }, { passive: true });
   }
 
+  function initAddToCart() {
+    const addBtns = document.querySelectorAll('.add-to-cart-btn');
+    addBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dishId = btn.getAttribute('data-dish-id') || '';
+        const name = btn.getAttribute('data-dish-name') || '';
+        const price = parseFloat(btn.getAttribute('data-dish-price') || '0');
+        const image = btn.getAttribute('data-dish-image') || '';
+        
+        if (dishId) {
+          addToCart({ id: dishId, name, price, image });
+          gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: 'back.out(1.5)' });
+        }
+      });
+    });
+  }
+
   // Initialize on loader-finished (when page reveals) and on DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', initHoverPreview);
-  document.addEventListener('loader-finished', initHoverPreview);
+  document.addEventListener('DOMContentLoaded', () => {
+    initHoverPreview();
+    initAddToCart();
+  });
+  document.addEventListener('loader-finished', () => {
+    initHoverPreview();
+    initAddToCart();
+  });
 </script>
