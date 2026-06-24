@@ -201,6 +201,35 @@ import DishProfile from '../components/menu/DishProfile.astro';
         showGallery();
       });
     });
+
+    // Bind event listeners to Info buttons (both desktop and mobile) for smooth scroll
+    const btnInfo = document.querySelectorAll('a[href="#dossier-section"]');
+    btnInfo.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#dossier-section', {
+              duration: 1.2,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('dossier-section')?.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else {
+          // Mobile native smooth scroll after a 150ms delay (to let the hamburger menu close and body overflow unlock)
+          setTimeout(() => {
+            const el = document.getElementById('dossier-section');
+            if (el) {
+              const targetY = el.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({ top: targetY, behavior: 'smooth' });
+            }
+          }, 150);
+        }
+      });
+    });
   }
 
   // 2. Open Dish Profile details modal on click
