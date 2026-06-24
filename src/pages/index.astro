@@ -91,6 +91,18 @@ import DishProfile from '../components/menu/DishProfile.astro';
       btnEditorial.forEach(btn => btn.classList.add('active-nav-item'));
       btnGallery.forEach(btn => btn.classList.remove('active-nav-item'));
 
+      // Update inline view switcher state
+      const switchHighlight = document.getElementById('switcher-highlight');
+      const switchBtnEditorial = document.getElementById('switch-btn-editorial');
+      const switchBtnGallery = document.getElementById('switch-btn-gallery');
+      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
+        switchHighlight.style.transform = 'translateX(0)';
+        switchBtnEditorial.classList.remove('text-white/60');
+        switchBtnEditorial.classList.add('text-black');
+        switchBtnGallery.classList.remove('text-black');
+        switchBtnGallery.classList.add('text-white/60');
+      }
+
       // Fade-in canvas wrapper cleanly
       gsap.fromTo(canvasWrapper, 
         { opacity: 0, y: 15 },
@@ -122,8 +134,8 @@ import DishProfile from '../components/menu/DishProfile.astro';
         setTimeout(() => {
           const el = document.getElementById('menu-content-container');
           if (el) {
-            // Scroll to the container top + 80px extra to push the Cover completely out of view
-            const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
+            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping headers visible
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 12;
             window.scrollTo({ top: targetY, behavior: 'smooth' });
           }
           
@@ -143,6 +155,18 @@ import DishProfile from '../components/menu/DishProfile.astro';
       // Update navigation active button styling
       btnGallery.forEach(btn => btn.classList.add('active-nav-item'));
       btnEditorial.forEach(btn => btn.classList.remove('active-nav-item', 'text-[var(--color-brand-red)]'));
+
+      // Update inline view switcher state
+      const switchHighlight = document.getElementById('switcher-highlight');
+      const switchBtnEditorial = document.getElementById('switch-btn-editorial');
+      const switchBtnGallery = document.getElementById('switch-btn-gallery');
+      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
+        switchHighlight.style.transform = 'translateX(100%)';
+        switchBtnGallery.classList.remove('text-white/60');
+        switchBtnGallery.classList.add('text-black');
+        switchBtnEditorial.classList.remove('text-black');
+        switchBtnEditorial.classList.add('text-white/60');
+      }
 
       // Fade-in gallery wrapper cleanly
       gsap.fromTo(galleryWrapper, 
@@ -175,8 +199,8 @@ import DishProfile from '../components/menu/DishProfile.astro';
         setTimeout(() => {
           const el = document.getElementById('menu-content-container');
           if (el) {
-            // Scroll to the container top + 80px extra to push the Cover completely out of view
-            const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
+            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping filter header visible
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 12;
             window.scrollTo({ top: targetY, behavior: 'smooth' });
           }
           
