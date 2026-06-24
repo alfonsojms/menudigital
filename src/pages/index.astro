@@ -117,28 +117,20 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // Mobile: Stop Lenis to prevent it from intercepting scroll,
-        // then use native window.scrollTo with extra offset to fully cover the screen.
-        const lenis = (window as any).lenis;
-        if (lenis) lenis.stop();
-        
+        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
+        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
         setTimeout(() => {
           const el = document.getElementById('menu-content-container');
           if (el) {
             // Scroll to the container top + 80px extra to push the Cover completely out of view
             const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
-            window.scrollTo({ top: targetY, behavior: 'instant' });
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
           }
           
-          // Restart Lenis and refresh ScrollTrigger after scroll completes
           setTimeout(() => {
-            if (lenis) {
-              lenis.start();
-              lenis.resize();
-            }
             ScrollTrigger.refresh();
-          }, 100);
-        }, 50);
+          }, 800);
+        }, 150);
       }
     };
 
@@ -178,28 +170,20 @@ import DishProfile from '../components/menu/DishProfile.astro';
           }, 850);
         });
       } else {
-        // Mobile: Stop Lenis to prevent it from intercepting scroll,
-        // then use native window.scrollTo with extra offset to fully cover the screen.
-        const lenis = (window as any).lenis;
-        if (lenis) lenis.stop();
-        
+        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
+        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
         setTimeout(() => {
           const el = document.getElementById('menu-content-container');
           if (el) {
             // Scroll to the container top + 80px extra to push the Cover completely out of view
             const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
-            window.scrollTo({ top: targetY, behavior: 'instant' });
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
           }
           
-          // Restart Lenis and refresh ScrollTrigger after scroll completes
           setTimeout(() => {
-            if (lenis) {
-              lenis.start();
-              lenis.resize();
-            }
             ScrollTrigger.refresh();
-          }, 100);
-        }, 50);
+          }, 800);
+        }, 150);
       }
     };
 
