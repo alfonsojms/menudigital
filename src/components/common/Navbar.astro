@@ -11,17 +11,26 @@
     </span>
   </a>
 
+  <!-- Center: Premium View Switcher (Segmented Control) -->
+  <div class="relative inline-flex p-0.5 rounded-full select-none" id="navbar-switcher">
+    <!-- Sliding Highlight -->
+    <div id="switcher-highlight" class="absolute top-0.5 bottom-0.5 left-0.5 rounded-full bg-[var(--color-brand-yellow)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" style="width: calc(50% - 2px); transform: translateX(0);"></div>
+    
+    <!-- Button 1: Carta -->
+    <button id="switch-btn-editorial" class="btn-toggle-editorial relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black active cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
+      Carta
+    </button>
+    <!-- Button 2: Galeria -->
+    <button id="switch-btn-gallery" class="btn-toggle-gallery relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black/60 hover:text-black cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
+      Galería
+    </button>
+  </div>
+
   <!-- Right: Nav links, CTA Button, & Hamburger -->
   <div class="navbar-col navbar-col--right flex items-center gap-4 md:gap-6 justify-end">
     <!-- Desktop Links (Tablet & Desktop only) -->
     <div class="navbar-desktop-links gap-6 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
-      <a href="#menu-content-container" class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-editorial text-[var(--color-brand-red)] no-underline decoration-none" id="global-nav-btn-editorial">
-        Carta
-      </a>
-      <a href="#menu-content-container" class="hover:text-[#E62020] transition-colors duration-300 cursor-pointer btn-toggle-gallery no-underline decoration-none" id="global-nav-btn-gallery">
-        Galería
-      </a>
-      <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline" href="#dossier-section">
+      <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline text-current" href="#dossier-section">
         Info
       </a>
     </div>
@@ -43,7 +52,7 @@
 <!-- Mobile Menu Overlay (Fullscreen with premium glassmorphism) -->
 <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center opacity-0 pointer-events-none" style="transition: opacity 0.15s ease-out;">
   <div class="flex flex-col gap-8 text-center font-display text-4xl uppercase tracking-wider text-white">
-    <a href="#menu-content-container" class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer no-underline decoration-none" id="mobile-nav-btn-editorial" style="touch-action: manipulation;">
+    <a href="#menu-content-container" class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer no-underline decoration-none active-nav-item" id="mobile-nav-btn-editorial" style="touch-action: manipulation;">
       Carta
     </a>
     <a href="#menu-content-container" class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-gallery cursor-pointer no-underline decoration-none" id="mobile-nav-btn-gallery" style="touch-action: manipulation;">
@@ -195,6 +204,38 @@
   }
 
   /* Fast fade-out is handled by inline style (0.15s) so close feels instant */
+
+  /* View Switcher inside Navbar */
+  #navbar-switcher {
+    border: 1px solid rgba(26, 26, 26, 0.15);
+    background-color: rgba(26, 26, 26, 0.08);
+  }
+
+  /* Scrolled theme switcher override */
+  .navbar-symmetric.scrolled #navbar-switcher {
+    border-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Button text colors based on active class */
+  .navbar-symmetric #switch-btn-editorial.active,
+  .navbar-symmetric #switch-btn-gallery.active {
+    color: #1A1A1A !important;
+  }
+
+  .navbar-symmetric #switch-btn-editorial:not(.active) {
+    color: rgba(26, 26, 26, 0.6);
+  }
+  .navbar-symmetric.scrolled #switch-btn-editorial:not(.active) {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .navbar-symmetric #switch-btn-gallery:not(.active) {
+    color: rgba(26, 26, 26, 0.6);
+  }
+  .navbar-symmetric.scrolled #switch-btn-gallery:not(.active) {
+    color: rgba(255, 255, 255, 0.6);
+  }
 </style>
 
 <script>
