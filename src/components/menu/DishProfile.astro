@@ -10,7 +10,7 @@
   </div>
 
   <!-- Right Panel: Text Content -->
-  <div class="relative w-full h-[60vh] md:h-full md:w-1/2 flex flex-col bg-[#1A1A1A] custom-scrollbar overflow-y-auto pt-12 pb-20 md:py-24 px-8 md:px-16 lg:px-24">
+  <div class="relative w-full h-[60vh] md:h-full md:w-1/2 flex flex-col bg-[#1A1A1A] custom-scrollbar overflow-y-auto pt-12 pb-20 md:py-24 px-8 md:px-16 lg:px-24" data-lenis-prevent>
     
     <!-- Close Button -->
     <button 
@@ -47,6 +47,35 @@
           Allergens: Alliums, Tree Nuts, Gluten
         </p>
       </div>
+
+      <!-- Cart Add/Remove Controls -->
+      <div class="mt-8 border-t border-white/10 pt-8 flex items-center justify-between gap-4">
+        <!-- Price Display -->
+        <div class="flex flex-col">
+          <span class="text-xs font-mono text-white/40 uppercase tracking-widest">Precio</span>
+          <span class="text-2xl font-mono font-bold text-[var(--color-brand-yellow)]" id="dish-modal-price">$0.00</span>
+        </div>
+        
+        <!-- Action Button / Quantity Controls -->
+        <div id="dish-modal-cart-control" class="relative overflow-hidden h-[44px]">
+          <!-- Add Button (shows when Qty = 0) -->
+          <button id="dish-modal-add-btn" class="px-6 py-2.5 h-full bg-[var(--color-brand-yellow)] hover:bg-[#F58220] transition-colors duration-300 text-black font-sans font-bold uppercase tracking-wider text-xs rounded-full flex items-center gap-2 cursor-pointer outline-none border-none">
+            <span class="material-symbols-outlined text-sm font-bold">shopping_bag</span>
+            Añadir al delivery
+          </button>
+          
+          <!-- Qty Adjuster (shows when Qty > 0, initially hidden) -->
+          <div id="dish-modal-qty-control" class="hidden flex items-center border border-white/20 rounded-full h-full overflow-hidden bg-white/5">
+            <button id="dish-modal-minus-btn" class="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent">
+              <span class="material-symbols-outlined text-sm font-bold">remove</span>
+            </button>
+            <span id="dish-modal-qty-val" class="w-10 text-center font-mono font-bold text-sm">0</span>
+            <button id="dish-modal-plus-btn" class="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent">
+              <span class="material-symbols-outlined text-sm font-bold">add</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     
   </div>
@@ -72,6 +101,7 @@
 <script>
   import { gsap } from 'gsap';
   import { menuData } from '../../types/menuData';
+  import { getCart, addToCart, removeFromCart } from '../../utils/cartStore';
 
   const modal = document.getElementById('dish-profile-modal');
   const closeBtn = document.getElementById('close-dish-modal');
@@ -83,13 +113,36 @@
   const ingredientsList = document.getElementById('dish-modal-ingredients');
   const allergensElement = document.getElementById('dish-modal-allergens');
   const modalContent = document.getElementById('dish-modal-content');
+  const priceElement = document.getElementById('dish-modal-price');
 
   let lastScrollY = 0;
   let isOpen = false;
+  let currentDishId = '';
+
+  function updateModalCartState() {
+    const cart = getCart();
+    const item = cart.find(i => i.id === currentDishId);
+    const qty = item ? item.quantity : 0;
+
+    const addBtn = document.getElementById('dish-modal-add-btn');
+    const qtyControl = document.getElementById('dish-modal-qty-control');
+    const qtyVal = document.getElementById('dish-modal-qty-val');
+
+    if (qty > 0) {
+      addBtn?.classList.add('hidden');
+      qtyControl?.classList.remove('hidden');
+      if (qtyVal) qtyVal.innerText = qty.toString();
+    } else {
+      addBtn?.classList.remove('hidden');
+      qtyControl?.classList.add('hidden');
+    }
+  }
 
   function populateModal(dishId: string) {
     const dish = menuData.find(d => d.id === dishId);
     if (!dish) return false;
+
+    currentDishId = dishId;
 
     // Set text contents
     if (imgElement) imgElement.style.backgroundImage = `url('${dish.image}')`;
@@ -97,6 +150,7 @@
     if (titleElement) titleElement.innerText = dish.name;
     if (storyElement) storyElement.innerText = dish.story;
     if (allergensElement) allergensElement.innerText = dish.allergens ? `Alergenos: ${dish.allergens}` : 'Alergenos: Ninguno';
+    if (priceElement) priceElement.innerText = `$${dish.price}`;
 
     // Clear and build ingredients list
     if (ingredientsList) {
@@ -109,6 +163,7 @@
       });
     }
 
+    updateModalCartState();
     return true;
   }
 
@@ -201,4 +256,39 @@
   });
 
   closeBtn?.addEventListener('click', closeModal);
+
+  // Cart action listeners
+  const addBtn = document.getElementById('dish-modal-add-btn');
+  const plusBtn = document.getElementById('dish-modal-plus-btn');
+  const minusBtn = document.getElementById('dish-modal-minus-btn');
+
+  addBtn?.addEventListener('click', () => {
+    const dish = menuData.find(d => d.id === currentDishId);
+    if (dish) {
+      addToCart({ id: dish.id, name: dish.name, price: dish.price, image: dish.image });
+      updateModalCartState();
+    }
+  });
+
+  plusBtn?.addEventListener('click', () => {
+    const dish = menuData.find(d => d.id === currentDishId);
+    if (dish) {
+      addToCart({ id: dish.id, name: dish.name, price: dish.price, image: dish.image });
+      updateModalCartState();
+    }
+  });
+
+  minusBtn?.addEventListener('click', () => {
+    if (currentDishId) {
+      removeFromCart(currentDishId);
+      updateModalCartState();
+    }
+  });
+
+  // Listen for background updates
+  document.addEventListener('cart-updated', () => {
+    if (isOpen && currentDishId) {
+      updateModalCartState();
+    }
+  });
 </script>

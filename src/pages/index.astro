@@ -9,6 +9,8 @@ import MenuCanvas from '../components/menu/MenuCanvas.astro';
 import MenuGallery from '../components/menu/MenuGallery.astro';
 import Dossier from '../components/menu/Dossier.astro';
 import DishProfile from '../components/menu/DishProfile.astro';
+import FloatingCartBar from '../components/menu/FloatingCartBar.astro';
+import OrderSheet from '../components/menu/OrderSheet.astro';
 ---
 
 <Layout>
@@ -49,6 +51,10 @@ import DishProfile from '../components/menu/DishProfile.astro';
 
   <!-- Split Screen Detail Modal overlay -->
   <DishProfile />
+
+  <!-- Delivery Order Builder Components -->
+  <FloatingCartBar />
+  <OrderSheet />
 </Layout>
 
 <script>
