@@ -28,7 +28,7 @@ import DishProfile from '../components/menu/DishProfile.astro';
   <Cover />
 
   <!-- Menu Content Container (scrolls up after cover) -->
-  <div id="menu-content-container" class="relative w-full z-20 bg-[#1A1A1A]">
+  <div id="menu-content-container" class="relative w-full z-20 bg-[#1A1A1A] min-h-screen">
     <div class="relative w-full">
       
       <!-- Asymmetric Editorial View -->
@@ -97,21 +97,41 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Smoothly scroll to the menu content container
-      if ((window as any).lenis) {
-        (window as any).lenis.scrollTo('#menu-content-container', {
-          offset: 0,
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile) {
+        // Desktop uses Lenis smooth scroll
+        requestAnimationFrame(() => {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: -10,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 850);
         });
       } else {
-        document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
+        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
+        setTimeout(() => {
+          const el = document.getElementById('menu-content-container');
+          if (el) {
+            // Scroll to the container top + 80px extra to push the Cover completely out of view
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 800);
+        }, 150);
       }
-
-      // Force GSAP ScrollTrigger to recalculate new heights and trigger values
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 50);
     };
 
     const showGallery = () => {
@@ -130,34 +150,54 @@ import DishProfile from '../components/menu/DishProfile.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      // Smoothly scroll to the menu content container
-      if ((window as any).lenis) {
-        (window as any).lenis.scrollTo('#menu-content-container', {
-          offset: 0,
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile) {
+        // Desktop uses Lenis smooth scroll
+        requestAnimationFrame(() => {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: -10,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 850);
         });
       } else {
-        document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
+        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
+        setTimeout(() => {
+          const el = document.getElementById('menu-content-container');
+          if (el) {
+            // Scroll to the container top + 80px extra to push the Cover completely out of view
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 80;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 800);
+        }, 150);
       }
-
-      // Force GSAP ScrollTrigger to recalculate new heights
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 50);
     };
 
     // Bind event listeners to both sets of header links (Cover header + Menu header)
     btnEditorial.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Always prevent default — we handle scroll programmatically
         showEditorial();
       });
     });
 
     btnGallery.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Always prevent default — we handle scroll programmatically
         showGallery();
       });
     });

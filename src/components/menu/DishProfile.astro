@@ -123,10 +123,8 @@
     // Stop Lenis smooth scroll
     if ((window as any).lenis) (window as any).lenis.stop();
     
-    // Save scroll position and lock body scroll
-    lastScrollY = window.scrollY;
+    // Lock body scroll
     document.body.classList.add('modal-open');
-    document.body.style.top = `-${lastScrollY}px`;
 
     // Make modal visible but transparent initially, then animate
     if (modal) {
@@ -177,13 +175,14 @@
         onComplete: () => {
           modal.classList.add('pointer-events-none');
           
-          // Restore scroll position
+          // Restore scroll
           document.body.classList.remove('modal-open');
-          document.body.style.top = '';
-          window.scrollTo(0, lastScrollY);
 
           // Restart Lenis smooth scroll
-          if ((window as any).lenis) (window as any).lenis.start();
+          if ((window as any).lenis) {
+            (window as any).lenis.start();
+            (window as any).lenis.resize();
+          }
         }
       });
 
