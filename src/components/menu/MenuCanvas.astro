@@ -339,13 +339,15 @@ const sections = [
     });
   }
 
-  // Initialize on loader-finished (when page reveals) and on DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', () => {
+  let initialized = false;
+  function initAll() {
+    if (initialized) return;
+    initialized = true;
     initHoverPreview();
     initAddToCart();
-  });
-  document.addEventListener('loader-finished', () => {
-    initHoverPreview();
-    initAddToCart();
-  });
+  }
+
+  // Initialize on loader-finished (when page reveals) and on DOMContentLoaded safely
+  document.addEventListener('DOMContentLoaded', initAll);
+  document.addEventListener('loader-finished', initAll);
 </script>
