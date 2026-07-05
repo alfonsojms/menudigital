@@ -17,7 +17,15 @@
 >
   <!-- Header / Drag Indicator -->
   <div class="flex-shrink-0 pt-3 pb-4 px-6 border-b border-white/5 flex items-center justify-between">
-    <h2 class="font-display text-lg md:text-xl uppercase tracking-wider text-[var(--color-brand-yellow)]">Tu Pedido</h2>
+    <div class="flex items-center gap-4">
+      <h2 class="font-display text-lg md:text-xl uppercase tracking-wider text-[var(--color-brand-yellow)]">Tu Pedido</h2>
+      <button 
+        id="clear-cart-btn" 
+        class="hidden px-2.5 py-1 text-[9px] font-mono uppercase tracking-widest text-[var(--color-brand-red)] hover:bg-[var(--color-brand-red)]/10 transition-colors rounded border border-[var(--color-brand-red)]/20 cursor-pointer outline-none"
+      >
+        Limpiar todo
+      </button>
+    </div>
     <button 
       id="close-order-sheet" 
       aria-label="Cerrar pedido"
@@ -135,6 +143,7 @@
   const subtotalVal = document.getElementById('order-subtotal');
   const totalVal = document.getElementById('order-total');
   const submitBtn = document.getElementById('submit-order-whatsapp');
+  const clearCartBtn = document.getElementById('clear-cart-btn');
 
   // Input Fields
   const nameInput = document.getElementById('order-name') as HTMLInputElement;
@@ -214,6 +223,12 @@
 
     if (subtotalVal) subtotalVal.innerText = `$${total.toFixed(2)}`;
     if (totalVal) totalVal.innerText = `$${total.toFixed(2)}`;
+
+    if (cart.length > 0) {
+      clearCartBtn?.classList.remove('hidden');
+    } else {
+      clearCartBtn?.classList.add('hidden');
+    }
 
     if (cart.length === 0) {
       itemsContainer.innerHTML = `
@@ -326,11 +341,29 @@
     window.open(waUrl, '_blank');
   }
 
+  // Auto-save form inputs to localStorage on input/change
+  nameInput?.addEventListener('input', () => {
+    localStorage.setItem('delivery_name', nameInput.value.trim());
+  });
+  addressInput?.addEventListener('input', () => {
+    localStorage.setItem('delivery_address', addressInput.value.trim());
+  });
+  paymentSelect?.addEventListener('change', () => {
+    localStorage.setItem('delivery_payment', paymentSelect.value);
+  });
+
   // Event bindings
   document.addEventListener('open-order-sheet', openDrawer);
   backdrop?.addEventListener('click', closeDrawer);
   closeBtn?.addEventListener('click', closeDrawer);
   submitBtn?.addEventListener('click', handleSendOrder);
+
+  clearCartBtn?.addEventListener('click', () => {
+    if (confirm('¿Seguro que deseas vaciar tu pedido?')) {
+      clearCart();
+      renderCartItems();
+    }
+  });
 
   // Escape key handler
   window.addEventListener('keydown', (e) => {
