@@ -1,0 +1,353 @@
+---
+// MenuCanvas.astro: Symmetric 2-column editorial layout — secciones en cuadrícula balanceada.
+import { menuData } from '../../types/menuData';
+
+const sections = [
+  {
+    id: "tequeperros",
+    title: "Tequeperros",
+    subtitle: "Fusionamos el rico tequeño venezolano con el clásico perro caliente, cambiando el pan por un súper tequeño.",
+    items: menuData.filter(d => d.id.includes("tequeperro")),
+  },
+  {
+    id: "perros",
+    title: "Perros",
+    subtitle: "El clásico indiscutible de la calle con su ensalada y queso de año.",
+    items: menuData.filter(d => d.id.includes("perro") && !d.id.includes("tequeperro")),
+  },
+  {
+    id: "hamburpizzas",
+    title: "Hamburpizzas",
+    subtitle: "La fusión de sabores que buscabas, uniendo lo mejor de la hamburguesa y lo exquisito de una buena pizza.",
+    items: menuData.filter(d => d.id.includes("hamburpizza")),
+  },
+  {
+    id: "pizzas",
+    title: "Pizzas",
+    subtitle: "Masa estirada a mano, salsa pomodoro y queso mozzarella derretido.",
+    items: menuData.filter(d => d.id.includes("pizza") && !d.id.includes("hamburpizza") && d.category !== 'desserts'),
+  },
+  {
+    id: "patacon",
+    title: "Patacón",
+    subtitle: "El auténtico sabor zuliano con tapas de plátano macho crujiente.",
+    items: menuData.filter(d => d.id.includes("patacon")),
+  },
+  {
+    id: "whopper",
+    title: "Whoppers",
+    subtitle: "Hamburguesas gigantes premium cargadas de sabor.",
+    items: menuData.filter(d => d.id.includes("whopper")),
+  },
+  {
+    id: "meri",
+    title: "La Meri",
+    subtitle: "Cambiamos el pan tradicional por nuestra deliciosa masa frita de la casa.",
+    items: menuData.filter(d => d.id.includes("meri")),
+  }
+];
+---
+
+<div id="editorial-view" class="w-full bg-[#1A1A1A] text-white min-h-screen">
+  <main class="w-full px-8 md:px-16 lg:px-28 pb-40">
+    <div class="menu-symmetric-grid">
+      
+      {sections.map((section, idx) => (
+        <section
+          class={`menu-section ${idx % 2 !== 0 ? 'menu-section--offset' : ''} relative`}
+          id={`section-${section.id}`}
+        >
+          <div class="border-t border-white/10 pt-6 mb-12 gs-reveal">
+            <h2 class="font-display text-4xl md:text-[54px] leading-none text-[var(--color-brand-yellow)] uppercase">
+              {section.title}
+            </h2>
+            <p class="text-xs text-white/50 tracking-wider mt-3 max-w-md font-sans uppercase">
+              {section.subtitle}
+            </p>
+          </div>
+          <div class="space-y-12">
+            {section.items.map(dish => (
+              <article 
+                class="dish-row group relative cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-yellow)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1A1A] rounded-md p-1" 
+                data-dish-id={dish.id} 
+                data-image-url={dish.image}
+                tabindex="0"
+                role="button"
+                aria-haspopup="dialog"
+                aria-label={`Ver detalles de ${dish.name}`}
+              >
+                {dish.soldOut && (
+                  <div class="absolute -left-16 top-0.5 font-mono text-[9px] text-[var(--color-brand-red)] uppercase tracking-widest bg-[var(--color-brand-red)]/10 px-2 py-0.5 border border-[var(--color-brand-red)]/20 select-none">
+                    Agotado
+                  </div>
+                )}
+                <div class="hover-dot"></div>
+                <div class="dish-row-inner">
+                  <!-- Text content -->
+                  <div class="dish-row-text">
+                    <div class={`flex items-baseline w-full gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
+                      <h3 class={`text-[16px] font-bold text-white tracking-tight group-hover:text-[var(--color-brand-yellow)] transition-colors duration-300 ${dish.soldOut ? 'line-through' : ''}`}>
+                        {dish.name}
+                      </h3>
+                      <div class="dotted-leader"></div>
+                      <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold mr-3">${dish.price}</span>
+                      {!dish.soldOut && (
+                        <button class="add-to-cart-btn z-10 p-1.5 flex items-center justify-center bg-[var(--color-brand-yellow)] text-black hover:bg-[#F58220] hover:text-white transition-colors duration-300 rounded-md cursor-pointer outline-none border-none" data-dish-id={dish.id} data-dish-name={dish.name} data-dish-price={dish.price} data-dish-image={dish.image} aria-label={`Añadir ${dish.name} al pedido`} title="Añadir al delivery">
+                          <span class="material-symbols-outlined text-[16px] font-bold" aria-hidden="true">add_shopping_cart</span>
+                        </button>
+                      )}
+                    </div>
+                    <p class={`text-[13px] text-white/70 mt-1 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
+                      {dish.description}
+                    </p>
+                  </div>
+                  <!-- Mobile thumbnail (hidden on desktop) -->
+                  <div class={`dish-thumb ${dish.soldOut ? 'opacity-40' : ''}`}>
+                    <img 
+                      src={dish.image} 
+                      alt={dish.name}
+                      loading="lazy"
+                      class="dish-thumb-img"
+                    />
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+
+    </div>
+  </main>
+
+  <!-- Floating Mouse-Following Preview Container -->
+  <div 
+    id="hover-image-preview" 
+    class="fixed pointer-events-none z-50 w-[220px] h-[280px] border-3 border-[var(--color-brand-yellow)] bg-[#262626] overflow-hidden scale-0 opacity-0 rounded-lg shadow-[0_15px_30px_rgba(0,0,0,0.5)] transition-transform duration-100"
+    style="left: 0; top: 0; transform: translate3d(0, 0, 0);"
+  >
+    <div id="hover-image-inner" class="w-full h-full bg-cover bg-center transition-all duration-300"></div>
+  </div>
+</div>
+
+<style>
+  /* ─── Symmetric 2-column menu grid ────────────────────────────────── */
+  .menu-symmetric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem 5rem;
+    padding-top: 4rem;
+  }
+
+  /* Offset on odd sections for visual rhythm while keeping balance */
+  .menu-section--offset {
+    padding-top: 4rem;
+  }
+
+  /* On mobile, stack to single column */
+  @media (max-width: 1023px) {
+    .menu-symmetric-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding-top: 4.5rem;
+    }
+
+    .menu-section--offset {
+      padding-top: 0;
+    }
+  }
+
+  /* Hairline borders and dotted leaders */
+  .dotted-leader {
+    flex-grow: 1;
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.2);
+    margin: 0 16px;
+    position: relative;
+    top: -6px;
+    opacity: 0.5;
+  }
+
+  /* ─── Dish Row with Mobile Thumbnail ──────────────────────────────── */
+  .dish-row-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dish-row-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Mobile thumbnail — shown only on touch / small screens */
+  .dish-thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(245, 130, 32, 0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease;
+  }
+
+  .dish-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Hover / active micro-interaction on thumbnail */
+  .dish-row:active .dish-thumb,
+  .dish-row:hover .dish-thumb {
+    border-color: var(--color-brand-yellow, #F5C518);
+    transform: scale(1.05);
+  }
+
+  .dish-row:active .dish-thumb-img,
+  .dish-row:hover .dish-thumb-img {
+    transform: scale(1.1);
+  }
+
+  /* Desktop: hide thumbnails, use hover preview instead */
+  @media (min-width: 1024px) {
+    .dish-thumb {
+      display: none;
+    }
+
+    .dish-row-inner {
+      display: block;
+    }
+  }
+
+  /* Mobile/Tablet: hide floating hover preview */
+  @media (max-width: 1023px) {
+    #hover-image-preview {
+      display: none !important;
+    }
+  }
+
+  /* Interactive Hover Dot (Yellow / Orange F58220) */
+  .hover-dot {
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    transform: scale(0);
+    width: 8px;
+    height: 8px;
+    background-color: #F58220;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dish-row:hover .hover-dot {
+    opacity: 1;
+    transform: scale(1);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { addToCart } from '../../utils/cartStore';
+
+  function initHoverPreview() {
+    const preview = document.getElementById('hover-image-preview');
+    const inner = document.getElementById('hover-image-inner');
+    const rows = document.querySelectorAll('.dish-row[data-image-url]');
+
+    if (!preview || !inner || rows.length === 0) return;
+
+    const isMobileOrTouch = () => window.matchMedia('(max-width: 1023px)').matches || window.matchMedia('(pointer: coarse)').matches;
+
+    rows.forEach(row => {
+      const imageUrl = row.getAttribute('data-image-url');
+      if (!imageUrl) return;
+
+      row.addEventListener('mouseenter', () => {
+        if (isMobileOrTouch()) return;
+
+        // Set background image
+        inner.style.backgroundImage = `url('${imageUrl}')`;
+
+        // Scale up and fade in
+        gsap.to(preview, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'back.out(1.2)'
+        });
+      });
+
+      row.addEventListener('mousemove', (e: any) => {
+        if (isMobileOrTouch()) return;
+
+        // Smoothly move preview container to match mouse coordinates with an offset
+        gsap.to(preview, {
+          x: e.clientX + 20,
+          y: e.clientY + 20,
+          duration: 0.25,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      });
+
+      row.addEventListener('mouseleave', () => {
+        if (isMobileOrTouch()) return;
+
+        // Scale down and fade out
+        gsap.to(preview, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.2,
+          ease: 'power2.in'
+        });
+      });
+    });
+
+    // Hide preview immediately on scroll to prevent it from getting stuck or blocking layout
+    window.addEventListener('scroll', () => {
+      gsap.to(preview, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.15,
+        ease: 'power2.in',
+        overwrite: 'auto'
+      });
+    }, { passive: true });
+  }
+
+  function initAddToCart() {
+    const addBtns = document.querySelectorAll('.add-to-cart-btn');
+    addBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dishId = btn.getAttribute('data-dish-id') || '';
+        const name = btn.getAttribute('data-dish-name') || '';
+        const price = parseFloat(btn.getAttribute('data-dish-price') || '0');
+        const image = btn.getAttribute('data-dish-image') || '';
+        
+        if (dishId) {
+          addToCart({ id: dishId, name, price, image });
+          gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: 'back.out(1.5)' });
+        }
+      });
+    });
+  }
+
+  let initialized = false;
+  function initAll() {
+    if (initialized) return;
+    initialized = true;
+    initHoverPreview();
+    initAddToCart();
+  }
+
+  // Initialize on loader-finished (when page reveals) and on DOMContentLoaded safely
+  document.addEventListener('DOMContentLoaded', initAll);
+  document.addEventListener('loader-finished', initAll);
+</script>

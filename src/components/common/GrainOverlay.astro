@@ -1,0 +1,30 @@
+---
+// GrainOverlay.astro: SVG filter overlay to give the website a tactile magazine paper texture.
+---
+<svg class="grain-overlay" xmlns="http://www.w3.org/2000/svg">
+  <filter id="noiseFilter">
+    <feTurbulence baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" type="fractalNoise"></feTurbulence>
+  </filter>
+  <rect filter="url(#noiseFilter)" height="100%" width="100%"></rect>
+</svg>
+
+<style>
+  .grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999; /* Display on top of everything to bind texture */
+    opacity: 0.08; /* Extremely subtle for a premium look */
+    mix-blend-mode: multiply;
+  }
+
+  /* Disable dynamic SVG filtering on mobile devices to prevent repaint micro-cuts during scroll */
+  @media (max-width: 1023px) {
+    .grain-overlay {
+      display: none !important;
+    }
+  }
+</style>

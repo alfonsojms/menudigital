@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #E62020;
+  --color-charcoal: #1A1A1A;
+  --color-oatmilk: #1A1A1A;
+  --color-limestone: #262626;
+  --color-ash: #EAEAEA;
+  --color-fennel: #A3A3A3;
+  --color-harissa: #F58220;
+  
+  --color-brand-yellow: #FFD500;
+  --color-brand-black: #1A1A1A;
+  --color-brand-red: #E62020;
+  --color-brand-orange: #F58220;
+  --color-brand-pepperoni: #D91E1E;
+  
+  --font-display: "Lilita One", sans-serif;
+  --font-sans: "Rubik", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+body {
+  background-color: #1A1A1A; /* Black background for a premium dark fast-food style */
+  color: #FFFFFF; /* White text */
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "Rubik", sans-serif;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight flash on mobile */
+}
+
+/* Eliminate 300ms mobile tap delay on all interactive elements */
+a, button, [role="button"], input, select, textarea, label, summary {
+  touch-action: manipulation;
+}
+
+/* Modal Open Lock Body Scroll (overflow-only: avoids position:fixed reflow cost) */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Instant Close for Mobile Overlay */
+#mobile-menu-overlay.instant-close {
+  transition: none !important;
+}
+
+/* General Hide scrollbar for a clean magazine layout */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Custom thin weight for Material Icons */
+.material-symbols-outlined {
+  font-variation-settings: 'wght' 200;
+}
+
+/* Clear focus indicators for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-yellow, #FFD500);
+  outline-offset: 2px;
+}
+
+/* Accessibility: Support Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

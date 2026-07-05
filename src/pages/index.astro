@@ -1,33 +1,315 @@
 ---
+// index.astro: The main page of the Neo-Bistro Digital Menu.
 import Layout from '../layouts/Layout.astro';
+import Loader from '../components/common/Loader.astro';
+import GrainOverlay from '../components/common/GrainOverlay.astro';
+import Navbar from '../components/common/Navbar.astro';
+import Cover from '../components/menu/Cover.astro';
+import MenuCanvas from '../components/menu/MenuCanvas.astro';
+import MenuGallery from '../components/menu/MenuGallery.astro';
+import Dossier from '../components/menu/Dossier.astro';
+import DishProfile from '../components/menu/DishProfile.astro';
+import FloatingCartBar from '../components/menu/FloatingCartBar.astro';
+import OrderSheet from '../components/menu/OrderSheet.astro';
 ---
 
 <Layout>
-	<main class="menu-shell">
-		<h1>Menú Digital</h1>
-		<p>El cascarón del menú digital está listo. Modifica este archivo para empezar a construir la interfaz.</p>
-	</main>
+  <!-- Global Navbar -->
+  <Navbar />
+
+  <!-- Interactive Loader -->
+  <Loader />
+
+  <!-- Tactile Grain Overlay -->
+  <GrainOverlay />
+
+  <!-- Scroll trigger area for cover page scaling -->
+  <div id="cover-trigger-area" class="absolute top-0 left-0 w-full h-[100vh] pointer-events-none z-0"></div>
+
+  <!-- Cover Section -->
+  <Cover />
+
+  <!-- Menu Content Container (scrolls up after cover) -->
+  <div id="menu-content-container" class="relative w-full z-20 bg-[#1A1A1A] min-h-screen">
+    <div class="relative w-full">
+      
+      <!-- Asymmetric Editorial View -->
+      <div id="canvas-wrapper">
+        <MenuCanvas />
+      </div>
+
+      <!-- High Density Grid Gallery View -->
+      <div id="gallery-wrapper" class="hidden">
+        <MenuGallery />
+      </div>
+
+      <!-- Footer Info Section -->
+      <Dossier />
+      
+    </div>
+  </div>
+
+  <!-- Split Screen Detail Modal overlay -->
+  <DishProfile />
+
+  <!-- Delivery Order Builder Components -->
+  <FloatingCartBar />
+  <OrderSheet />
 </Layout>
 
-<style>
-	.menu-shell {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		height: 100vh;
-		font-family: system-ui, sans-serif;
-		color: #333;
-		text-align: center;
-		padding: 2rem;
-	}
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 1rem;
-	}
-	p {
-		font-size: 1.2rem;
-		color: #666;
-		max-width: 600px;
-	}
-</style>
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { initMenuAnimations } from '../animations/menuAnimations';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Initialize GSAP ScrollTrigger and animations AFTER loading animation completes
+  document.addEventListener('loader-finished', () => {
+    // Scroll to top on fresh load to prevent offset trigger issues
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+    
+    initMenuAnimations();
+    setupToggleViews();
+    setupDishClickHandlers();
+  });
+
+  // 1. View Toggling: Editorial vs Gallery Grid
+  function setupToggleViews() {
+    const btnEditorial = document.querySelectorAll('.btn-toggle-editorial, #nav-btn-editorial');
+    const btnGallery = document.querySelectorAll('.btn-toggle-gallery, #nav-btn-gallery');
+    
+    const canvasWrapper = document.getElementById('canvas-wrapper');
+    const galleryWrapper = document.getElementById('gallery-wrapper');
+    const galleryView = document.getElementById('gallery-view');
+
+    if (!canvasWrapper || !galleryWrapper || !galleryView) return;
+
+    const showEditorial = () => {
+      // Toggle visibility
+      canvasWrapper.classList.remove('hidden');
+      galleryWrapper.classList.add('hidden');
+      galleryView.classList.add('hidden');
+      
+      // Update navigation active button styling
+      btnEditorial.forEach(btn => btn.classList.add('active-nav-item'));
+      btnGallery.forEach(btn => btn.classList.remove('active-nav-item'));
+
+      // Update inline view switcher state
+      const switchHighlight = document.getElementById('switcher-highlight');
+      const switchBtnEditorial = document.getElementById('switch-btn-editorial');
+      const switchBtnGallery = document.getElementById('switch-btn-gallery');
+      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
+        switchHighlight.style.transform = 'translateX(0)';
+        switchBtnEditorial.classList.remove('text-white/60');
+        switchBtnEditorial.classList.add('text-black');
+        switchBtnEditorial.setAttribute('aria-selected', 'true');
+        switchBtnGallery.classList.remove('text-black');
+        switchBtnGallery.classList.add('text-white/60');
+        switchBtnGallery.setAttribute('aria-selected', 'false');
+      }
+
+      // Fade-in canvas wrapper cleanly
+      gsap.fromTo(canvasWrapper, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
+      );
+
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile) {
+        // Desktop uses Lenis smooth scroll
+        requestAnimationFrame(() => {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: -10,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 850);
+        });
+      } else {
+        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
+        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
+        setTimeout(() => {
+          const el = document.getElementById('menu-content-container');
+          if (el) {
+            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping headers visible
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 12;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 800);
+        }, 150);
+      }
+    };
+
+    const showGallery = () => {
+      // Toggle visibility
+      canvasWrapper.classList.add('hidden');
+      galleryWrapper.classList.remove('hidden');
+      galleryView.classList.remove('hidden');
+
+      // Update navigation active button styling
+      btnGallery.forEach(btn => btn.classList.add('active-nav-item'));
+      btnEditorial.forEach(btn => btn.classList.remove('active-nav-item', 'text-[var(--color-brand-red)]'));
+
+      // Update inline view switcher state
+      const switchHighlight = document.getElementById('switcher-highlight');
+      const switchBtnEditorial = document.getElementById('switch-btn-editorial');
+      const switchBtnGallery = document.getElementById('switch-btn-gallery');
+      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
+        switchHighlight.style.transform = 'translateX(100%)';
+        switchBtnGallery.classList.remove('text-white/60');
+        switchBtnGallery.classList.add('text-black');
+        switchBtnGallery.setAttribute('aria-selected', 'true');
+        switchBtnEditorial.classList.remove('text-black');
+        switchBtnEditorial.classList.add('text-white/60');
+        switchBtnEditorial.setAttribute('aria-selected', 'false');
+      }
+
+      // Fade-in gallery wrapper cleanly
+      gsap.fromTo(galleryWrapper, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
+      );
+
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile) {
+        // Desktop uses Lenis smooth scroll
+        requestAnimationFrame(() => {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#menu-content-container', {
+              offset: -10,
+              duration: 0.8,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 850);
+        });
+      } else {
+        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
+        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
+        setTimeout(() => {
+          const el = document.getElementById('menu-content-container');
+          if (el) {
+            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping filter header visible
+            const targetY = el.getBoundingClientRect().top + window.scrollY + 12;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+          
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 800);
+        }, 150);
+      }
+    };
+
+    // Bind event listeners to both sets of header links (Cover header + Menu header)
+    btnEditorial.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Always prevent default — we handle scroll programmatically
+        showEditorial();
+      });
+    });
+
+    btnGallery.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault(); // Always prevent default — we handle scroll programmatically
+        showGallery();
+      });
+    });
+
+    // Bind event listeners to Info buttons (both desktop and mobile) for smooth scroll
+    const btnInfo = document.querySelectorAll('a[href="#dossier-section"]');
+    btnInfo.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) {
+          if ((window as any).lenis) {
+            (window as any).lenis.resize();
+            (window as any).lenis.scrollTo('#dossier-section', {
+              duration: 1.2,
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            document.getElementById('dossier-section')?.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else {
+          // Mobile native smooth scroll after a 150ms delay (to let the hamburger menu close and body overflow unlock)
+          setTimeout(() => {
+            const el = document.getElementById('dossier-section');
+            if (el) {
+              const targetY = el.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({ top: targetY, behavior: 'smooth' });
+            }
+          }, 150);
+        }
+      });
+    });
+  }
+
+  // 2. Open Dish Profile details modal on click and keyboard press
+  function setupDishClickHandlers() {
+    const dishRows = document.querySelectorAll('.dish-row[data-dish-id]');
+    const dishCards = document.querySelectorAll('.dish-card[data-dish-id]');
+
+    const triggerOpen = (dishId: string) => {
+      // Dispatch custom event to notify DishProfile modal to open
+      document.dispatchEvent(new CustomEvent('open-dish-profile', {
+        detail: { dishId }
+      }));
+    };
+
+    const handleKeyboard = (e: KeyboardEvent, dishId: string) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        // Prevent default browser scrolling behavior for spacebar
+        e.preventDefault();
+        triggerOpen(dishId);
+      }
+    };
+
+    dishRows.forEach(row => {
+      const dishId = row.getAttribute('data-dish-id');
+      if (!dishId) return;
+
+      row.addEventListener('click', () => {
+        triggerOpen(dishId);
+      });
+
+      row.addEventListener('keydown', (e: any) => {
+        handleKeyboard(e, dishId);
+      });
+    });
+
+    dishCards.forEach(card => {
+      const dishId = card.getAttribute('data-dish-id');
+      if (!dishId) return;
+
+      card.addEventListener('click', () => {
+        triggerOpen(dishId);
+      });
+
+      card.addEventListener('keydown', (e: any) => {
+        handleKeyboard(e, dishId);
+      });
+    });
+  }
+</script>

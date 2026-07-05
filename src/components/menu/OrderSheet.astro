@@ -1,0 +1,379 @@
+---
+// OrderSheet.astro: Slide-up drawer showing list of items, customer info form, and WhatsApp checkout action.
+---
+<!-- Overlay Backdrop -->
+<div 
+  id="order-sheet-backdrop" 
+  class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-all duration-400"
+></div>
+
+<!-- Drawer Panel -->
+<div 
+  id="order-sheet-drawer" 
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  class="fixed bottom-0 left-0 right-0 max-h-[90dvh] bg-[#161616] z-50 rounded-t-3xl border-t border-white/10 shadow-[0_-12px_40px_rgba(0,0,0,0.6)] transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col"
+>
+  <!-- Header / Drag Indicator -->
+  <div class="flex-shrink-0 pt-3 pb-4 px-6 border-b border-white/5 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <h2 class="font-display text-lg md:text-xl uppercase tracking-wider text-[var(--color-brand-yellow)]">Tu Pedido</h2>
+      <button 
+        id="clear-cart-btn" 
+        class="hidden px-2.5 py-1 text-[9px] font-mono uppercase tracking-widest text-[var(--color-brand-red)] hover:bg-[var(--color-brand-red)]/10 transition-colors rounded border border-[var(--color-brand-red)]/20 cursor-pointer outline-none"
+      >
+        Limpiar todo
+      </button>
+    </div>
+    <button 
+      id="close-order-sheet" 
+      aria-label="Cerrar pedido"
+      class="text-white/40 hover:text-white transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent"
+    >
+      <span class="material-symbols-outlined text-2xl font-bold" aria-hidden="true">close</span>
+    </button>
+  </div>
+
+  <!-- Scrollable Content -->
+  <div class="overflow-y-auto flex-grow px-6 py-6 space-y-8 custom-scrollbar" data-lenis-prevent>
+    
+    <!-- Items list -->
+    <div class="space-y-4">
+      <h3 class="font-mono text-xs uppercase tracking-widest text-white/40 font-bold">1. Resumen de platos</h3>
+      <div id="order-items-container" class="space-y-4">
+        <!-- Dynamically injected items -->
+      </div>
+    </div>
+
+    <!-- Delivery Form -->
+    <div class="space-y-4 border-t border-white/5 pt-6">
+      <h3 class="font-mono text-xs uppercase tracking-widest text-white/40 font-bold">2. Datos de Envío</h3>
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Name -->
+        <div class="flex flex-col gap-1.5">
+          <label for="order-name" class="text-[10px] font-mono uppercase tracking-wider text-white/50">Nombre y Apellido</label>
+          <input 
+            type="text" 
+            id="order-name" 
+            placeholder="Ej. Juan Pérez" 
+            class="bg-white/5 border border-white/10 px-4 py-2.5 text-xs text-white rounded-none outline-none focus:border-[var(--color-brand-yellow)]"
+            required
+          />
+        </div>
+        <!-- Address -->
+        <div class="flex flex-col gap-1.5">
+          <label for="order-address" class="text-[10px] font-mono uppercase tracking-wider text-white/50">Dirección Completa de Entrega</label>
+          <textarea 
+            id="order-address" 
+            rows="2" 
+            placeholder="Calle, edificio/casa, apto/Nº, referencia..." 
+            class="bg-white/5 border border-white/10 px-4 py-2.5 text-xs text-white rounded-none outline-none focus:border-[var(--color-brand-yellow)] resize-none"
+            required
+          ></textarea>
+        </div>
+        <!-- Payment Method -->
+        <div class="flex flex-col gap-1.5">
+          <label for="order-payment" class="text-[10px] font-mono uppercase tracking-wider text-white/50">Método de Pago</label>
+          <select 
+            id="order-payment" 
+            class="bg-[#262626] border border-white/10 px-4 py-2.5 text-xs text-white rounded-none outline-none focus:border-[var(--color-brand-yellow)] cursor-pointer"
+          >
+            <option value="Pago Móvil">Pago Móvil</option>
+            <option value="Efectivo ($)">Efectivo ($)</option>
+            <option value="Zelle">Zelle</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing Summary -->
+    <div class="border-t border-white/5 pt-6 space-y-2">
+      <div class="flex justify-between items-center text-xs text-white/60">
+        <span>Subtotal</span>
+        <span id="order-subtotal" class="font-mono">$0.00</span>
+      </div>
+      <div class="flex justify-between items-center text-xs text-white/60">
+        <span>Costo de Delivery</span>
+        <span class="font-mono">A convenir</span>
+      </div>
+      <div class="flex justify-between items-center pt-2 border-t border-white/5 text-sm font-bold">
+        <span class="text-white">Total del Pedido</span>
+        <span id="order-total" class="font-mono text-[var(--color-brand-yellow)]">$0.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom CTA Action (Sticky at bottom of panel) -->
+  <div class="flex-shrink-0 p-6 border-t border-white/5 bg-[#121212]">
+    <button 
+      id="submit-order-whatsapp" 
+      class="w-full bg-[var(--color-brand-yellow)] hover:bg-[#F58220] transition-colors duration-300 text-black py-3.5 px-6 font-sans font-bold uppercase tracking-widest text-xs rounded-full flex items-center justify-center gap-2 cursor-pointer outline-none border-none"
+    >
+      <span class="material-symbols-outlined text-sm font-bold">chat</span>
+      Enviar Pedido por WhatsApp
+    </button>
+  </div>
+</div>
+
+<style>
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'wght' 400;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { getCart, getCartTotal, addToCart, removeFromCart, updateCartQuantity, clearCart } from '../../utils/cartStore';
+
+  const backdrop = document.getElementById('order-sheet-backdrop');
+  const drawer = document.getElementById('order-sheet-drawer');
+  const closeBtn = document.getElementById('close-order-sheet');
+  const itemsContainer = document.getElementById('order-items-container');
+  const subtotalVal = document.getElementById('order-subtotal');
+  const totalVal = document.getElementById('order-total');
+  const submitBtn = document.getElementById('submit-order-whatsapp');
+  const clearCartBtn = document.getElementById('clear-cart-btn');
+
+  // Input Fields
+  const nameInput = document.getElementById('order-name') as HTMLInputElement;
+  const addressInput = document.getElementById('order-address') as HTMLTextAreaElement;
+  const paymentSelect = document.getElementById('order-payment') as HTMLSelectElement;
+
+  let isOpen = false;
+  let previousActiveElement: HTMLElement | null = null;
+
+  function openDrawer() {
+    if (isOpen) return;
+    isOpen = true;
+    previousActiveElement = document.activeElement as HTMLElement;
+
+    // Load inputs from localStorage to avoid typing every time!
+    if (nameInput) nameInput.value = localStorage.getItem('delivery_name') || '';
+    if (addressInput) addressInput.value = localStorage.getItem('delivery_address') || '';
+    if (paymentSelect) paymentSelect.value = localStorage.getItem('delivery_payment') || 'Pago Móvil';
+
+    renderCartItems();
+
+    // Toggle scroll
+    document.body.classList.add('modal-open');
+    if ((window as any).lenis) (window as any).lenis.stop();
+
+    if (backdrop && drawer) {
+      drawer.setAttribute('aria-hidden', 'false');
+      backdrop.classList.remove('pointer-events-none');
+      
+      gsap.to(backdrop, { opacity: 1, duration: 0.3 });
+      gsap.to(drawer, { 
+        y: 0, 
+        duration: 0.45, 
+        ease: 'power3.out',
+        onComplete: () => {
+          closeBtn?.focus();
+        }
+      });
+    }
+  }
+
+  function closeDrawer() {
+    if (!isOpen) return;
+    isOpen = false;
+
+    // Restore scroll
+    document.body.classList.remove('modal-open');
+    if ((window as any).lenis) {
+      (window as any).lenis.start();
+      (window as any).lenis.resize();
+    }
+
+    if (backdrop && drawer) {
+      backdrop.classList.add('pointer-events-none');
+      
+      gsap.to(backdrop, { opacity: 0, duration: 0.3 });
+      gsap.to(drawer, { 
+        y: '100%', 
+        duration: 0.4, 
+        ease: 'power2.in',
+        onComplete: () => {
+          drawer.setAttribute('aria-hidden', 'true');
+          if (previousActiveElement) {
+            previousActiveElement.focus();
+          }
+        }
+      });
+    }
+  }
+
+  function renderCartItems() {
+    if (!itemsContainer) return;
+    itemsContainer.innerHTML = '';
+
+    const cart = getCart();
+    const total = getCartTotal();
+
+    if (subtotalVal) subtotalVal.innerText = `$${total.toFixed(2)}`;
+    if (totalVal) totalVal.innerText = `$${total.toFixed(2)}`;
+
+    if (cart.length > 0) {
+      clearCartBtn?.classList.remove('hidden');
+    } else {
+      clearCartBtn?.classList.add('hidden');
+    }
+
+    if (cart.length === 0) {
+      itemsContainer.innerHTML = `
+        <div class="text-center py-8 text-white/30 font-sans text-xs">
+          Tu carrito está vacío. ¡Añade algunos antojos!
+        </div>
+      `;
+      // Auto close drawer if cart emptied
+      setTimeout(closeDrawer, 800);
+      return;
+    }
+
+    cart.forEach(item => {
+      const itemEl = document.createElement('div');
+      itemEl.className = 'flex items-center justify-between gap-4 py-2 border-b border-white/5 last:border-b-0';
+      itemEl.innerHTML = `
+        <div class="flex items-center gap-3">
+          <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-md border border-white/10" />
+          <div class="flex flex-col">
+            <span class="text-xs font-bold uppercase tracking-tight text-white">${item.name}</span>
+            <span class="text-[10px] font-mono text-[var(--color-brand-yellow)] font-bold">$${item.price} c/u</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <div class="flex items-center border border-white/10 rounded-full overflow-hidden bg-white/5 h-[30px]">
+            <button class="minus-qty w-7 h-full flex items-center justify-center hover:bg-white/10 transition-colors text-white cursor-pointer border-none bg-transparent" data-id="${item.id}">
+              <span class="material-symbols-outlined text-xs">remove</span>
+            </button>
+            <span class="w-6 text-center font-mono text-xs font-bold text-white">${item.quantity}</span>
+            <button class="plus-qty w-7 h-full flex items-center justify-center hover:bg-white/10 transition-colors text-white cursor-pointer border-none bg-transparent" data-id="${item.id}">
+              <span class="material-symbols-outlined text-xs">add</span>
+            </button>
+          </div>
+          <span class="font-mono text-xs font-bold w-12 text-right text-white">$${(item.price * item.quantity).toFixed(2)}</span>
+        </div>
+      `;
+      itemsContainer.appendChild(itemEl);
+    });
+
+    // Bind quantity click listeners inside summary
+    itemsContainer.querySelectorAll('.minus-qty').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (id) {
+          removeFromCart(id);
+          renderCartItems();
+        }
+      });
+    });
+
+    itemsContainer.querySelectorAll('.plus-qty').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (id) {
+          const item = getCart().find(i => i.id === id);
+          if (item) {
+            addToCart({ id: item.id, name: item.name, price: item.price, image: item.image });
+            renderCartItems();
+          }
+        }
+      });
+    });
+  }
+
+  function handleSendOrder() {
+    const cart = getCart();
+    if (cart.length === 0) return;
+
+    const name = nameInput?.value.trim() || '';
+    const address = addressInput?.value.trim() || '';
+    const payment = paymentSelect?.value || 'Pago Móvil';
+
+    // Simple validation
+    if (!name || !address) {
+      alert('Por favor complete su nombre y dirección para realizar el envío.');
+      return;
+    }
+
+    // Save inputs to localStorage
+    localStorage.setItem('delivery_name', name);
+    localStorage.setItem('delivery_address', address);
+    localStorage.setItem('delivery_payment', payment);
+
+    // Format WhatsApp message
+    let message = `🍔 *NUEVO PEDIDO - LA CASA DE LA HAMBURPIZZA* 🍕\n\n`;
+    message += `👤 *Cliente:* ${name}\n`;
+    message += `📍 *Dirección:* ${address}\n`;
+    message += `💳 *Método de Pago:* ${payment}\n\n`;
+    message += `📋 *Detalle del Pedido:*\n`;
+
+    cart.forEach(item => {
+      message += `- ${item.quantity}x ${item.name} ($${item.price} c/u) = $${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+
+    const total = getCartTotal();
+    message += `\n💵 *Total Platos:* $${total.toFixed(2)}\n`;
+    message += `🛵 *Delivery:* A convenir con el operador\n`;
+    message += `\n_Enviado desde el Menú Digital_ 📱`;
+
+    // WhatsApp redirection URL
+    const phoneNumber = '584120721925'; // Default delivery phone number
+    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    // Clear cart on checkout success
+    clearCart();
+    closeDrawer();
+
+    // Redirect
+    window.open(waUrl, '_blank');
+  }
+
+  // Auto-save form inputs to localStorage on input/change
+  nameInput?.addEventListener('input', () => {
+    localStorage.setItem('delivery_name', nameInput.value.trim());
+  });
+  addressInput?.addEventListener('input', () => {
+    localStorage.setItem('delivery_address', addressInput.value.trim());
+  });
+  paymentSelect?.addEventListener('change', () => {
+    localStorage.setItem('delivery_payment', paymentSelect.value);
+  });
+
+  // Event bindings
+  document.addEventListener('open-order-sheet', openDrawer);
+  backdrop?.addEventListener('click', closeDrawer);
+  closeBtn?.addEventListener('click', closeDrawer);
+  submitBtn?.addEventListener('click', handleSendOrder);
+
+  clearCartBtn?.addEventListener('click', () => {
+    if (confirm('¿Seguro que deseas vaciar tu pedido?')) {
+      clearCart();
+      renderCartItems();
+    }
+  });
+
+  // Escape key handler
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeDrawer();
+    }
+  });
+
+  // Sync details if updated elsewhere
+  document.addEventListener('cart-updated', () => {
+    if (isOpen) renderCartItems();
+  });
+</script>

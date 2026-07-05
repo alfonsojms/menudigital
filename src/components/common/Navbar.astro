@@ -1,0 +1,420 @@
+---
+// Navbar.astro: Floating Pill Navbar inspired by Mobbin with premium micro-interactions.
+---
+<nav id="global-navbar" class="navbar-symmetric">
+
+  <!-- Left: Logo & Brand Name -->
+  <a href="#" class="navbar-col navbar-col--left flex items-center gap-3 decoration-none no-underline group select-none" aria-label="La Casa de la Hamburpizza - Inicio">
+    <img src="/logo.png" alt="Logotipo de La Casa de la Hamburpizza" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain transition-all duration-500" />
+    <span id="navbar-brand-name" class="navbar-brand-text font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[3px] uppercase whitespace-nowrap text-current transition-colors duration-500">
+      La Casa de la Hamburpizza
+    </span>
+  </a>
+
+  <!-- Center: Premium View Switcher (Segmented Control) -->
+  <div class="relative inline-flex p-0.5 rounded-full select-none" id="navbar-switcher" role="tablist" aria-label="Vista del menú">
+    <!-- Sliding Highlight -->
+    <div id="switcher-highlight" class="absolute top-0.5 bottom-0.5 left-0.5 rounded-full bg-[var(--color-brand-yellow)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" style="width: calc(50% - 2px); transform: translateX(0);"></div>
+    
+    <!-- Button 1: Carta -->
+    <button id="switch-btn-editorial" role="tab" aria-selected="true" aria-controls="canvas-wrapper" class="btn-toggle-editorial relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black active cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
+      Carta
+    </button>
+    <!-- Button 2: Galeria -->
+    <button id="switch-btn-gallery" role="tab" aria-selected="false" aria-controls="gallery-wrapper" class="btn-toggle-gallery relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black/60 hover:text-black cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
+      Galería
+    </button>
+  </div>
+
+  <!-- Right: Nav links, CTA Button, & Hamburger -->
+  <div class="navbar-col navbar-col--right flex items-center gap-4 md:gap-6 justify-end">
+    <!-- Cart Trigger Badge (Global) -->
+    <button id="navbar-cart-trigger" class="relative flex items-center justify-center p-2 text-current hover:text-[var(--color-brand-red)] transition-colors duration-300 cursor-pointer outline-none border-none bg-transparent" aria-label="Ver pedido. 0 platos añadidos." title="Ver pedido" style="-webkit-tap-highlight-color: transparent;">
+      <span class="material-symbols-outlined text-2xl font-bold" aria-hidden="true">shopping_cart</span>
+      <span id="navbar-cart-badge" class="absolute -top-0.5 -right-0.5 hidden bg-[var(--color-brand-red)] text-white font-mono text-[9px] font-bold w-4.5 h-4.5 rounded-full items-center justify-center border border-[#1A1A1A]">0</span>
+    </button>
+
+    <!-- Desktop Links (Tablet & Desktop only) -->
+    <div class="navbar-desktop-links gap-6 font-sans text-xs md:text-sm uppercase font-bold tracking-[1px] md:tracking-[2px] items-center">
+      <a class="hover:text-[#E62020] transition-colors duration-300 decoration-none no-underline text-current" href="#dossier-section">
+        Info
+      </a>
+    </div>
+
+    <!-- CTA Delivery Button (Tablet & Desktop only) -->
+    <a href="https://wa.me/584120721925" target="_blank" class="navbar-cta-btn no-underline decoration-none font-sans text-[10px] md:text-xs uppercase font-bold tracking-[1px] px-4 md:px-5 py-2 md:py-2.5 rounded-full transition-all duration-300">
+      Pide Delivery
+    </a>
+
+    <!-- Hamburger Button (Mobile only) -->
+    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-12 h-12 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu-overlay">
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top" aria-hidden="true"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle" aria-hidden="true"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom" aria-hidden="true"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay (Fullscreen with premium glassmorphism) -->
+<div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Menú móvil" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center opacity-0 pointer-events-none" style="transition: opacity 0.15s ease-out;">
+  <div class="flex flex-col gap-8 text-center font-display text-4xl uppercase tracking-wider text-white">
+    <a href="#menu-content-container" class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer no-underline decoration-none active-nav-item" id="mobile-nav-btn-editorial" style="touch-action: manipulation;">
+      Carta
+    </a>
+    <a href="#menu-content-container" class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-gallery cursor-pointer no-underline decoration-none" id="mobile-nav-btn-gallery" style="touch-action: manipulation;">
+      Galería
+    </a>
+    <a class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 no-underline decoration-none" href="#dossier-section" id="mobile-nav-link-info" style="touch-action: manipulation;">
+      Info
+    </a>
+  </div>
+</div>
+
+<style>
+  /* ─── Floating Pill Navbar: Responsive Styles ─────────────────── */
+  .navbar-symmetric {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 92%;
+    max-w: 1200px;
+    border-radius: 9999px;
+    padding: 10px 24px;
+    border: 1px solid rgba(26, 26, 26, 0.15);
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 40;
+    color: #1A1A1A;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (max-width: 767px) {
+    .navbar-symmetric {
+      top: 12px;
+      padding: 8px 16px;
+      width: 94%;
+    }
+  }
+
+  /* Scrolled dark theme applied dynamically */
+  .navbar-symmetric.scrolled {
+    background-color: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #ffffff;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Column flex settings */
+  .navbar-col {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-col--left {
+    justify-content: flex-start;
+  }
+
+  .navbar-col--right {
+    justify-content: flex-end;
+  }
+
+  /* Brand name visibility and responsiveness */
+  .navbar-brand-text {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .navbar-brand-text {
+      display: inline-block;
+    }
+  }
+
+  /* Responsive Display classes for desktop links and mobile menu button */
+  .navbar-desktop-links {
+    display: none;
+  }
+
+  .navbar-cta-btn {
+    display: none;
+    background-color: #1A1A1A;
+    color: #FFD500;
+  }
+
+  .navbar-cta-btn:hover {
+    background-color: #E62020;
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  /* Scrolled dark theme button state */
+  .navbar-symmetric.scrolled .navbar-cta-btn {
+    background-color: #FFD500;
+    color: #1A1A1A;
+  }
+
+  .navbar-symmetric.scrolled .navbar-cta-btn:hover {
+    background-color: #ffffff;
+    color: #1A1A1A;
+  }
+
+  .navbar-mobile-menu-btn {
+    display: flex;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-desktop-links {
+      display: flex;
+    }
+    .navbar-cta-btn {
+      display: inline-block;
+    }
+    .navbar-mobile-menu-btn {
+      display: none;
+    }
+  }
+
+  /* Active nav item state (defined globally to prevent Astro styling scope issues when toggling via JS) */
+  :global(.active-nav-item) {
+    color: #E62020 !important;
+  }
+
+  /* Hamburger morphing to X */
+  #mobile-menu-btn.is-open #bar-top {
+    transform: translateY(6px) rotate(45deg);
+  }
+  #mobile-menu-btn.is-open #bar-middle {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  #mobile-menu-btn.is-open #bar-bottom {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Ensure hamburger is white when open, regardless of navbar state */
+  #mobile-menu-btn.is-open {
+    color: #ffffff !important;
+  }
+
+  /* Mobile Overlay visibility */
+  #mobile-menu-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease-out; /* Smooth fade-in on open */
+  }
+
+  /* Fast fade-out is handled by inline style (0.15s) so close feels instant */
+
+  /* View Switcher inside Navbar */
+  #navbar-switcher {
+    border: 1px solid rgba(26, 26, 26, 0.15);
+    background-color: rgba(26, 26, 26, 0.08);
+  }
+
+  /* Scrolled theme switcher override */
+  .navbar-symmetric.scrolled #navbar-switcher {
+    border-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Button text colors based on active class */
+  .navbar-symmetric #switch-btn-editorial.active,
+  .navbar-symmetric #switch-btn-gallery.active {
+    color: #1A1A1A !important;
+  }
+
+  .navbar-symmetric #switch-btn-editorial:not(.active) {
+    color: rgba(26, 26, 26, 0.6);
+  }
+  .navbar-symmetric.scrolled #switch-btn-editorial:not(.active) {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .navbar-symmetric #switch-btn-gallery:not(.active) {
+    color: rgba(26, 26, 26, 0.6);
+  }
+  .navbar-symmetric.scrolled #switch-btn-gallery:not(.active) {
+    color: rgba(255, 255, 255, 0.6);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { getCartItemsCount } from '../../utils/cartStore';
+
+  function initNavbarAnimations() {
+    if ((window as any).__navbarInitialized) return;
+    (window as any).__navbarInitialized = true;
+
+    const navbar = document.getElementById('global-navbar');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (!navbar) return;
+
+    // Cart Badge Update Logic
+    const cartTrigger = document.getElementById('navbar-cart-trigger');
+    const cartBadge = document.getElementById('navbar-cart-badge');
+    
+    function updateNavbarCartBadge() {
+      const count = getCartItemsCount();
+      if (cartBadge) {
+        cartBadge.innerText = count.toString();
+        if (count > 0) {
+          cartBadge.classList.remove('hidden');
+          cartBadge.classList.add('flex');
+        } else {
+          cartBadge.classList.add('hidden');
+          cartBadge.classList.remove('flex');
+        }
+      }
+      if (cartTrigger) {
+        const label = `Ver pedido. ${count} ${count === 1 ? 'antojo añadido' : 'antojos añadidos'}.`;
+        cartTrigger.setAttribute('aria-label', label);
+      }
+    }
+
+    cartTrigger?.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('open-order-sheet'));
+    });
+
+    document.addEventListener('cart-updated', updateNavbarCartBadge);
+    updateNavbarCartBadge(); // Initial run
+
+    let lastScrollY = window.scrollY;
+    let isHidden = false;
+
+    // Consolidated Scroll Handler for both Theme updates and Show/Hide transitions
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const threshold = window.innerHeight * 0.8; // Change theme at 80% viewport height
+
+      // Theme toggle
+      if (currentScrollY > threshold) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // Show/Hide toggle
+      if (mobileMenuBtn && mobileMenuBtn.classList.contains('is-open')) return;
+
+      if (currentScrollY > 100) {
+        if (currentScrollY > lastScrollY && !isHidden) {
+          // Scrolling down -> hide navbar
+          gsap.to(navbar, {
+            y: -100,
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power3.out'
+          });
+          isHidden = true;
+        } else if (currentScrollY < lastScrollY && isHidden) {
+          // Scrolling up -> show navbar
+          gsap.to(navbar, {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            ease: 'power3.out'
+          });
+          isHidden = false;
+        }
+      } else {
+        // Always show near top
+        gsap.to(navbar, {
+          y: 0,
+          opacity: 1,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+        isHidden = false;
+      }
+      lastScrollY = currentScrollY;
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll(); // Run initially
+
+    // 3. Mobile Menu Toggle Logic
+    function openMobileMenu() {
+      if (!mobileMenuBtn || !mobileMenuOverlay) return;
+      mobileMenuBtn.classList.add('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      mobileMenuOverlay.classList.add('is-active');
+      mobileMenuOverlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      (window as any).lenis?.stop();
+
+      // GSAP Staggered entry for links
+      gsap.fromTo(mobileLinks,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'power3.out', delay: 0.1 }
+      );
+    }
+
+    function closeMobileMenu(instant = false) {
+      if (!mobileMenuBtn || !mobileMenuOverlay) return;
+      mobileMenuBtn.classList.remove('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      
+      if (instant) {
+        mobileMenuOverlay.classList.add('instant-close');
+        mobileMenuOverlay.classList.remove('is-active');
+        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
+        
+        // Force reflow
+        mobileMenuOverlay.offsetHeight;
+        
+        // Remove class after transition duration to allow smooth open transitions next time
+        setTimeout(() => {
+          mobileMenuOverlay.classList.remove('instant-close');
+        }, 150);
+      } else {
+        mobileMenuOverlay.classList.remove('is-active');
+        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
+      }
+      
+      document.body.classList.remove('modal-open');
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+        (window as any).lenis.resize();
+      }
+    }
+
+    // Escape key handler to close mobile menu
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenuBtn && mobileMenuBtn.classList.contains('is-open')) {
+        closeMobileMenu();
+      }
+    });
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenuBtn.classList.contains('is-open');
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+    }
+
+    // Close when clicking any link inside the menu (instant close on link selection)
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu(true);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initNavbarAnimations);
+  document.addEventListener('loader-finished', initNavbarAnimations);
+</script>

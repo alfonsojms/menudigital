@@ -1,0 +1,111 @@
+---
+// Cover.astro: The 100vh dramatic typographic cover page with scroll animations.
+---
+<section class="sticky top-0 left-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden z-10 bg-[#FFD500]" id="cover-page">
+  
+  <!-- Floating Pepperonis (Branding decoration #D91E1E) -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none z-10 opacity-70" aria-hidden="true">
+    <div class="pepperoni absolute w-16 h-16 rounded-full bg-[#D91E1E] shadow-inner top-[15%] left-[10%]" style="box-shadow: inset -4px -4px 10px rgba(0,0,0,0.2), 2px 4px 6px rgba(0,0,0,0.15);">
+      <div class="absolute w-2 h-2 rounded-full bg-[#a11111] top-3 left-4 opacity-40"></div>
+      <div class="absolute w-1.5 h-1.5 rounded-full bg-[#a11111] top-8 left-3 opacity-40"></div>
+      <div class="absolute w-3 h-3 rounded-full bg-[#a11111] top-6 left-8 opacity-40"></div>
+    </div>
+    <div class="pepperoni absolute w-24 h-24 rounded-full bg-[#D91E1E] shadow-inner top-[65%] left-[8%]" style="box-shadow: inset -6px -6px 15px rgba(0,0,0,0.2), 3px 6px 10px rgba(0,0,0,0.15);">
+      <div class="absolute w-3 h-3 rounded-full bg-[#a11111] top-6 left-6 opacity-40"></div>
+      <div class="absolute w-2.5 h-2.5 rounded-full bg-[#a11111] top-14 left-8 opacity-40"></div>
+      <div class="absolute w-4 h-4 rounded-full bg-[#a11111] top-10 left-12 opacity-40"></div>
+    </div>
+    <div class="pepperoni absolute w-20 h-20 rounded-full bg-[#D91E1E] shadow-inner top-[20%] right-[12%]" style="box-shadow: inset -5px -5px 12px rgba(0,0,0,0.2), 3px 5px 8px rgba(0,0,0,0.15);">
+      <div class="absolute w-2.5 h-2.5 rounded-full bg-[#a11111] top-4 left-6 opacity-40"></div>
+      <div class="absolute w-3 h-3 rounded-full bg-[#a11111] top-10 left-10 opacity-40"></div>
+      <div class="absolute w-2 h-2 rounded-full bg-[#a11111] top-12 left-4 opacity-40"></div>
+    </div>
+    <div class="pepperoni absolute w-14 h-14 rounded-full bg-[#D91E1E] shadow-inner top-[75%] right-[15%]" style="box-shadow: inset -3px -3px 8px rgba(0,0,0,0.2), 2px 3px 5px rgba(0,0,0,0.15);">
+      <div class="absolute w-2 h-2 rounded-full bg-[#a11111] top-3 left-4 opacity-40"></div>
+      <div class="absolute w-2 h-2 rounded-full bg-[#a11111] top-7 left-8 opacity-40"></div>
+    </div>
+  </div>
+
+
+  <!-- Hero Typography & Logo -->
+  <div class="relative w-full flex flex-col justify-center items-center text-center px-4 z-20 -translate-y-12 md:-translate-y-16" id="hero-content">
+    <!-- Restaurant Logo -->
+    <img 
+      src="/logo.png" 
+      alt="La Casa de la Hamburpizza Logo" 
+      class="h-[22vh] md:h-[28vh] w-auto max-w-[80%] object-contain select-none pointer-events-none mb-6" 
+      id="hero-logo"
+    />
+    
+    <!-- Bold Typographic Name -->
+    <h1 class="font-display text-[8vw] md:text-[6vw] leading-none tracking-tighter text-[#1A1A1A] uppercase select-none flex flex-col items-center justify-center" id="hero-title">
+      <span class="text-sm font-mono tracking-[6px] text-[#1A1A1A]/70 uppercase font-bold mb-2">Bienvenidos a</span>
+      <span class="flex flex-wrap justify-center items-baseline gap-x-4">
+        <span>LA CASA DE LA</span>
+        <span class="text-white bg-[#1A1A1A] px-4 py-1 inline-block transform -rotate-1 shadow-md">HAMBUR</span>
+        <span class="text-[#E62020] underline decoration-[#1A1A1A] decoration-wavy underline-offset-8">PIZZA</span>
+      </span>
+    </h1>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-[#1A1A1A]" id="scroll-indicator">
+    <div class="relative w-24 h-24 rotating-text select-none pointer-events-none" aria-hidden="true">
+      <svg class="w-full h-full overflow-visible" viewBox="0 0 100 100">
+        <path d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" id="circlePath"></path>
+        <text class="font-mono text-[9px] font-bold fill-[#1A1A1A] uppercase tracking-[2px]">
+          <textPath href="#circlePath" startOffset="0%">
+            HORA DE COMER • HORARIO DE COMER •
+          </textPath>
+        </text>
+      </svg>
+    </div>
+    <!-- Orange Arrow (#F58220) -->
+    <span class="material-symbols-outlined animate-bounce text-4xl select-none pointer-events-none text-[#F58220] font-black" aria-hidden="true">arrow_downward</span>
+  </div>
+</section>
+
+<style>
+  /* GPU acceleration for animated hero wrapper */
+  #hero-content {
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
+
+  /* Circular text rotation */
+  .rotating-text {
+    animation: rotate 12s linear infinite;
+  }
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Pepperoni slow floating animation */
+  .pepperoni {
+    animation: float-around 20s ease-in-out infinite alternate;
+  }
+  .pepperoni:nth-child(2) {
+    animation-duration: 25s;
+    animation-delay: -5s;
+  }
+  .pepperoni:nth-child(3) {
+    animation-duration: 22s;
+    animation-delay: -10s;
+  }
+  .pepperoni:nth-child(4) {
+    animation-duration: 18s;
+    animation-delay: -3s;
+  }
+
+  @keyframes float-around {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+      transform: translate(20px, 30px) rotate(15deg);
+    }
+  }
+</style>
