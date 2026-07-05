@@ -10,6 +10,9 @@
 <!-- Drawer Panel -->
 <div 
   id="order-sheet-drawer" 
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
   class="fixed bottom-0 left-0 right-0 max-h-[90dvh] bg-[#161616] z-50 rounded-t-3xl border-t border-white/10 shadow-[0_-12px_40px_rgba(0,0,0,0.6)] transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col"
 >
   <!-- Header / Drag Indicator -->
@@ -17,9 +20,10 @@
     <h2 class="font-display text-lg md:text-xl uppercase tracking-wider text-[var(--color-brand-yellow)]">Tu Pedido</h2>
     <button 
       id="close-order-sheet" 
+      aria-label="Cerrar pedido"
       class="text-white/40 hover:text-white transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent"
     >
-      <span class="material-symbols-outlined text-2xl font-bold">close</span>
+      <span class="material-symbols-outlined text-2xl font-bold" aria-hidden="true">close</span>
     </button>
   </div>
 
@@ -138,10 +142,12 @@
   const paymentSelect = document.getElementById('order-payment') as HTMLSelectElement;
 
   let isOpen = false;
+  let previousActiveElement: HTMLElement | null = null;
 
   function openDrawer() {
     if (isOpen) return;
     isOpen = true;
+    previousActiveElement = document.activeElement as HTMLElement;
 
     // Load inputs from localStorage to avoid typing every time!
     if (nameInput) nameInput.value = localStorage.getItem('delivery_name') || '';
@@ -155,10 +161,18 @@
     if ((window as any).lenis) (window as any).lenis.stop();
 
     if (backdrop && drawer) {
+      drawer.setAttribute('aria-hidden', 'false');
       backdrop.classList.remove('pointer-events-none');
       
       gsap.to(backdrop, { opacity: 1, duration: 0.3 });
-      gsap.to(drawer, { y: 0, duration: 0.45, ease: 'power3.out' });
+      gsap.to(drawer, { 
+        y: 0, 
+        duration: 0.45, 
+        ease: 'power3.out',
+        onComplete: () => {
+          closeBtn?.focus();
+        }
+      });
     }
   }
 
@@ -177,7 +191,17 @@
       backdrop.classList.add('pointer-events-none');
       
       gsap.to(backdrop, { opacity: 0, duration: 0.3 });
-      gsap.to(drawer, { y: '100%', duration: 0.4, ease: 'power2.in' });
+      gsap.to(drawer, { 
+        y: '100%', 
+        duration: 0.4, 
+        ease: 'power2.in',
+        onComplete: () => {
+          drawer.setAttribute('aria-hidden', 'true');
+          if (previousActiveElement) {
+            previousActiveElement.focus();
+          }
+        }
+      });
     }
   }
 
@@ -307,6 +331,13 @@
   backdrop?.addEventListener('click', closeDrawer);
   closeBtn?.addEventListener('click', closeDrawer);
   submitBtn?.addEventListener('click', handleSendOrder);
+
+  // Escape key handler
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeDrawer();
+    }
+  });
 
   // Sync details if updated elsewhere
   document.addEventListener('cart-updated', () => {

@@ -4,24 +4,24 @@
 <nav id="global-navbar" class="navbar-symmetric">
 
   <!-- Left: Logo & Brand Name -->
-  <a href="#" class="navbar-col navbar-col--left flex items-center gap-3 decoration-none no-underline group select-none">
-    <img src="/logo.png" alt="Logo" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain transition-all duration-500" />
+  <a href="#" class="navbar-col navbar-col--left flex items-center gap-3 decoration-none no-underline group select-none" aria-label="La Casa de la Hamburpizza - Inicio">
+    <img src="/logo.png" alt="Logotipo de La Casa de la Hamburpizza" id="navbar-logo" class="h-8 md:h-10 w-auto object-contain transition-all duration-500" />
     <span id="navbar-brand-name" class="navbar-brand-text font-display text-sm md:text-base font-bold tracking-[2px] md:tracking-[3px] uppercase whitespace-nowrap text-current transition-colors duration-500">
       La Casa de la Hamburpizza
     </span>
   </a>
 
   <!-- Center: Premium View Switcher (Segmented Control) -->
-  <div class="relative inline-flex p-0.5 rounded-full select-none" id="navbar-switcher">
+  <div class="relative inline-flex p-0.5 rounded-full select-none" id="navbar-switcher" role="tablist" aria-label="Vista del menú">
     <!-- Sliding Highlight -->
     <div id="switcher-highlight" class="absolute top-0.5 bottom-0.5 left-0.5 rounded-full bg-[var(--color-brand-yellow)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" style="width: calc(50% - 2px); transform: translateX(0);"></div>
     
     <!-- Button 1: Carta -->
-    <button id="switch-btn-editorial" class="btn-toggle-editorial relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black active cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
+    <button id="switch-btn-editorial" role="tab" aria-selected="true" aria-controls="canvas-wrapper" class="btn-toggle-editorial relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black active cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
       Carta
     </button>
     <!-- Button 2: Galeria -->
-    <button id="switch-btn-gallery" class="btn-toggle-gallery relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black/60 hover:text-black cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
+    <button id="switch-btn-gallery" role="tab" aria-selected="false" aria-controls="gallery-wrapper" class="btn-toggle-gallery relative z-10 px-4 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold rounded-full transition-colors duration-300 text-black/60 hover:text-black cursor-pointer outline-none border-none" style="width: 72px; md:width: 88px; background: transparent; height: 26px;">
       Galería
     </button>
   </div>
@@ -29,8 +29,8 @@
   <!-- Right: Nav links, CTA Button, & Hamburger -->
   <div class="navbar-col navbar-col--right flex items-center gap-4 md:gap-6 justify-end">
     <!-- Cart Trigger Badge (Global) -->
-    <button id="navbar-cart-trigger" class="relative flex items-center justify-center p-2 text-current hover:text-[var(--color-brand-red)] transition-colors duration-300 cursor-pointer outline-none border-none bg-transparent" title="Ver pedido" style="-webkit-tap-highlight-color: transparent;">
-      <span class="material-symbols-outlined text-2xl font-bold">shopping_cart</span>
+    <button id="navbar-cart-trigger" class="relative flex items-center justify-center p-2 text-current hover:text-[var(--color-brand-red)] transition-colors duration-300 cursor-pointer outline-none border-none bg-transparent" aria-label="Ver pedido. 0 platos añadidos." title="Ver pedido" style="-webkit-tap-highlight-color: transparent;">
+      <span class="material-symbols-outlined text-2xl font-bold" aria-hidden="true">shopping_cart</span>
       <span id="navbar-cart-badge" class="absolute -top-0.5 -right-0.5 hidden bg-[var(--color-brand-red)] text-white font-mono text-[9px] font-bold w-4.5 h-4.5 rounded-full items-center justify-center border border-[#1A1A1A]">0</span>
     </button>
 
@@ -47,16 +47,16 @@
     </a>
 
     <!-- Hamburger Button (Mobile only) -->
-    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-12 h-12 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú">
-      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top"></span>
-      <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle"></span>
-      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom"></span>
+    <button id="mobile-menu-btn" class="navbar-mobile-menu-btn flex-col justify-center items-center w-12 h-12 cursor-pointer z-50 text-current focus:outline-none transition-colors duration-300" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu-overlay">
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[-6px]" id="bar-top" aria-hidden="true"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300" id="bar-middle" aria-hidden="true"></span>
+      <span class="w-6 h-[2px] bg-current transition-all duration-300 translate-y-[6px]" id="bar-bottom" aria-hidden="true"></span>
     </button>
   </div>
 </nav>
 
 <!-- Mobile Menu Overlay (Fullscreen with premium glassmorphism) -->
-<div id="mobile-menu-overlay" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center opacity-0 pointer-events-none" style="transition: opacity 0.15s ease-out;">
+<div id="mobile-menu-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Menú móvil" class="fixed inset-0 bg-[#1A1A1A]/95 backdrop-blur-xl z-30 flex flex-col justify-center items-center opacity-0 pointer-events-none" style="transition: opacity 0.15s ease-out;">
   <div class="flex flex-col gap-8 text-center font-display text-4xl uppercase tracking-wider text-white">
     <a href="#menu-content-container" class="mobile-nav-link hover:text-[#E62020] transition-colors duration-300 btn-toggle-editorial cursor-pointer no-underline decoration-none active-nav-item" id="mobile-nav-btn-editorial" style="touch-action: manipulation;">
       Carta
@@ -275,6 +275,10 @@
           cartBadge.classList.remove('flex');
         }
       }
+      if (cartTrigger) {
+        const label = `Ver pedido. ${count} ${count === 1 ? 'antojo añadido' : 'antojos añadidos'}.`;
+        cartTrigger.setAttribute('aria-label', label);
+      }
     }
 
     cartTrigger?.addEventListener('click', () => {
@@ -287,14 +291,21 @@
     let lastScrollY = window.scrollY;
     let isHidden = false;
 
-    // 1. Show/Hide on Scroll direction (GSAP)
-    window.addEventListener('scroll', () => {
-      // If mobile menu is open, do not hide navbar
+    // Consolidated Scroll Handler for both Theme updates and Show/Hide transitions
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const threshold = window.innerHeight * 0.8; // Change theme at 80% viewport height
+
+      // Theme toggle
+      if (currentScrollY > threshold) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // Show/Hide toggle
       if (mobileMenuBtn && mobileMenuBtn.classList.contains('is-open')) return;
 
-      const currentScrollY = window.scrollY;
-
-      // Only toggle if scrolled past a threshold
       if (currentScrollY > 100) {
         if (currentScrollY > lastScrollY && !isHidden) {
           // Scrolling down -> hide navbar
@@ -326,29 +337,19 @@
         isHidden = false;
       }
       lastScrollY = currentScrollY;
-    }, { passive: true });
-
-    // 2. Change Theme on Scroll (Deterministic Native Event)
-    function updateNavbarTheme() {
-      const currentScrollY = window.scrollY;
-      const threshold = window.innerHeight * 0.8; // Change theme at 80% viewport height
-
-      if (currentScrollY > threshold) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
     }
 
-    window.addEventListener('scroll', updateNavbarTheme, { passive: true });
-    window.addEventListener('resize', updateNavbarTheme);
-    updateNavbarTheme(); // Run initially
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll(); // Run initially
 
     // 3. Mobile Menu Toggle Logic
     function openMobileMenu() {
       if (!mobileMenuBtn || !mobileMenuOverlay) return;
       mobileMenuBtn.classList.add('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
       mobileMenuOverlay.classList.add('is-active');
+      mobileMenuOverlay.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
       (window as any).lenis?.stop();
 
@@ -362,10 +363,12 @@
     function closeMobileMenu(instant = false) {
       if (!mobileMenuBtn || !mobileMenuOverlay) return;
       mobileMenuBtn.classList.remove('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
       
       if (instant) {
         mobileMenuOverlay.classList.add('instant-close');
         mobileMenuOverlay.classList.remove('is-active');
+        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
         
         // Force reflow
         mobileMenuOverlay.offsetHeight;
@@ -376,6 +379,7 @@
         }, 150);
       } else {
         mobileMenuOverlay.classList.remove('is-active');
+        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
       }
       
       document.body.classList.remove('modal-open');
@@ -384,6 +388,13 @@
         (window as any).lenis.resize();
       }
     }
+
+    // Escape key handler to close mobile menu
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenuBtn && mobileMenuBtn.classList.contains('is-open')) {
+        closeMobileMenu();
+      }
+    });
 
     if (mobileMenuBtn) {
       mobileMenuBtn.addEventListener('click', () => {

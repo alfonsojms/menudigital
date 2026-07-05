@@ -105,8 +105,10 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
         switchHighlight.style.transform = 'translateX(0)';
         switchBtnEditorial.classList.remove('text-white/60');
         switchBtnEditorial.classList.add('text-black');
+        switchBtnEditorial.setAttribute('aria-selected', 'true');
         switchBtnGallery.classList.remove('text-black');
         switchBtnGallery.classList.add('text-white/60');
+        switchBtnGallery.setAttribute('aria-selected', 'false');
       }
 
       // Fade-in canvas wrapper cleanly
@@ -170,8 +172,10 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
         switchHighlight.style.transform = 'translateX(100%)';
         switchBtnGallery.classList.remove('text-white/60');
         switchBtnGallery.classList.add('text-black');
+        switchBtnGallery.setAttribute('aria-selected', 'true');
         switchBtnEditorial.classList.remove('text-black');
         switchBtnEditorial.classList.add('text-white/60');
+        switchBtnEditorial.setAttribute('aria-selected', 'false');
       }
 
       // Fade-in gallery wrapper cleanly
@@ -262,7 +266,7 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
     });
   }
 
-  // 2. Open Dish Profile details modal on click
+  // 2. Open Dish Profile details modal on click and keyboard press
   function setupDishClickHandlers() {
     const dishRows = document.querySelectorAll('.dish-row[data-dish-id]');
     const dishCards = document.querySelectorAll('.dish-card[data-dish-id]');
@@ -274,17 +278,37 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       }));
     };
 
+    const handleKeyboard = (e: KeyboardEvent, dishId: string) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        // Prevent default browser scrolling behavior for spacebar
+        e.preventDefault();
+        triggerOpen(dishId);
+      }
+    };
+
     dishRows.forEach(row => {
+      const dishId = row.getAttribute('data-dish-id');
+      if (!dishId) return;
+
       row.addEventListener('click', () => {
-        const dishId = row.getAttribute('data-dish-id');
-        if (dishId) triggerOpen(dishId);
+        triggerOpen(dishId);
+      });
+
+      row.addEventListener('keydown', (e: any) => {
+        handleKeyboard(e, dishId);
       });
     });
 
     dishCards.forEach(card => {
+      const dishId = card.getAttribute('data-dish-id');
+      if (!dishId) return;
+
       card.addEventListener('click', () => {
-        const dishId = card.getAttribute('data-dish-id');
-        if (dishId) triggerOpen(dishId);
+        triggerOpen(dishId);
+      });
+
+      card.addEventListener('keydown', (e: any) => {
+        handleKeyboard(e, dishId);
       });
     });
   }

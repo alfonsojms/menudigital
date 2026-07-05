@@ -55,6 +55,12 @@ body.modal-open {
   font-variation-settings: 'wght' 200;
 }
 
+/* Clear focus indicators for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-yellow, #FFD500);
+  outline-offset: 2px;
+}
+
 /* Accessibility: Support Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

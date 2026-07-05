@@ -1,7 +1,7 @@
 ---
 // DishProfile.astro: Fixed overlay modal displaying detailed dish profiles.
 ---
-<div id="dish-profile-modal" class="fixed inset-0 w-screen h-screen z-50 flex flex-col md:flex-row bg-[#1A1A1A] translate-y-full opacity-0 pointer-events-none transition-all duration-300">
+<div id="dish-profile-modal" role="dialog" aria-modal="true" aria-hidden="true" class="fixed inset-0 w-screen h-screen z-50 flex flex-col md:flex-row bg-[#1A1A1A] translate-y-full opacity-0 pointer-events-none transition-all duration-300">
   
   <!-- Left Panel: Full Bleed Hero Image -->
   <div class="relative w-full h-[40vh] md:h-full md:w-1/2 overflow-hidden" id="dish-modal-image-container">
@@ -15,10 +15,10 @@
     <!-- Close Button -->
     <button 
       id="close-dish-modal"
-      aria-label="Close Dish Profile" 
+      aria-label="Cerrar perfil de plato" 
       class="fixed top-6 right-6 md:top-8 md:right-8 z-50 text-white transition-all duration-500 ease-out close-btn p-2 cursor-pointer outline-none hover:rotate-90 hover:text-[var(--color-brand-yellow)]"
     >
-      <span class="material-symbols-outlined thin text-[36px] md:text-[48px] leading-none">close</span>
+      <span class="material-symbols-outlined thin text-[36px] md:text-[48px] leading-none" aria-hidden="true">close</span>
     </button>
 
     <!-- Content Container -->
@@ -167,6 +167,8 @@
     return true;
   }
 
+  let previousActiveElement: HTMLElement | null = null;
+
   function openModal(dishId: string) {
     if (isOpen) return;
     
@@ -174,6 +176,7 @@
     if (!success) return;
 
     isOpen = true;
+    previousActiveElement = document.activeElement as HTMLElement;
 
     // Stop Lenis smooth scroll
     if ((window as any).lenis) (window as any).lenis.stop();
@@ -183,6 +186,7 @@
 
     // Make modal visible but transparent initially, then animate
     if (modal) {
+      modal.setAttribute('aria-hidden', 'false');
       modal.classList.remove('pointer-events-none');
       
       const tl = gsap.timeline({
@@ -211,7 +215,11 @@
         const textElements = modalContent.children;
         tl.fromTo(textElements, 
           { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out' },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out',
+            onComplete: () => {
+              closeBtn?.focus();
+            }
+          },
           '-=0.9'
         );
       }
@@ -229,6 +237,7 @@
         defaults: { ease: 'power2.in', duration: 0.25 },
         onComplete: () => {
           modal.classList.add('pointer-events-none');
+          modal.setAttribute('aria-hidden', 'true');
           
           // Restore scroll
           document.body.classList.remove('modal-open');
@@ -237,6 +246,11 @@
           if ((window as any).lenis) {
             (window as any).lenis.start();
             (window as any).lenis.resize();
+          }
+
+          // Restore focus
+          if (previousActiveElement) {
+            previousActiveElement.focus();
           }
         }
       });
@@ -247,6 +261,13 @@
       });
     }
   }
+
+  // Escape key handler
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeModal();
+    }
+  });
 
   // Bind custom events to open the modal from other components
   document.addEventListener('open-dish-profile', (e: any) => {

@@ -4,7 +4,7 @@
 <section class="sticky top-0 left-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden z-10 bg-[#FFD500]" id="cover-page">
   
   <!-- Floating Pepperonis (Branding decoration #D91E1E) -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none z-10 opacity-70">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none z-10 opacity-70" aria-hidden="true">
     <div class="pepperoni absolute w-16 h-16 rounded-full bg-[#D91E1E] shadow-inner top-[15%] left-[10%]" style="box-shadow: inset -4px -4px 10px rgba(0,0,0,0.2), 2px 4px 6px rgba(0,0,0,0.15);">
       <div class="absolute w-2 h-2 rounded-full bg-[#a11111] top-3 left-4 opacity-40"></div>
       <div class="absolute w-1.5 h-1.5 rounded-full bg-[#a11111] top-8 left-3 opacity-40"></div>
@@ -50,22 +50,29 @@
 
   <!-- Scroll Indicator -->
   <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-[#1A1A1A]" id="scroll-indicator">
-    <div class="relative w-24 h-24 rotating-text select-none pointer-events-none">
+    <div class="relative w-24 h-24 rotating-text select-none pointer-events-none" aria-hidden="true">
       <svg class="w-full h-full overflow-visible" viewBox="0 0 100 100">
         <path d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" id="circlePath"></path>
         <text class="font-mono text-[9px] font-bold fill-[#1A1A1A] uppercase tracking-[2px]">
           <textPath href="#circlePath" startOffset="0%">
-            HORA DE COMER • HORATIO DE COMER •
+            HORA DE COMER • HORARIO DE COMER •
           </textPath>
         </text>
       </svg>
     </div>
     <!-- Orange Arrow (#F58220) -->
-    <span class="material-symbols-outlined animate-bounce text-4xl select-none pointer-events-none text-[#F58220] font-black">arrow_downward</span>
+    <span class="material-symbols-outlined animate-bounce text-4xl select-none pointer-events-none text-[#F58220] font-black" aria-hidden="true">arrow_downward</span>
   </div>
 </section>
 
 <style>
+  /* GPU acceleration for animated hero wrapper */
+  #hero-content {
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
+
   /* Circular text rotation */
   .rotating-text {
     animation: rotate 12s linear infinite;
