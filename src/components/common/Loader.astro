@@ -1,8 +1,21 @@
 ---
 // Loader.astro: Percentage-based animated loader that reveals the cover page when finished.
 ---
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-[#F2EFE9]" id="loader" role="status" aria-live="polite" aria-label="Cargando menú digital">
-  <div class="font-mono text-[var(--color-primary)] text-5xl md:text-7xl tracking-widest font-bold" id="counter">0%</div>
+<div 
+  class="fixed inset-0 z-50 flex items-center justify-center bg-[#F2EFE9]" 
+  id="loader" 
+  role="status" 
+  aria-live="polite" 
+  aria-label="Cargando menú digital"
+  style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #F2EFE9; display: flex; align-items: center; justify-center; z-index: 9999;"
+>
+  <div 
+    class="font-mono text-[var(--color-primary)] text-5xl md:text-7xl tracking-widest font-bold" 
+    id="counter"
+    style="font-family: monospace; font-size: 3rem; font-weight: bold; color: #E62020;"
+  >
+    0%
+  </div>
 </div>
 
 <script>

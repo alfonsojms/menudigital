@@ -15,9 +15,21 @@ export function initMenuAnimations() {
       end: "bottom top",
       scrub: 0.5, // Numeric scrub smooths jitter on mobile touch
     },
-    scale: 1.6, // Lower scale reduces GPU rendering stress
+    scale: isMobile ? 1 : 1.6, // Disables upscaling on mobile to avoid iOS Safari repaint lag
     opacity: 0,
     ease: "none"
+  });
+
+  // Toggle cover page visibility to prevent it from peeking through on mobile scroll lag
+  ScrollTrigger.create({
+    trigger: "#cover-trigger-area",
+    start: "bottom top",
+    onEnter: () => {
+      gsap.set("#cover-page", { visibility: "hidden" });
+    },
+    onLeaveBack: () => {
+      gsap.set("#cover-page", { visibility: "visible" });
+    }
   });
 
 
