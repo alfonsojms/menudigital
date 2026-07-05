@@ -15,7 +15,7 @@ export function initMenuAnimations() {
       end: "bottom top",
       scrub: 0.5, // Numeric scrub smooths jitter on mobile touch
     },
-    scale: isMobile ? 1 : 1.6, // Disables upscaling on mobile to avoid iOS Safari repaint lag
+    scale: isMobile ? 1.6 : 2.4, // Restores zoom/scaling animation safely without dynamic drop-shadow repaint lag
     opacity: 0,
     ease: "none"
   });
