@@ -13,9 +13,9 @@ export function initMenuAnimations() {
       trigger: "#cover-trigger-area",
       start: "top top",
       end: "bottom top",
-      scrub: isMobile ? true : 0.5,
+      scrub: 0.5, // Numeric scrub smooths jitter on mobile touch
     },
-    scale: 2.5,
+    scale: 1.6, // Lower scale reduces GPU rendering stress
     opacity: 0,
     ease: "none"
   });
@@ -51,24 +51,21 @@ export function initMenuAnimations() {
   });
 
   // 3. Staggered reveal for dishes in the Editorial view
-  const sections = ["#section-starters", "#section-mains"];
-  sections.forEach(sectionId => {
-    const section = document.querySelector(sectionId);
-    if (section) {
-      const dishes = section.querySelectorAll(".gs-dish");
+  const menuSections = document.querySelectorAll(".menu-section");
+  menuSections.forEach(section => {
+    const dishes = section.querySelectorAll(".gs-dish");
+    if (dishes.length > 0) {
       gsap.from(dishes, {
         scrollTrigger: {
           trigger: section,
-          start: "top 80%",
+          start: "top 85%",
         },
         y: 25,
         opacity: 0,
-        duration: 0.9,
-        stagger: 0.08,
+        duration: 0.8,
+        stagger: 0.06,
         ease: "power2.out"
       });
     }
   });
-
-
 }

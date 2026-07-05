@@ -18,6 +18,7 @@ import { menuData } from '../../types/menuData';
           class="w-full bg-transparent border border-white/20 py-2.5 pl-10 pr-4 text-xs font-mono uppercase tracking-[2px] focus:ring-0 focus:border-[var(--color-brand-yellow)] text-white placeholder:text-white/30 outline-none rounded-none" 
           placeholder="Buscar antojo..." 
           type="text"
+          aria-label="Buscar plato en la galería"
         />
       </div>
 
@@ -49,10 +50,14 @@ import { menuData } from '../../types/menuData';
       
       {menuData.map(dish => (
         <article 
-          class="dish-card group cursor-pointer relative" 
+          class="dish-card group cursor-pointer relative outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-yellow)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1A1A] rounded-md p-1" 
           data-category={dish.category}
           data-dish-id={dish.id}
           data-search-term={dish.name.toLowerCase() + " " + dish.description.toLowerCase()}
+          tabindex="0"
+          role="button"
+          aria-haspopup="dialog"
+          aria-label={`Ver detalles de ${dish.name}`}
         >
           {dish.soldOut && (
             <div class="absolute top-2 right-2 z-10 bg-[var(--color-brand-red)] text-white text-[9px] font-mono uppercase tracking-tighter px-2 py-0.5 select-none">
@@ -78,8 +83,8 @@ import { menuData } from '../../types/menuData';
             <div class="flex flex-col items-end gap-2 shrink-0">
               <span class="font-mono text-xs font-bold text-[var(--color-brand-yellow)]">${dish.price}</span>
               {!dish.soldOut && (
-                <button class="add-to-cart-btn z-10 p-1.5 flex items-center justify-center bg-[var(--color-brand-yellow)] text-black hover:bg-[#F58220] hover:text-white transition-colors duration-300 rounded-md cursor-pointer outline-none border-none" data-dish-id={dish.id} data-dish-name={dish.name} data-dish-price={dish.price} data-dish-image={dish.image} title="Añadir al delivery">
-                  <span class="material-symbols-outlined text-[16px] font-bold">add_shopping_cart</span>
+                <button class="add-to-cart-btn z-10 p-1.5 flex items-center justify-center bg-[var(--color-brand-yellow)] text-black hover:bg-[#F58220] hover:text-white transition-colors duration-300 rounded-md cursor-pointer outline-none border-none" data-dish-id={dish.id} data-dish-name={dish.name} data-dish-price={dish.price} data-dish-image={dish.image} aria-label={`Añadir ${dish.name} al pedido`} title="Añadir al delivery">
+                  <span class="material-symbols-outlined text-[16px] font-bold" aria-hidden="true">add_shopping_cart</span>
                 </button>
               )}
             </div>
