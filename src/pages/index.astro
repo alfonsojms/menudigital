@@ -64,12 +64,15 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Prevent browser from automatically restoring scroll position on refresh
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   // Initialize GSAP ScrollTrigger and animations AFTER loading animation completes
   document.addEventListener('loader-finished', () => {
-    // Scroll to top on fresh load to prevent offset trigger issues
-    if (window.scrollY > 0) {
-      window.scrollTo(0, 0);
-    }
+    // Reset scroll positions (both horizontal and vertical) unconditionally
+    window.scrollTo(0, 0);
     
     initMenuAnimations();
     setupToggleViews();
