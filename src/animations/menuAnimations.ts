@@ -20,6 +20,8 @@ export function initMenuAnimations() {
     ease: "none"
   });
 
+
+
   // Toggle cover page visibility to prevent it from peeking through on mobile scroll lag
   ScrollTrigger.create({
     trigger: "#cover-trigger-area",
