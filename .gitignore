@@ -24,3 +24,7 @@ pnpm-debug.log*
 .idea/
 # Local AI runtime state
 .atl/
+# test output
+coverage/
+playwright-report/
+test-results/

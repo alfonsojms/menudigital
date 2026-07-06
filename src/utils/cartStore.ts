@@ -19,10 +19,13 @@ export function saveCart(cart: CartItem[]) {
   document.dispatchEvent(new CustomEvent('cart-updated', { detail: { cart } }));
 }
 
+export const MAX_QUANTITY = 99;
+
 export function addToCart(dish: { id: string; name: string; price: number; image: string }) {
   const cart = getCart();
   const existing = cart.find(item => item.id === dish.id);
   if (existing) {
+    if (existing.quantity >= MAX_QUANTITY) return;
     existing.quantity += 1;
   } else {
     cart.push({ ...dish, quantity: 1 });
@@ -46,7 +49,11 @@ export function updateCartQuantity(dishId: string, quantity: number) {
   let cart = getCart();
   const existing = cart.find(item => item.id === dishId);
   if (existing) {
-    existing.quantity = quantity;
+    if (quantity > MAX_QUANTITY) {
+      existing.quantity = MAX_QUANTITY;
+    } else {
+      existing.quantity = quantity;
+    }
     if (existing.quantity <= 0) {
       cart = cart.filter(item => item.id !== dishId);
     }
