@@ -22,6 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+# Local AI runtime state
+.atl/
 
 # AI tooling and agent workspaces
 .agent/
