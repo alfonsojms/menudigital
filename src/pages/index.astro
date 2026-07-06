@@ -23,29 +23,37 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
   <!-- Tactile Grain Overlay -->
   <GrainOverlay />
 
-  <!-- Scroll trigger area for cover page scaling -->
-  <div id="cover-trigger-area" class="absolute top-0 left-0 w-full h-[100vh] pointer-events-none z-0"></div>
+  <!-- Scroll trigger area for cover page scaling (acts as 100vh spacer in document flow) -->
+  <div id="cover-trigger-area" class="relative w-full h-screen pointer-events-none z-0"></div>
 
   <!-- Cover Section -->
   <Cover />
 
   <!-- Menu Content Container (scrolls up after cover) -->
-  <div id="menu-content-container" class="relative w-full z-20 bg-[#1A1A1A] min-h-screen">
-    <div class="relative w-full">
-      
-      <!-- Asymmetric Editorial View -->
-      <div id="canvas-wrapper">
-        <MenuCanvas />
-      </div>
+  <div id="menu-content-container" class="relative w-full z-20 min-h-screen">
+    <!-- Card Shadow Element (absolute behind) -->
+    <div class="absolute inset-x-0 top-0 h-40 rounded-t-[32px] md:rounded-t-[48px] shadow-[0_-20px_50px_rgba(0,0,0,0.6)] pointer-events-none z-0"></div>
+    
+    <!-- Card Content Wrapper (has bg, rounded corners and overflow clip) -->
+    <div class="relative w-full bg-[#1A1A1A] rounded-t-[32px] md:rounded-t-[48px] overflow-hidden z-10">
+      <!-- Visual Card Handle / Pill Indicator -->
+      <div class="w-12 h-1 bg-white/25 rounded-full mx-auto my-4 pointer-events-none"></div>
+      <div class="relative w-full">
+        
+        <!-- Asymmetric Editorial View -->
+        <div id="canvas-wrapper">
+          <MenuCanvas />
+        </div>
 
-      <!-- High Density Grid Gallery View -->
-      <div id="gallery-wrapper" class="hidden">
-        <MenuGallery />
-      </div>
+        <!-- High Density Grid Gallery View -->
+        <div id="gallery-wrapper" class="hidden">
+          <MenuGallery />
+        </div>
 
-      <!-- Footer Info Section -->
-      <Dossier />
-      
+        <!-- Footer Info Section -->
+        <Dossier />
+        
+      </div>
     </div>
   </div>
 
