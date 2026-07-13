@@ -57,10 +57,10 @@
   </div>
 
   <!-- Booking/Order Button -->
-  <a href="https://wa.me/584120721925" target="_blank" class="booking-btn w-full h-[80px] bg-[#FFD500] text-[#1A1A1A] hover:bg-[#F58220] hover:text-white transition-colors duration-500 ease-in-out flex items-center justify-center cursor-pointer rounded-none outline-none border-none decoration-none no-underline">
+  <button id="footer-cart-trigger" class="booking-btn w-full h-[80px] bg-[#FFD500] text-[#1A1A1A] hover:bg-[#F58220] hover:text-white transition-colors duration-500 ease-in-out flex items-center justify-center cursor-pointer rounded-none outline-none border-none">
     <span class="text-initial text-lg md:text-2xl tracking-[4px] uppercase font-display">Pide por Delivery</span>
-    <span class="text-hover text-lg md:text-2xl tracking-[4px] uppercase font-display hidden">¡Escríbenos al WhatsApp!</span>
-  </a>
+    <span class="text-hover text-lg md:text-2xl tracking-[4px] uppercase font-display hidden">Ver mi Pedido</span>
+  </button>
   
 </footer>
 
@@ -73,3 +73,16 @@
     display: block;
   }
 </style>
+
+<script>
+  function initFooterCartTrigger() {
+    const trigger = document.getElementById('footer-cart-trigger');
+    trigger?.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('open-order-sheet'));
+    });
+  }
+
+  // Bind to DOM ready and load events
+  document.addEventListener('DOMContentLoaded', initFooterCartTrigger);
+  document.addEventListener('loader-finished', initFooterCartTrigger);
+</script>

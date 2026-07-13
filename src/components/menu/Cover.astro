@@ -48,20 +48,24 @@
     </h1>
   </div>
 
-  <!-- Scroll Indicator -->
-  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-[#1A1A1A]" id="scroll-indicator">
-    <div class="relative w-24 h-24 rotating-text select-none pointer-events-none" aria-hidden="true">
-      <svg class="w-full h-full overflow-visible" viewBox="0 0 100 100">
-        <path d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" id="circlePath"></path>
-        <text class="font-mono text-[9px] font-bold fill-[#1A1A1A] uppercase tracking-[2px]">
-          <textPath href="#circlePath" startOffset="0%">
-            HORA DE COMER • HORARIO DE COMER •
-          </textPath>
-        </text>
-      </svg>
+  <!-- Scroll Indicator Container (Centers horizontally without using transform on the target element to avoid GSAP collisions) -->
+  <div class="absolute bottom-16 left-0 w-full flex justify-center z-30 pointer-events-none">
+    <div class="flex flex-col items-center gap-4 text-[#1A1A1A] pointer-events-auto" id="scroll-indicator">
+      <div class="relative w-24 h-24 select-none pointer-events-none mb-1 mx-auto" aria-hidden="true">
+        <svg class="w-full h-full overflow-visible rotating-text mx-auto block" viewBox="0 0 100 100">
+          <path d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" id="circlePath"></path>
+          <text class="font-mono text-[8px] font-bold fill-[#1A1A1A] uppercase tracking-[2px]">
+            <textPath href="#circlePath" startOffset="0%">HORA DE COMER • HORA DE COMER • </textPath>
+          </text>
+        </svg>
+      </div>
+      <!-- Custom SVG Arrow (Orange #F58220) for high-performance and brand-aligned vector aesthetics -->
+      <div class="animate-bounce select-none pointer-events-none text-[#F58220]" aria-hidden="true">
+        <svg class="w-9 h-9 drop-shadow-[0_2px_3px_rgba(0,0,0,0.1)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 4v16M18 14l-6 6-6-6" />
+        </svg>
+      </div>
     </div>
-    <!-- Orange Arrow (#F58220) -->
-    <span class="material-symbols-outlined animate-bounce text-4xl select-none pointer-events-none text-[#F58220] font-black" aria-hidden="true">arrow_downward</span>
   </div>
 </section>
 
@@ -75,6 +79,7 @@
 
   /* Circular text rotation */
   .rotating-text {
+    transform-origin: center;
     animation: rotate 12s linear infinite;
   }
   @keyframes rotate {
