@@ -226,7 +226,9 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       const dishId = row.getAttribute('data-dish-id');
       if (!dishId) return;
 
-      row.addEventListener('click', () => {
+      row.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('.add-to-cart-btn')) return;
         triggerOpen(dishId);
       });
 
@@ -239,7 +241,9 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       const dishId = card.getAttribute('data-dish-id');
       if (!dishId) return;
 
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('.add-to-cart-btn')) return;
         triggerOpen(dishId);
       });
 
