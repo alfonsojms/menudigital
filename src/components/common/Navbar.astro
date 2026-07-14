@@ -246,8 +246,8 @@
   import { getCartItemsCount } from '../../utils/cartStore';
 
   function initNavbarAnimations() {
-    if ((window as any).__navbarInitialized) return;
-    (window as any).__navbarInitialized = true;
+    if (window.__navbarInitialized) return;
+    window.__navbarInitialized = true;
 
     const navbar = document.getElementById('global-navbar');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -348,7 +348,7 @@
       mobileMenuOverlay.classList.add('is-active');
       mobileMenuOverlay.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
-      (window as any).lenis?.stop();
+      window.lenis?.stop();
 
       // GSAP Staggered entry for links
       gsap.fromTo(mobileLinks,
@@ -380,9 +380,9 @@
       }
       
       document.body.classList.remove('modal-open');
-      if ((window as any).lenis) {
-        (window as any).lenis.start();
-        (window as any).lenis.resize();
+      if (window.lenis) {
+        window.lenis.start();
+        window.lenis.resize();
       }
     }
 

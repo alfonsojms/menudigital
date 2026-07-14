@@ -100,9 +100,9 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       if (!isMobile) {
         // Desktop uses Lenis smooth scroll
         requestAnimationFrame(() => {
-          if ((window as any).lenis) {
-            (window as any).lenis.resize();
-            (window as any).lenis.scrollTo('#menu-content-container', {
+          if (window.lenis) {
+            window.lenis.resize();
+            window.lenis.scrollTo('#menu-content-container', {
               offset: -10,
               duration: 0.8,
               easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
@@ -179,9 +179,9 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
         e.preventDefault();
         const isMobile = window.innerWidth < 768;
         if (!isMobile) {
-          if ((window as any).lenis) {
-            (window as any).lenis.resize();
-            (window as any).lenis.scrollTo('#dossier-section', {
+          if (window.lenis) {
+            window.lenis.resize();
+            window.lenis.scrollTo('#dossier-section', {
               duration: 1.2,
               easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             });

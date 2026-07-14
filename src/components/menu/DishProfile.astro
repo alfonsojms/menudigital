@@ -179,7 +179,7 @@
     previousActiveElement = document.activeElement as HTMLElement;
 
     // Stop Lenis smooth scroll
-    if ((window as any).lenis) (window as any).lenis.stop();
+    if (window.lenis) window.lenis.stop();
     
     // Lock body scroll
     document.body.classList.add('modal-open');
@@ -243,9 +243,9 @@
           document.body.classList.remove('modal-open');
 
           // Restart Lenis smooth scroll
-          if ((window as any).lenis) {
-            (window as any).lenis.start();
-            (window as any).lenis.resize();
+          if (window.lenis) {
+            window.lenis.start();
+            window.lenis.resize();
           }
 
           // Restore focus
