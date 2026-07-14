@@ -410,6 +410,83 @@
         closeMobileMenu(true);
       });
     });
+
+    // --- Switcher Decoupled Logic ---
+    const switchBtnEditorial = document.getElementById('switch-btn-editorial');
+    const switchBtnGallery = document.getElementById('switch-btn-gallery');
+    const switchHighlight = document.getElementById('switcher-highlight');
+    const mobileNavBtnEditorial = document.getElementById('mobile-nav-btn-editorial');
+    const mobileNavBtnGallery = document.getElementById('mobile-nav-btn-gallery');
+
+    function dispatchViewChange(view: 'editorial' | 'gallery') {
+      document.dispatchEvent(new CustomEvent('view-changed', { detail: { view } }));
+    }
+
+    if (switchBtnEditorial) {
+      switchBtnEditorial.addEventListener('click', (e) => {
+        e.preventDefault();
+        dispatchViewChange('editorial');
+      });
+    }
+
+    if (switchBtnGallery) {
+      switchBtnGallery.addEventListener('click', (e) => {
+        e.preventDefault();
+        dispatchViewChange('gallery');
+      });
+    }
+
+    if (mobileNavBtnEditorial) {
+      mobileNavBtnEditorial.addEventListener('click', (e) => {
+        e.preventDefault();
+        dispatchViewChange('editorial');
+      });
+    }
+
+    if (mobileNavBtnGallery) {
+      mobileNavBtnGallery.addEventListener('click', (e) => {
+        e.preventDefault();
+        dispatchViewChange('gallery');
+      });
+    }
+
+    document.addEventListener('view-changed', ((e: CustomEvent<{ view: 'editorial' | 'gallery' }>) => {
+      const view = e.detail.view;
+      
+      // Update sliding highlight and classes for the header switcher tab
+      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
+        if (view === 'editorial') {
+          switchHighlight.style.transform = 'translateX(0)';
+          switchBtnEditorial.classList.remove('text-white/60');
+          switchBtnEditorial.classList.add('text-black');
+          switchBtnEditorial.setAttribute('aria-selected', 'true');
+          
+          switchBtnGallery.classList.remove('text-black');
+          switchBtnGallery.classList.add('text-white/60');
+          switchBtnGallery.setAttribute('aria-selected', 'false');
+        } else {
+          switchHighlight.style.transform = 'translateX(100%)';
+          switchBtnGallery.classList.remove('text-white/60');
+          switchBtnGallery.classList.add('text-black');
+          switchBtnGallery.setAttribute('aria-selected', 'true');
+          
+          switchBtnEditorial.classList.remove('text-black');
+          switchBtnEditorial.classList.add('text-white/60');
+          switchBtnEditorial.setAttribute('aria-selected', 'false');
+        }
+      }
+
+      // Update mobile menu overlay navigation buttons
+      if (mobileNavBtnEditorial && mobileNavBtnGallery) {
+        if (view === 'editorial') {
+          mobileNavBtnEditorial.classList.add('active-nav-item');
+          mobileNavBtnGallery.classList.remove('active-nav-item');
+        } else {
+          mobileNavBtnGallery.classList.add('active-nav-item');
+          mobileNavBtnEditorial.classList.remove('active-nav-item');
+        }
+      }
+    }) as EventListener);
   }
 
   document.addEventListener('DOMContentLoaded', initNavbarAnimations);

@@ -89,9 +89,6 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
 
   // 1. View Toggling: Editorial vs Gallery Grid
   function setupToggleViews() {
-    const btnEditorial = document.querySelectorAll('.btn-toggle-editorial, #nav-btn-editorial');
-    const btnGallery = document.querySelectorAll('.btn-toggle-gallery, #nav-btn-gallery');
-    
     const canvasWrapper = document.getElementById('canvas-wrapper');
     const galleryWrapper = document.getElementById('gallery-wrapper');
     const galleryView = document.getElementById('gallery-view');
@@ -103,24 +100,6 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       canvasWrapper.classList.remove('hidden');
       galleryWrapper.classList.add('hidden');
       galleryView.classList.add('hidden');
-      
-      // Update navigation active button styling
-      btnEditorial.forEach(btn => btn.classList.add('active-nav-item'));
-      btnGallery.forEach(btn => btn.classList.remove('active-nav-item'));
-
-      // Update inline view switcher state
-      const switchHighlight = document.getElementById('switcher-highlight');
-      const switchBtnEditorial = document.getElementById('switch-btn-editorial');
-      const switchBtnGallery = document.getElementById('switch-btn-gallery');
-      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
-        switchHighlight.style.transform = 'translateX(0)';
-        switchBtnEditorial.classList.remove('text-white/60');
-        switchBtnEditorial.classList.add('text-black');
-        switchBtnEditorial.setAttribute('aria-selected', 'true');
-        switchBtnGallery.classList.remove('text-black');
-        switchBtnGallery.classList.add('text-white/60');
-        switchBtnGallery.setAttribute('aria-selected', 'false');
-      }
 
       // Fade-in canvas wrapper cleanly
       gsap.fromTo(canvasWrapper, 
@@ -153,7 +132,7 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
         setTimeout(() => {
           const el = document.getElementById('menu-content-container');
           if (el) {
-            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping headers visible
+            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping filter header visible
             const targetY = el.getBoundingClientRect().top + window.scrollY + 12;
             window.scrollTo({ top: targetY, behavior: 'smooth' });
           }
@@ -170,24 +149,6 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       canvasWrapper.classList.add('hidden');
       galleryWrapper.classList.remove('hidden');
       galleryView.classList.remove('hidden');
-
-      // Update navigation active button styling
-      btnGallery.forEach(btn => btn.classList.add('active-nav-item'));
-      btnEditorial.forEach(btn => btn.classList.remove('active-nav-item', 'text-[var(--color-brand-red)]'));
-
-      // Update inline view switcher state
-      const switchHighlight = document.getElementById('switcher-highlight');
-      const switchBtnEditorial = document.getElementById('switch-btn-editorial');
-      const switchBtnGallery = document.getElementById('switch-btn-gallery');
-      if (switchHighlight && switchBtnEditorial && switchBtnGallery) {
-        switchHighlight.style.transform = 'translateX(100%)';
-        switchBtnGallery.classList.remove('text-white/60');
-        switchBtnGallery.classList.add('text-black');
-        switchBtnGallery.setAttribute('aria-selected', 'true');
-        switchBtnEditorial.classList.remove('text-black');
-        switchBtnEditorial.classList.add('text-white/60');
-        switchBtnEditorial.setAttribute('aria-selected', 'false');
-      }
 
       // Fade-in gallery wrapper cleanly
       gsap.fromTo(galleryWrapper, 
@@ -232,20 +193,14 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       }
     };
 
-    // Bind event listeners to both sets of header links (Cover header + Menu header)
-    btnEditorial.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault(); // Always prevent default — we handle scroll programmatically
+    // Listen to decoupled custom event
+    document.addEventListener('view-changed', ((e: CustomEvent<{ view: 'editorial' | 'gallery' }>) => {
+      if (e.detail.view === 'editorial') {
         showEditorial();
-      });
-    });
-
-    btnGallery.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault(); // Always prevent default — we handle scroll programmatically
+      } else if (e.detail.view === 'gallery') {
         showGallery();
-      });
-    });
+      }
+    }) as EventListener);
 
     // Bind event listeners to Info buttons (both desktop and mobile) for smooth scroll
     const btnInfo = document.querySelectorAll('a[href="#dossier-section"]');
