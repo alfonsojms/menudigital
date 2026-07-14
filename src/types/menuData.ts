@@ -3,6 +3,7 @@ export interface Dish {
   name: string;
   price: number;
   category: 'starters' | 'mains' | 'desserts' | 'drinks';
+  subcategory: 'tequeperros' | 'perros' | 'hamburpizzas' | 'pizzas' | 'patacones' | 'burgers' | 'meri' | 'postres' | 'bebidas';
   categoryLabel: string;
   description: string;
   image: string;
@@ -20,6 +21,7 @@ export const menuData: Dish[] = [
     name: "Tequeperros 2 Unidades",
     price: 8,
     category: "starters",
+    subcategory: "tequeperros",
     categoryLabel: "Tequeperros y Perros",
     description: "Fusionamos el rico tequeño venezolano con el clásico perro caliente, cambiamos el pan por un súper tequeño. Con salchicha, papas ralladas, tocineta, maíz y salsas.",
     image: "/menufotos/480435892_17894956473170633_7261931795626125031_n.webp",
@@ -40,6 +42,7 @@ export const menuData: Dish[] = [
     name: "Tequeperros Especial 2 Unidades",
     price: 10,
     category: "starters",
+    subcategory: "tequeperros",
     categoryLabel: "Tequeperros y Perros",
     description: "Súper tequeño relleno de salchicha, jamón, queso amarillo, queso mozzarella, tocineta, papas ralladas, maíz y salsas.",
     image: "/menufotos/480435892_17894956473170633_7261931795626125031_n.webp",
@@ -59,6 +62,7 @@ export const menuData: Dish[] = [
     name: "Perros Normales Tamaño Jumbo",
     price: 6,
     category: "starters",
+    subcategory: "perros",
     categoryLabel: "Tequeperros y Perros",
     description: "Perro caliente jumbo tradicional con ensalada, salchicha, papitas, salsas y queso de año.",
     image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
@@ -79,6 +83,7 @@ export const menuData: Dish[] = [
     name: "Perro Charcutero",
     price: 8,
     category: "starters",
+    subcategory: "perros",
     categoryLabel: "Tequeperros y Perros",
     description: "Perro caliente especial con ensalada, salchicha, papitas, maíz, jamón, queso pasteurizado, queso amarillo, salsas y queso de año.",
     image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
@@ -93,13 +98,12 @@ export const menuData: Dish[] = [
     ],
     allergens: "Gluten, Lácteos"
   },
-
-  // --- MAINS (Hamburpizzas, Pizzas, Patacones, Whoppers, La Meri) ---
   {
     id: "hamburpizza-pollo-carne",
     name: "Hamburpizza Pollo o Carne",
     price: 14,
     category: "mains",
+    subcategory: "hamburpizzas",
     categoryLabel: "Hamburpizzas y Más",
     description: "La fusión de sabores que buscabas, unimos lo mejor de la hamburguesa y lo exquisito de una buena pizza. Con jamón, tocineta, queso mozzarella, queso amarillo, tomate, orégano, maíz, salsas, pasta de tomate y papas ralladas.",
     image: "/menufotos/481020682_17894956464170633_8960802278795460931_n.webp",
@@ -119,11 +123,12 @@ export const menuData: Dish[] = [
     name: "Hamburpizza Crispy Pollo o Chuleta",
     price: 16,
     category: "mains",
+    subcategory: "hamburpizzas",
     categoryLabel: "Hamburpizzas y Más",
     description: "Nuestra hamburpizza premium rellena de jamón, tocineta, queso mozzarella, queso amarillo, pollo crispy crujiente o chuleta, tomate, maíz, salsas, pasta de tomate y papas ralladas.",
     image: "/menufotos/481020682_17894956464170633_8960802278795460931_n.webp",
     subtitle: "Sabor Extra Crujiente",
-    story: "Una versión con texturas inigualables. Rellenamos la masa de pizza con jugoso pollo crispy súper crujiente o una chuleta ahumada tierna a la plancha, combinada con jamón, tocineta, quesos derretidos y papitas fritas ralladas.",
+    story: "Una versión con texturas inigualables. Rellenamos la masa de pizza con jugoso pollo crispy súper crujiente o una chuleta ahumada terna a la plancha, combinada con jamón, tocineta, quesos derretidos y papitas fritas ralladas.",
     ingredients: [
       "Masa de pizza artesanal crujiente",
       "Pollo frito crispy o chuleta ahumada premium",
@@ -138,6 +143,7 @@ export const menuData: Dish[] = [
     name: "Hamburpizza Minions",
     price: 10,
     category: "mains",
+    subcategory: "hamburpizzas",
     categoryLabel: "Hamburpizzas y Más",
     description: "Hamburpizza en tamaño perfecto para los pequeños. Rellena de carne, jamón, queso mozzarella, queso amarillo, tomate, orégano, maíz, salsas, pasta de tomate y papas ralladas.",
     image: "/menufotos/481020682_17894956464170633_8960802278795460931_n.webp",
@@ -145,7 +151,7 @@ export const menuData: Dish[] = [
     story: "Una versión miniatura de nuestra hamburpizza pero con todo el sabor. Carne molida premium, jamón, quesos derretidos, maíz dulce y papitas ralladas en una porción ideal para niños.",
     ingredients: [
       "Masa de pizza individual",
-      "Carne de res tierna sazonada",
+      "Carne de res sazonada",
       "Jamón, queso mozzarella y amarillo",
       "Tomate fresco, maíz dulce y papitas ralladas",
       "Salsas suaves y pasta de tomate"
@@ -157,6 +163,7 @@ export const menuData: Dish[] = [
     name: "Pizza Individual Sencilla",
     price: 8,
     category: "mains",
+    subcategory: "pizzas",
     categoryLabel: "Pizzas",
     description: "Pizza individual de masa fina con queso mozzarella fundido, jamón premium y un toque de orégano.",
     image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
@@ -175,6 +182,7 @@ export const menuData: Dish[] = [
     name: "Pizza Individual Margarita",
     price: 8,
     category: "mains",
+    subcategory: "pizzas",
     categoryLabel: "Pizzas",
     description: "Pizza individual con queso mozzarella, maíz tierno y orégano.",
     image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
@@ -193,6 +201,7 @@ export const menuData: Dish[] = [
     name: "Pizza Individual Especial",
     price: 10,
     category: "mains",
+    subcategory: "pizzas",
     categoryLabel: "Pizzas",
     description: "Pizza individual cargada con queso, jamón, tocineta, maíz y orégano.",
     image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
@@ -211,6 +220,7 @@ export const menuData: Dish[] = [
     name: "Pizza Il Rectzza Sencilla",
     price: 22,
     category: "mains",
+    subcategory: "pizzas",
     categoryLabel: "Pizzas",
     description: "Pizza cuadrada gigante de 24 trozos con abundante queso mozzarella, maíz y orégano. Perfecta para compartir en familia.",
     image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
@@ -229,6 +239,7 @@ export const menuData: Dish[] = [
     name: "Pizza Il Rectzza Especial",
     price: 26,
     category: "mains",
+    subcategory: "pizzas",
     categoryLabel: "Pizzas",
     description: "Pizza cuadrada gigante de 24 trozos con abundante queso mozzarella, jamón, tocineta, maíz y orégano.",
     image: "/menufotos/480456987_17894956491170633_2138880112667699261_n.webp",
@@ -247,6 +258,7 @@ export const menuData: Dish[] = [
     name: "Patacón de la Casa",
     price: 12,
     category: "mains",
+    subcategory: "patacones",
     categoryLabel: "Patacón y Burgers",
     description: "Plátano verde macho frito y crujiente relleno de carne y pollo, ensalada rallada, queso de mano, queso amarillo, jamón, tocineta, maíz y salsas.",
     image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
@@ -266,6 +278,7 @@ export const menuData: Dish[] = [
     name: "Whopper de Pollo Crispy",
     price: 10,
     category: "mains",
+    subcategory: "burgers",
     categoryLabel: "Patacón y Burgers",
     description: "Hamburguesa premium con vegetales, papitas crujientes, pollo crispy, queso mozzarella, queso amarillo, tocineta y salsas.",
     image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
@@ -286,6 +299,7 @@ export const menuData: Dish[] = [
     name: "Whopper Sencilla",
     price: 9,
     category: "mains",
+    subcategory: "burgers",
     categoryLabel: "Patacón y Burgers",
     description: "Hamburguesa clásica con vegetales, papitas, carne de res premium o pollo, jamón, queso y salsas.",
     image: "/menufotos/480898688_17894956503170633_6105284169569578037_n.webp",
@@ -305,6 +319,7 @@ export const menuData: Dish[] = [
     name: "Meri de Pollo o Carne",
     price: 11,
     category: "mains",
+    subcategory: "meri",
     categoryLabel: "La Meri",
     description: "Cambiamos el pan tradicional por nuestra deliciosa masa frita de la casa. Con pollo o carne, queso de mano, queso amarillo, jamón, tocineta, papas ralladas, maíz y salsas.",
     image: "/menufotos/480986107_17894956482170633_5563912232239391031_n.webp",
@@ -324,6 +339,7 @@ export const menuData: Dish[] = [
     name: "Meri de Pollo Crispy o Chuleta",
     price: 12,
     category: "mains",
+    subcategory: "meri",
     categoryLabel: "La Meri",
     description: "Masa frita de la casa rellena de pollo crispy súper crujiente o chuleta, queso de mano, queso amarillo, jamón, tocineta, papas ralladas, maíz y salsas.",
     image: "/menufotos/480986107_17894956482170633_5563912232239391031_n.webp",
@@ -338,13 +354,12 @@ export const menuData: Dish[] = [
     ],
     allergens: "Gluten, Lácteos"
   },
-
-  // --- DESSERTS (Postres / Dulces) ---
   {
     id: "dessert-1",
     name: "Pizza Sweet Nutella & Fresas",
     price: 12,
     category: "desserts",
+    subcategory: "postres",
     categoryLabel: "Postres",
     description: "Masa delgada y crujiente cubierta de Nutella caliente, rodajas de fresas frescas y lluvia de azúcar glas.",
     image: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?q=80&w=800",
@@ -363,6 +378,7 @@ export const menuData: Dish[] = [
     name: "Mega Shake Oreo Burger",
     price: 10,
     category: "desserts",
+    subcategory: "postres",
     categoryLabel: "Postres",
     description: "Batido cremoso de galletas Oreo, crema batida, coronado con una mini dona glaseada de chocolate.",
     image: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?q=80&w=800",
@@ -376,13 +392,12 @@ export const menuData: Dish[] = [
     ],
     allergens: "Gluten, Lácteos"
   },
-
-  // --- DRINKS (Bebidas) ---
   {
     id: "drink-1",
     name: "Refrescos Variados",
     price: 3,
     category: "drinks",
+    subcategory: "bebidas",
     categoryLabel: "Bebidas",
     description: "Lata de Coca-Cola, Chinotto, Fanta o Pepsi bien fría.",
     image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800",
@@ -398,6 +413,7 @@ export const menuData: Dish[] = [
     name: "Soda Tropical de Maracuyá",
     price: 5,
     category: "drinks",
+    subcategory: "bebidas",
     categoryLabel: "Bebidas",
     description: "Refresco natural artesanal de pulpa de maracuyá maduro, menta fresca y gasificado ligero.",
     image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800",
