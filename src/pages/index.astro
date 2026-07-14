@@ -95,18 +95,7 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
 
     if (!canvasWrapper || !galleryWrapper || !galleryView) return;
 
-    const showEditorial = () => {
-      // Toggle visibility
-      canvasWrapper.classList.remove('hidden');
-      galleryWrapper.classList.add('hidden');
-      galleryView.classList.add('hidden');
-
-      // Fade-in canvas wrapper cleanly
-      gsap.fromTo(canvasWrapper, 
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
-      );
-
+    const scrollToMenu = () => {
       const isMobile = window.innerWidth < 768;
       if (!isMobile) {
         // Desktop uses Lenis smooth scroll
@@ -144,6 +133,21 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
       }
     };
 
+    const showEditorial = () => {
+      // Toggle visibility
+      canvasWrapper.classList.remove('hidden');
+      galleryWrapper.classList.add('hidden');
+      galleryView.classList.add('hidden');
+
+      // Fade-in canvas wrapper cleanly
+      gsap.fromTo(canvasWrapper, 
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
+      );
+
+      scrollToMenu();
+    };
+
     const showGallery = () => {
       // Toggle visibility
       canvasWrapper.classList.add('hidden');
@@ -156,41 +160,7 @@ import OrderSheet from '../components/menu/OrderSheet.astro';
         { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
       );
 
-      const isMobile = window.innerWidth < 768;
-      if (!isMobile) {
-        // Desktop uses Lenis smooth scroll
-        requestAnimationFrame(() => {
-          if ((window as any).lenis) {
-            (window as any).lenis.resize();
-            (window as any).lenis.scrollTo('#menu-content-container', {
-              offset: -10,
-              duration: 0.8,
-              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-            });
-          } else {
-            document.getElementById('menu-content-container')?.scrollIntoView({ behavior: 'smooth' });
-          }
-          
-          setTimeout(() => {
-            ScrollTrigger.refresh();
-          }, 850);
-        });
-      } else {
-        // Mobile: use native smooth scroll. Native scroll is hardware-accelerated on mobile
-        // and doesn't get stuck due to conflicts with touch momentum or layout resets.
-        setTimeout(() => {
-          const el = document.getElementById('menu-content-container');
-          if (el) {
-            // Scroll to the container top + 12px extra to push the Cover completely out of view while keeping filter header visible
-            const targetY = el.getBoundingClientRect().top + window.scrollY + 12;
-            window.scrollTo({ top: targetY, behavior: 'smooth' });
-          }
-          
-          setTimeout(() => {
-            ScrollTrigger.refresh();
-          }, 800);
-        }, 150);
-      }
+      scrollToMenu();
     };
 
     // Listen to decoupled custom event
