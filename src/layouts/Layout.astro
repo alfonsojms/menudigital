@@ -99,7 +99,7 @@ import '../styles/global.css';
 			gsap.ticker.lagSmoothing(0);
 
 			// Expose lenis instance globally to allow pausing/starting (e.g. when opening modals)
-			(window as any).lenis = lenis;
+			window.lenis = lenis;
 
 			// Global Event Delegation for Add-To-Cart buttons
 			document.addEventListener('click', (e) => {

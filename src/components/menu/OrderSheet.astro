@@ -167,7 +167,7 @@
 
     // Toggle scroll
     document.body.classList.add('modal-open');
-    if ((window as any).lenis) (window as any).lenis.stop();
+    if (window.lenis) window.lenis.stop();
 
     if (backdrop && drawer) {
       drawer.setAttribute('aria-hidden', 'false');
@@ -191,9 +191,9 @@
 
     // Restore scroll
     document.body.classList.remove('modal-open');
-    if ((window as any).lenis) {
-      (window as any).lenis.start();
-      (window as any).lenis.resize();
+    if (window.lenis) {
+      window.lenis.start();
+      window.lenis.resize();
     }
 
     if (backdrop && drawer) {
