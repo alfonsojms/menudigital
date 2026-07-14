@@ -253,7 +253,6 @@ const sections = [
 
 <script>
   import { gsap } from 'gsap';
-  import { addToCart } from '../../utils/cartStore';
 
   function initHoverPreview() {
     const preview = document.getElementById('hover-image-preview');
@@ -321,30 +320,11 @@ const sections = [
     }, { passive: true });
   }
 
-  function initAddToCart() {
-    const addBtns = document.querySelectorAll('.add-to-cart-btn');
-    addBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const dishId = btn.getAttribute('data-dish-id') || '';
-        const name = btn.getAttribute('data-dish-name') || '';
-        const price = parseFloat(btn.getAttribute('data-dish-price') || '0');
-        const image = btn.getAttribute('data-dish-image') || '';
-        
-        if (dishId) {
-          addToCart({ id: dishId, name, price, image });
-          gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: 'back.out(1.5)' });
-        }
-      });
-    });
-  }
-
   let initialized = false;
   function initAll() {
     if (initialized) return;
     initialized = true;
     initHoverPreview();
-    initAddToCart();
   }
 
   // Initialize on loader-finished (when page reveals) and on DOMContentLoaded safely

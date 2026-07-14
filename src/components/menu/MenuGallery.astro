@@ -120,7 +120,6 @@ import { menuData } from '../../types/menuData';
 
 <script>
   import { gsap } from 'gsap';
-  import { addToCart } from '../../utils/cartStore';
 
   // Client-side search and filtering logic
   const searchInput = document.getElementById('gallery-search') as HTMLInputElement;
@@ -189,20 +188,4 @@ import { menuData } from '../../types/menuData';
     });
   });
 
-  // Bind Add to Cart buttons
-  const addBtns = document.querySelectorAll('#gallery-grid .add-to-cart-btn');
-  addBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Prevent opening the detail modal
-      const dishId = btn.getAttribute('data-dish-id') || '';
-      const name = btn.getAttribute('data-dish-name') || '';
-      const price = parseFloat(btn.getAttribute('data-dish-price') || '0');
-      const image = btn.getAttribute('data-dish-image') || '';
-      
-      if (dishId) {
-        addToCart({ id: dishId, name, price, image });
-        gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: 'back.out(1.5)' });
-      }
-    });
-  });
 </script>

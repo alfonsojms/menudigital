@@ -78,6 +78,7 @@ import '../styles/global.css';
 			import Lenis from '@studio-freight/lenis';
 			import { gsap } from 'gsap';
 			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+			import { addToCart } from '../utils/cartStore';
 
 			gsap.registerPlugin(ScrollTrigger);
 
@@ -99,6 +100,25 @@ import '../styles/global.css';
 
 			// Expose lenis instance globally to allow pausing/starting (e.g. when opening modals)
 			(window as any).lenis = lenis;
+
+			// Global Event Delegation for Add-To-Cart buttons
+			document.addEventListener('click', (e) => {
+				const target = e.target as HTMLElement;
+				const btn = target.closest('.add-to-cart-btn');
+				if (btn) {
+					e.stopPropagation(); // Prevent opening the detail modal
+					e.preventDefault();
+					const dishId = btn.getAttribute('data-dish-id') || '';
+					const name = btn.getAttribute('data-dish-name') || '';
+					const price = parseFloat(btn.getAttribute('data-dish-price') || '0');
+					const image = btn.getAttribute('data-dish-image') || '';
+					
+					if (dishId) {
+						addToCart({ id: dishId, name, price, image });
+						gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: 'back.out(1.5)' });
+					}
+				}
+			});
 		</script>
 	</body>
 </html>
