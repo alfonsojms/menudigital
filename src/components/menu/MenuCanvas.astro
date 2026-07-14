@@ -7,43 +7,43 @@ const sections = [
     id: "tequeperros",
     title: "Tequeperros",
     subtitle: "Fusionamos el rico tequeño venezolano con el clásico perro caliente, cambiando el pan por un súper tequeño.",
-    items: menuData.filter(d => d.id.includes("tequeperro")),
+    items: menuData.filter(d => d.subcategory === 'tequeperros'),
   },
   {
     id: "perros",
     title: "Perros",
     subtitle: "El clásico indiscutible de la calle con su ensalada y queso de año.",
-    items: menuData.filter(d => d.id.includes("perro") && !d.id.includes("tequeperro")),
+    items: menuData.filter(d => d.subcategory === 'perros'),
   },
   {
     id: "hamburpizzas",
     title: "Hamburpizzas",
     subtitle: "La fusión de sabores que buscabas, uniendo lo mejor de la hamburguesa y lo exquisito de una buena pizza.",
-    items: menuData.filter(d => d.id.includes("hamburpizza")),
+    items: menuData.filter(d => d.subcategory === 'hamburpizzas'),
   },
   {
     id: "pizzas",
     title: "Pizzas",
     subtitle: "Masa estirada a mano, salsa pomodoro y queso mozzarella derretido.",
-    items: menuData.filter(d => d.id.includes("pizza") && !d.id.includes("hamburpizza") && d.category !== 'desserts'),
+    items: menuData.filter(d => d.subcategory === 'pizzas'),
   },
   {
     id: "patacon",
     title: "Patacón",
     subtitle: "El auténtico sabor zuliano con tapas de plátano macho crujiente.",
-    items: menuData.filter(d => d.id.includes("patacon")),
+    items: menuData.filter(d => d.subcategory === 'patacones'),
   },
   {
     id: "whopper",
     title: "Whoppers",
     subtitle: "Hamburguesas gigantes premium cargadas de sabor.",
-    items: menuData.filter(d => d.id.includes("whopper")),
+    items: menuData.filter(d => d.subcategory === 'burgers'),
   },
   {
     id: "meri",
     title: "La Meri",
     subtitle: "Cambiamos el pan tradicional por nuestra deliciosa masa frita de la casa.",
-    items: menuData.filter(d => d.id.includes("meri")),
+    items: menuData.filter(d => d.subcategory === 'meri'),
   }
 ];
 ---
