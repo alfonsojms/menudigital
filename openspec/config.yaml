@@ -1,0 +1,28 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Astro (v7.0.6), Tailwind CSS (v4.3.2), TypeScript, Node.js (>=22.12.0)
+  Architecture: Static Site Generation (SSG), mobile-first component layouts
+  Testing: Vitest (unit/integration), Playwright (E2E)
+  Animations: GSAP (v3.15.0), Lenis smooth scrolling
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns and mobile-first rules
+    tdd: false
+  verify:
+    build_command: "npm run build"
+  archive:
+    - Warn before merging destructive deltas
