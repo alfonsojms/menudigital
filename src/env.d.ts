@@ -1,6 +1,6 @@
 /// <reference types="astro/client" />
 
 interface Window {
-  lenis?: import('@studio-freight/lenis').default;
+  lenis?: import('lenis').default;
   __navbarInitialized?: boolean;
 }
