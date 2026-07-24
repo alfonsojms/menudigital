@@ -1,0 +1,8 @@
+# Gentleman Guardian Angel (GGA) Configuration for Menú Digital
+
+PROVIDER="opencode"
+FILE_PATTERNS="src/**/*.ts,src/**/*.astro,src/**/*.js"
+EXCLUDE_PATTERNS="*.test.*,*.spec.*,*.d.ts,dist/*,build/*,node_modules/*,.agents/*,.impeccable/*,public/*"
+RULES_FILE="AGENTS.md"
+STRICT_MODE="false"
+TIMEOUT="30"
