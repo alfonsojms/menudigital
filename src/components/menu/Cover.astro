@@ -60,7 +60,7 @@
         </svg>
       </div>
       <!-- Custom SVG Arrow (Orange #F58220) for high-performance and brand-aligned vector aesthetics -->
-      <div class="animate-bounce select-none pointer-events-none text-[#F58220]" aria-hidden="true">
+      <div class="scroll-arrow-float select-none pointer-events-none text-[#F58220]" aria-hidden="true">
         <svg class="w-9 h-9 drop-shadow-[0_2px_3px_rgba(0,0,0,0.1)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 4v16M18 14l-6 6-6-6" />
         </svg>
@@ -75,6 +75,20 @@
     will-change: transform, opacity;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
+  }
+
+  /* Smooth custom floating animation for scroll arrow */
+  .scroll-arrow-float {
+    animation: float-down 2s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+  }
+
+  @keyframes float-down {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(10px);
+    }
   }
 
   /* Circular text rotation */
