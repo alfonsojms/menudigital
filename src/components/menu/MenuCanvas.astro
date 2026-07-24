@@ -1,6 +1,8 @@
 ---
 // MenuCanvas.astro: Symmetric 2-column editorial layout — secciones en cuadrícula balanceada.
 import { menuData } from '../../types/menuData';
+import Badge from '../common/Badge.astro';
+import AddToCartBtn from '../common/AddToCartBtn.astro';
 
 const sections = [
   {
@@ -77,9 +79,7 @@ const sections = [
                 aria-label={`Ver detalles de ${dish.name}`}
               >
                 {dish.soldOut && (
-                  <div class="absolute -left-16 top-0.5 font-mono text-[9px] text-[var(--color-brand-red)] uppercase tracking-widest bg-[var(--color-brand-red)]/10 px-2 py-0.5 border border-[var(--color-brand-red)]/20 select-none">
-                    Agotado
-                  </div>
+                  <Badge variant="soldOut" label="Agotado" class="absolute -left-16 top-0.5" />
                 )}
                 <div class="hover-dot"></div>
                 <div class="dish-row-inner">
@@ -92,9 +92,12 @@ const sections = [
                       <div class="dotted-leader"></div>
                       <span class="font-mono text-[14px] text-[var(--color-brand-yellow)] font-bold mr-3">${dish.price}</span>
                       {!dish.soldOut && (
-                        <button class="add-to-cart-btn z-10 p-1.5 flex items-center justify-center bg-[var(--color-brand-yellow)] text-black hover:bg-[#F58220] hover:text-white transition-colors duration-300 rounded-md cursor-pointer outline-none border-none" data-dish-id={dish.id} data-dish-name={dish.name} data-dish-price={dish.price} data-dish-image={dish.image} aria-label={`Añadir ${dish.name} al pedido`} title="Añadir al delivery">
-                          <span class="material-symbols-outlined text-[16px] font-bold" aria-hidden="true">add_shopping_cart</span>
-                        </button>
+                        <AddToCartBtn
+                          dishId={dish.id}
+                          dishName={dish.name}
+                          dishPrice={dish.price}
+                          dishImage={dish.image}
+                        />
                       )}
                     </div>
                     <p class={`text-[13px] text-white/70 mt-1 leading-relaxed gs-dish ${dish.soldOut ? 'opacity-40' : ''}`}>
