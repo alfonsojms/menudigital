@@ -1,0 +1,22 @@
+---
+// Badge.astro: Reusable design system status badge.
+interface Props {
+  variant?: 'soldOut' | 'tag' | 'warning';
+  label: string;
+  class?: string;
+}
+
+const { variant = 'soldOut', label, class: className = '' } = Astro.props;
+
+const variantStyles = {
+  soldOut: 'text-[var(--color-brand-red)] bg-[var(--color-brand-red)]/10 border-[var(--color-brand-red)]/20',
+  tag: 'text-[var(--color-brand-yellow)] bg-[var(--color-brand-yellow)]/10 border-[var(--color-brand-yellow)]/20',
+  warning: 'text-[var(--color-harissa)] bg-[var(--color-harissa)]/10 border-[var(--color-harissa)]/20',
+};
+---
+
+<div
+  class={`font-mono text-[9px] uppercase tracking-widest px-2 py-0.5 border select-none inline-block ${variantStyles[variant]} ${className}`}
+>
+  {label}
+</div>

@@ -24,6 +24,8 @@ pnpm-debug.log*
 .idea/
 # Local AI runtime state
 .atl/
+.codegraph/
+.codex/
 # test output
 coverage/
 playwright-report/

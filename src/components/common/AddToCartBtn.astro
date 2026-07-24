@@ -1,0 +1,48 @@
+---
+// AddToCartBtn.astro: Reusable design system Add-To-Cart trigger button.
+interface Props {
+  dishId: string;
+  dishName: string;
+  dishPrice: number;
+  dishImage?: string;
+  variant?: 'icon' | 'full';
+  label?: string;
+  class?: string;
+}
+
+const {
+  dishId,
+  dishName,
+  dishPrice,
+  dishImage = '',
+  variant = 'icon',
+  label = 'Añadir al pedido',
+  class: className = ''
+} = Astro.props;
+---
+
+{variant === 'icon' ? (
+  <button
+    class={`add-to-cart-btn z-10 p-1.5 flex items-center justify-center bg-[var(--color-brand-yellow)] text-black hover:bg-[var(--color-harissa)] hover:text-white transition-colors duration-300 rounded-md cursor-pointer outline-none border-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-yellow)] ${className}`}
+    data-dish-id={dishId}
+    data-dish-name={dishName}
+    data-dish-price={dishPrice}
+    data-dish-image={dishImage}
+    aria-label={`Añadir ${dishName} al pedido`}
+    title={label}
+  >
+    <span class="material-symbols-outlined text-[16px] font-bold" aria-hidden="true">add_shopping_cart</span>
+  </button>
+) : (
+  <button
+    class={`add-to-cart-btn z-10 px-4 py-2.5 flex items-center justify-center gap-2 bg-[var(--color-brand-yellow)] text-black font-sans font-bold text-xs uppercase tracking-wider hover:bg-[var(--color-harissa)] hover:text-white transition-colors duration-300 rounded-full cursor-pointer outline-none border-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-yellow)] ${className}`}
+    data-dish-id={dishId}
+    data-dish-name={dishName}
+    data-dish-price={dishPrice}
+    data-dish-image={dishImage}
+    aria-label={`Añadir ${dishName} al pedido`}
+  >
+    <span class="material-symbols-outlined text-base font-bold" aria-hidden="true">add_shopping_cart</span>
+    <span>{label}</span>
+  </button>
+)}

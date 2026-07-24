@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-24T13:39:40-04:00",
+  "title": "Design System: Menú Digital",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Bold Pepperoni Red",
+        "canonical": "#E62020",
+        "tonalRamp": ["#330707", "#660e0e", "#991515", "#cc1c1c", "#E62020", "#eb4d4d", "#f07a7a", "#f5a8a8"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Charcoal Black",
+        "canonical": "#1A1A1A",
+        "tonalRamp": ["#000000", "#0d0d0d", "#1A1A1A", "#262626", "#404040", "#666666", "#999999", "#cccccc"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Limestone Surface",
+        "canonical": "#262626",
+        "tonalRamp": ["#0f0f0f", "#1a1a1a", "#262626", "#3d3d3d", "#595959", "#7a7a7a", "#a3a3a3", "#d1d1d1"]
+      },
+      "accent-yellow": {
+        "role": "secondary",
+        "displayName": "Vibrant Mustard Yellow",
+        "canonical": "#FFD500",
+        "tonalRamp": ["#332b00", "#665600", "#998100", "#ccac00", "#FFD500", "#ffde33", "#ffe666", "#ffee99"]
+      },
+      "accent-orange": {
+        "role": "tertiary",
+        "displayName": "Harissa Orange",
+        "canonical": "#F58220",
+        "tonalRamp": ["#311a06", "#62340d", "#934e13", "#c4681a", "#F58220", "#f79b4d", "#f9b479", "#fccda6"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display (Lilita One)",
+        "purpose": "Hero headers and high-impact editorial titles."
+      },
+      "sans": {
+        "displayName": "Body Sans (Rubik)",
+        "purpose": "Primary readable UI labels and dish descriptions."
+      },
+      "mono": {
+        "displayName": "Metadata Mono (JetBrains Mono)",
+        "purpose": "Prices, badges, toggle options, and numerical data."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-lift",
+        "value": "0 -20px 50px rgba(0,0,0,0.6)",
+        "purpose": "Atmospheric depth for bottom sheet containers sliding up."
+      },
+      {
+        "name": "floating-pill",
+        "value": "0 12px 40px rgba(0,0,0,0.6)",
+        "purpose": "Prominent floating cart bar depth."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Smooth spring-like physics for modal drawers and pills."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Floating Cart Pill",
+      "kind": "button",
+      "refersTo": "button-pill",
+      "description": "Sticky bottom action bar displaying total item count and checkout price.",
+      "html": "<div class=\"ds-floating-pill\"><span>shopping_bag</span><span>2 ANTOJOS AÑADIDOS</span><span>$24.50</span></div>",
+      "css": ".ds-floating-pill { display: flex; align-items: center; justify-content: space-between; background: #FFD500; color: #1A1A1A; padding: 16px 24px; border-radius: 9999px; font-weight: 700; cursor: pointer; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-floating-pill:hover { transform: scale(1.02); }"
+    },
+    {
+      "name": "Segmented View Switcher",
+      "kind": "nav",
+      "refersTo": "button-primary",
+      "description": "Tab control inside navbar toggling between Editorial Canvas and Gallery views.",
+      "html": "<div class=\"ds-switcher\"><button class=\"ds-switch-btn ds-active\">CARTA</button><button class=\"ds-switch-btn\">GALERÍA</button></div>",
+      "css": ".ds-switcher { display: inline-flex; padding: 2px; border-radius: 9999px; background: rgba(26,26,26,0.08); border: 1px solid rgba(26,26,26,0.15); } .ds-switch-btn { padding: 6px 16px; border-radius: 9999px; border: none; font-family: monospace; font-size: 11px; text-transform: uppercase; cursor: pointer; font-weight: 700; } .ds-switch-btn.ds-active { background: #FFD500; color: #1A1A1A; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Editorial Gastronomy",
+    "overview": "Menú Digital encapsulates a high-end tactile dark-mode aesthetic for a Neo-Bistro venue. It balances publication-grade typography, tactile grain overlays, and fluid micro-interactions with immediate order conversion.",
+    "keyCharacteristics": [
+      "Tactile dark background (#1A1A1A) with soft grain overlay",
+      "High-impact display font (Lilita One) paired with clean geometric sans (Rubik) and JetBrains Mono",
+      "Symmetric floating glassmorphic pill navbar",
+      "Asymmetric Editorial Canvas vs. High-Density Grid view switcher",
+      "Direct WhatsApp checkout flow via split-screen drawers"
+    ],
+    "rules": [
+      {
+        "name": "The Dark Surface Rule",
+        "body": "All primary views use charcoal dark background (#1A1A1A). Bright accents appear selectively on active interactive elements.",
+        "section": "colors"
+      },
+      {
+        "name": "The High Contrast Pill Rule",
+        "body": "Floating action bars and key interactive CTAs utilize vibrant mustard yellow (#FFD500) with dark text for maximum legibility.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do preserve mobile viewport boundaries with overflow-x clipping",
+      "Do use cubic-bezier(0.16, 1, 0.3, 1) for fluid drawer and pill spring transitions",
+      "Do provide full keyboard accessibility with 2px mustard focus indicators"
+    ],
+    "donts": [
+      "Don't stretch margins horizontally beyond mobile viewport bounds",
+      "Don't mix generic browser default fonts with the defined Lilita One / Rubik / JetBrains Mono typography stack"
+    ]
+  }
+}
