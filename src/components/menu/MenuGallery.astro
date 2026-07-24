@@ -12,7 +12,7 @@ import AddToCartBtn from '../common/AddToCartBtn.astro';
       
       <!-- Search Input -->
       <div class="relative w-full lg:w-80">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-lg select-none">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-lg select-none" aria-hidden="true">
           search
         </span>
         <input 
@@ -25,20 +25,20 @@ import AddToCartBtn from '../common/AddToCartBtn.astro';
       </div>
 
       <!-- Category Filter Tabs -->
-      <nav class="flex flex-wrap items-center gap-2" id="gallery-filters">
-        <button class="filter-btn active px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="all">
+      <nav class="flex flex-wrap items-center gap-2" id="gallery-filters" aria-label="Filtros de categoría">
+        <button class="filter-btn active px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="all" aria-label="Mostrar todos los platos">
           Todo
         </button>
-        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="starters">
+        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="starters" aria-label="Filtrar por Entradas">
           Entradas
         </button>
-        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="mains">
+        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="mains" aria-label="Filtrar por Hamburguesas y Pizzas">
           Hamburguesas & Pizzas
         </button>
-        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="desserts">
+        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="desserts" aria-label="Filtrar por Postres">
           Postres
         </button>
-        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="drinks">
+        <button class="filter-btn px-4 py-2 border border-white/20 text-[10px] font-sans uppercase font-bold tracking-widest transition-colors duration-300 hover:bg-[var(--color-brand-yellow)] hover:text-black" data-filter="drinks" aria-label="Filtrar por Bebidas">
           Bebidas
         </button>
       </nav>
@@ -98,8 +98,19 @@ import AddToCartBtn from '../common/AddToCartBtn.astro';
     </div>
 
     <!-- Empty State -->
-    <div id="gallery-empty-state" class="hidden text-center py-20">
-      <p class="font-display italic text-2xl text-white/40">No hay productos que coincidan.</p>
+    <div id="gallery-empty-state" class="hidden text-center py-20 px-4 max-w-md mx-auto space-y-4">
+      <span class="material-symbols-outlined text-4xl text-white/30" aria-hidden="true">search_off</span>
+      <h3 class="font-display text-2xl text-white/90 uppercase tracking-wide">No encontramos antojos que coincidan</h3>
+      <p class="text-xs font-sans text-white/60 leading-relaxed">
+        Intenta buscar con otro término, explora una categoría distinta o borra el filtro de búsqueda actual.
+      </p>
+      <button 
+        id="reset-search-btn" 
+        aria-label="Restablecer todos los filtros y la búsqueda"
+        class="mt-2 px-5 py-2.5 bg-[var(--color-brand-yellow)] text-black font-mono text-xs uppercase tracking-wider font-bold rounded-full hover:bg-[#F58220] hover:text-white transition-colors duration-300 cursor-pointer outline-none border-none"
+      >
+        Limpiar filtro y búsqueda
+      </button>
     </div>
   </main>
 </div>
@@ -189,6 +200,22 @@ import AddToCartBtn from '../common/AddToCartBtn.astro';
         }
       });
     });
+  });
+
+  // Bind Reset Search & Filter Button
+  const resetBtn = document.getElementById('reset-search-btn');
+  resetBtn?.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    searchQuery = '';
+    activeFilter = 'all';
+    filterButtons.forEach(b => {
+      if (b.getAttribute('data-filter') === 'all') {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+    filterGallery();
   });
 
 </script>

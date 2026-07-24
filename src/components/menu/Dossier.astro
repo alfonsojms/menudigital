@@ -1,7 +1,7 @@
 ---
 // Dossier.astro: The elegant info footer containing service details and booking interactions.
 ---
-<footer id="dossier-section" class="w-full border-t border-white/10 mt-auto bg-[#1A1A1A] text-white">
+<footer id="dossier-section" class="w-full border-t border-white/10 mt-auto bg-[#1A1A1A] text-white pb-28 md:pb-0">
   
   <!-- 3-Column Info Grid -->
   <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-b border-white/10">
@@ -57,7 +57,7 @@
   </div>
 
   <!-- Booking/Order Button -->
-  <button id="footer-cart-trigger" class="booking-btn w-full h-[80px] bg-[#FFD500] text-[#1A1A1A] hover:bg-[#F58220] hover:text-white transition-colors duration-500 ease-in-out flex items-center justify-center cursor-pointer rounded-none outline-none border-none">
+  <button id="footer-cart-trigger" aria-label="Pedir por delivery o ver mi pedido" class="booking-btn w-full h-[80px] bg-[#FFD500] text-[#1A1A1A] hover:bg-[#F58220] hover:text-white transition-colors duration-500 ease-in-out flex items-center justify-center cursor-pointer rounded-none outline-none border-none focus-visible:ring-2 focus-visible:ring-[#FFD500]">
     <span class="text-initial text-lg md:text-2xl tracking-[4px] uppercase font-display">Pide por Delivery</span>
     <span class="text-hover text-lg md:text-2xl tracking-[4px] uppercase font-display hidden">Ver mi Pedido</span>
   </button>

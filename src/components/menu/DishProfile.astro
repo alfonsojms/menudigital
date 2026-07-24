@@ -59,19 +59,19 @@
         <!-- Action Button / Quantity Controls -->
         <div id="dish-modal-cart-control" class="relative overflow-hidden h-[44px]">
           <!-- Add Button (shows when Qty = 0) -->
-          <button id="dish-modal-add-btn" class="px-6 py-2.5 h-full bg-[var(--color-brand-yellow)] hover:bg-[#F58220] transition-colors duration-300 text-black font-sans font-bold uppercase tracking-wider text-xs rounded-full flex items-center gap-2 cursor-pointer outline-none border-none">
-            <span class="material-symbols-outlined text-sm font-bold">shopping_bag</span>
+          <button id="dish-modal-add-btn" aria-label="Añadir plato al pedido" class="px-6 py-2.5 h-full bg-[var(--color-brand-yellow)] hover:bg-[#F58220] transition-colors duration-300 text-black font-sans font-bold uppercase tracking-wider text-xs rounded-full flex items-center gap-2 cursor-pointer outline-none border-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-yellow)]">
+            <span class="material-symbols-outlined text-sm font-bold" aria-hidden="true">shopping_bag</span>
             Añadir al delivery
           </button>
           
           <!-- Qty Adjuster (shows when Qty > 0, initially hidden) -->
           <div id="dish-modal-qty-control" class="hidden flex items-center border border-white/20 rounded-full h-full overflow-hidden bg-white/5">
-            <button id="dish-modal-minus-btn" class="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent">
-              <span class="material-symbols-outlined text-sm font-bold">remove</span>
+            <button id="dish-modal-minus-btn" aria-label="Disminuir cantidad" class="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent">
+              <span class="material-symbols-outlined text-sm font-bold" aria-hidden="true">remove</span>
             </button>
             <span id="dish-modal-qty-val" class="w-10 text-center font-mono font-bold text-sm">0</span>
-            <button id="dish-modal-plus-btn" class="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent">
-              <span class="material-symbols-outlined text-sm font-bold">add</span>
+            <button id="dish-modal-plus-btn" aria-label="Aumentar cantidad" class="w-10 h-full flex items-center justify-center text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer outline-none border-none bg-transparent">
+              <span class="material-symbols-outlined text-sm font-bold" aria-hidden="true">add</span>
             </button>
           </div>
         </div>
