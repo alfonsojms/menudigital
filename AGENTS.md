@@ -21,9 +21,4 @@ Welcome to the **Menú Digital** codebase. This file provides guidelines and con
 
 ## Development Rules
 - **Commit Messages**: Conventional commits only (e.g., `feat:`, `fix:`, `build:`, `style:`). Never append "Co-Authored-By" or AI attributions.
-- **Testing**:
-  - Write unit tests under `tests/unit/` using **Vitest**.
-  - Write E2E integration tests under `tests/e2e/` using **Playwright**.
-  - Emulate mobile viewports (iOS Safari, Android Chrome) for interface interactions.
-  - Intercept the WhatsApp checkout redirects using `window.open` mocks rather than hitting live endpoints.
 - **Mobile First**: All interface elements, drawers, and buttons must fit strictly within mobile viewports. Avoid fixed margins that stretch the horizontal layout.
